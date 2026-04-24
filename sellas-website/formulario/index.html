@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diagnóstico Comercial · Outpace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #080F09;
+      --bg2:      #0B1A0D;
+      --card:     #0F2015;
+      --border:   rgba(201,168,76,0.18);
+      --border2:  rgba(201,168,76,0.08);
+      --gold:     #C9A84C;
+      --gold-l:   #E2C56A;
+      --gold-d:   #A07B2A;
+      --gradient: linear-gradient(135deg,#C9A84C 0%,#E2C56A 55%,#C9A84C 100%);
+      --cream:    #EDE8DB;
+      --muted:    #6E8872;
+      --light:    #B8CDB9;
+      --danger:   #e05555;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--cream);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      cursor: none;
+    }
+    ::selection { background: var(--gold); color: #000; }
+
+    /* CURSOR */
+    #cur-dot, #cur-ring {
+      position: fixed; top: 0; left: 0; z-index: 9999;
+      pointer-events: none; border-radius: 50%;
+      transform: translate(-50%,-50%);
+    }
+    #cur-dot  { width: 6px; height: 6px; background: var(--gold-l); }
+    #cur-ring {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(201,168,76,0.45);
+      transition: width .3s, height .3s, border-color .3s;
+    }
+    body.hov #cur-ring { width: 52px; height: 52px; border-color: var(--gold); }
+
+    /* BACKGROUND GLOW */
+    .bg-glow {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(201,168,76,0.04) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 80% 20%, rgba(11,90,40,0.08) 0%, transparent 70%);
+    }
+
+    /* HEADER */
+    header {
+      position: relative; z-index: 10;
+      padding: 28px 6%;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border2);
+      background: rgba(8,15,9,0.9);
+      backdrop-filter: blur(20px);
+    }
+    .logo {
+      font-size: 22px; font-weight: 900; letter-spacing: -.5px;
+      background: var(--gradient); -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; background-clip: text;
+      text-decoration: none;
+    }
+    .back-link {
+      font-size: 13px; font-weight: 500; color: var(--muted);
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+      transition: color .3s;
+    }
+    .back-link:hover { color: var(--cream); }
+    .back-link::before { content: '←'; font-size: 16px; }
+
+    /* MAIN */
+    main {
+      flex: 1; position: relative; z-index: 2;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 60px 6%;
+    }
+
+    /* INTRO */
+    .intro {
+      text-align: center; max-width: 640px; margin-bottom: 60px;
+    }
+    .intro-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2);
+      padding: 6px 18px; border-radius: 100px;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 28px;
+    }
+    .intro-badge::before {
+      content: ''; width: 5px; height: 5px;
+      background: var(--gold); border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(1.6)} }
+    .intro h1 {
+      font-size: clamp(32px,4vw,52px); font-weight: 900;
+      letter-spacing: -2px; line-height: 1.1; margin-bottom: 18px;
+      color: var(--cream);
+    }
+    .intro h1 em {
+      font-style: normal;
+      background: var(--gradient); -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .intro p {
+      font-size: 16px; color: var(--muted); line-height: 1.75;
+    }
+    .intro-time {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 20px; font-size: 13px; color: rgba(201,168,76,0.6);
+      font-weight: 500; letter-spacing: .3px;
+    }
+    .intro-time::before { content: '⏱'; }
+
+    /* FORM CARD */
+    .form-card {
+      width: 100%; max-width: 720px;
+      background: rgba(11,26,13,0.95);
+      border: 1px solid var(--border);
+      border-radius: 28px; overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+    }
+
+    /* PROGRESS BAR */
+    .progress-wrap {
+      padding: 28px 40px 0;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .progress-steps {
+      display: flex; align-items: center; gap: 8px; flex: 1;
+    }
+    .ps {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 600; letter-spacing: .5px;
+      color: rgba(255,255,255,0.2); transition: color .4s;
+      cursor: default; white-space: nowrap;
+    }
+    .ps.active { color: var(--gold); }
+    .ps.done   { color: rgba(201,168,76,0.5); }
+    .ps-num {
+      width: 26px; height: 26px; border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800;
+      transition: background .4s, border-color .4s, color .4s;
+      flex-shrink: 0;
+    }
+    .ps.active .ps-num { background: var(--gradient); border-color: transparent; color: #000; }
+    .ps.done   .ps-num { background: rgba(201,168,76,0.15); border-color: rgba(201,168,76,0.3); color: var(--gold); }
+    .ps-sep { flex: 1; height: 1px; background: rgba(201,168,76,0.12); min-width: 16px; }
+    .progress-pct {
+      font-size: 12px; font-weight: 700; color: var(--gold); letter-spacing: .5px;
+    }
+
+    /* STEP PANELS */
+    .form-body { padding: 36px 40px 40px; }
+    .step-panel { display: none; }
+    .step-panel.active { display: block; animation: fadeIn .3s ease; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+    .step-title {
+      font-size: 22px; font-weight: 800; letter-spacing: -.5px;
+      margin-bottom: 6px; color: var(--cream);
+    }
+    .step-desc {
+      font-size: 14px; color: var(--muted); margin-bottom: 32px; line-height: 1.6;
+    }
+
+    /* FIELD */
+    .fields { display: flex; flex-direction: column; gap: 20px; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field { display: flex; flex-direction: column; gap: 8px; }
+    .field label {
+      font-size: 12px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: rgba(201,168,76,0.7);
+    }
+    .field input,
+    .field select,
+    .field textarea {
+      background: rgba(8,15,9,0.8);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 12px; padding: 14px 16px;
+      font-size: 15px; font-weight: 400;
+      color: var(--cream); font-family: inherit;
+      outline: none;
+      transition: border-color .3s, box-shadow .3s;
+      -webkit-appearance: none; appearance: none;
+    }
+    .field input::placeholder,
+    .field textarea::placeholder { color: rgba(255,255,255,0.15); }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: rgba(201,168,76,0.5);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.08);
+    }
+    .field input.err,
+    .field select.err,
+    .field textarea.err { border-color: var(--danger); }
+    .field .err-msg {
+      font-size: 12px; color: var(--danger); display: none;
+    }
+    .field.has-err .err-msg { display: block; }
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9A84C' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px; cursor: pointer;
+    }
+    .field select option { background: #0B1A0D; color: var(--cream); }
+    .field textarea { resize: none; min-height: 100px; line-height: 1.6; }
+
+    /* RADIO / CHECKBOX GROUPS */
+    .opt-group { display: flex; flex-direction: column; gap: 10px; }
+    .opt-group.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .opt-item { display: flex; align-items: center; }
+    .opt-item input[type="radio"],
+    .opt-item input[type="checkbox"] { display: none; }
+    .opt-item label {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 14px; font-weight: 500; color: var(--light);
+      background: rgba(8,15,9,0.7);
+      border: 1px solid rgba(201,168,76,0.12);
+      border-radius: 12px; padding: 12px 16px;
+      cursor: pointer; width: 100%;
+      transition: border-color .3s, background .3s, color .3s;
+      text-transform: none; letter-spacing: 0;
+    }
+    .opt-item label::before {
+      content: ''; width: 18px; height: 18px; border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.3);
+      flex-shrink: 0; transition: background .3s, border-color .3s;
+    }
+    .opt-item input[type="checkbox"] + label::before { border-radius: 5px; }
+    .opt-item input:checked + label {
+      border-color: rgba(201,168,76,0.4);
+      background: rgba(201,168,76,0.07);
+      color: var(--cream);
+    }
+    .opt-item input:checked + label::before {
+      background: var(--gradient); border-color: transparent;
+    }
+
+    /* NAVIGATION BUTTONS */
+    .form-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 36px; gap: 12px;
+    }
+    .btn-back {
+      background: transparent; color: var(--muted);
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 14px 28px; border-radius: 100px;
+      font-size: 14px; font-weight: 600; cursor: pointer;
+      font-family: inherit;
+      transition: color .3s, border-color .3s;
+    }
+    .btn-back:hover { color: var(--cream); border-color: rgba(201,168,76,0.3); }
+    .btn-next {
+      background: var(--gradient); color: #000;
+      border: none; padding: 14px 36px; border-radius: 100px;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      font-family: inherit;
+      transition: transform .3s, box-shadow .3s, opacity .3s;
+      box-shadow: 0 6px 30px rgba(201,168,76,0.22);
+      margin-left: auto;
+    }
+    .btn-next:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(201,168,76,0.35); }
+    .btn-next:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-submit {
+      background: var(--gradient); color: #000;
+      border: none; padding: 16px 44px; border-radius: 100px;
+      font-size: 15px; font-weight: 800; cursor: pointer;
+      font-family: inherit;
+      transition: transform .3s, box-shadow .3s, opacity .3s;
+      box-shadow: 0 8px 40px rgba(201,168,76,0.28);
+      margin-left: auto; letter-spacing: .3px;
+    }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 20px 60px rgba(201,168,76,0.4); }
+    .btn-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+    /* SUCCESS STATE */
+    #success {
+      display: none;
+      text-align: center; padding: 72px 40px;
+    }
+    #success.visible { display: block; animation: fadeIn .5s ease; }
+    .success-icon {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--gradient);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px; margin: 0 auto 28px;
+      box-shadow: 0 16px 48px rgba(201,168,76,0.3);
+    }
+    #success h2 {
+      font-size: 28px; font-weight: 900; letter-spacing: -1px;
+      margin-bottom: 14px; color: var(--cream);
+    }
+    #success p {
+      font-size: 16px; color: var(--muted); line-height: 1.75;
+      max-width: 440px; margin: 0 auto 40px;
+    }
+    #success .next-steps {
+      background: rgba(8,15,9,0.8);
+      border: 1px solid var(--border2);
+      border-radius: 16px; padding: 24px 28px;
+      text-align: left; margin-bottom: 32px;
+      max-width: 440px; margin-left: auto; margin-right: auto;
+    }
+    #success .next-steps h4 {
+      font-size: 12px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 16px;
+    }
+    #success .next-steps ul {
+      list-style: none; display: flex; flex-direction: column; gap: 10px;
+    }
+    #success .next-steps li {
+      font-size: 14px; color: var(--light);
+      display: flex; align-items: center; gap: 10px;
+    }
+    #success .next-steps li::before {
+      content: '✓'; color: var(--gold); font-weight: 800; flex-shrink: 0;
+    }
+
+    /* FOOTER */
+    footer {
+      position: relative; z-index: 2;
+      padding: 24px 6%; text-align: center;
+      border-top: 1px solid var(--border2);
+    }
+    footer p { font-size: 12px; color: rgba(255,255,255,0.18); }
+    footer a { color: var(--gold); text-decoration: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .form-body { padding: 28px 24px 32px; }
+      .progress-wrap { padding: 24px 24px 0; }
+      .field-row { grid-template-columns: 1fr; }
+      .opt-group.cols { grid-template-columns: 1fr; }
+      .ps span { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cur-dot"></div>
+  <div id="cur-ring"></div>
+  <div class="bg-glow"></div>
+
+  <header>
+    <a href="../home/index.html" class="logo">Outpace</a>
+    <a href="../home/index.html" class="back-link">Voltar ao site</a>
+  </header>
+
+  <main>
+    <div class="intro">
+      <div class="intro-badge">Diagnóstico Gratuito</div>
+      <h1>Vamos entender o seu <em>negócio.</em></h1>
+      <p>Responda 3 blocos rápidos de perguntas. Com isso, nosso especialista chega na conversa já com um diagnóstico do seu cenário, sem perguntas genéricas, sem enrolação.</p>
+      <div class="intro-time">Aproximadamente 3 minutos</div>
+    </div>
+
+    <div class="form-card">
+
+      <!-- PROGRESS -->
+      <div class="progress-wrap">
+        <div class="progress-steps">
+          <div class="ps active" id="ps1">
+            <div class="ps-num">1</div>
+            <span>Sobre você</span>
+          </div>
+          <div class="ps-sep"></div>
+          <div class="ps" id="ps2">
+            <div class="ps-num">2</div>
+            <span>Seu negócio</span>
+          </div>
+          <div class="ps-sep"></div>
+          <div class="ps" id="ps3">
+            <div class="ps-num">3</div>
+            <span>Desafios</span>
+          </div>
+        </div>
+        <div class="progress-pct" id="pct">33%</div>
+      </div>
+
+      <!-- FORM BODY -->
+      <div class="form-body">
+        <form id="diag-form" novalidate>
+
+          <!-- STEP 1: Sobre você -->
+          <div class="step-panel active" data-step="1">
+            <div class="step-title">Seus dados de contato</div>
+            <div class="step-desc">Para que o especialista saiba com quem vai falar e possa preparar a conversa.</div>
+            <div class="fields">
+              <div class="field-row">
+                <div class="field" id="f-nome">
+                  <label for="nome">Nome completo *</label>
+                  <input type="text" id="nome" name="nome" placeholder="João da Silva" autocomplete="name" />
+                  <span class="err-msg">Por favor, informe seu nome.</span>
+                </div>
+                <div class="field" id="f-cargo">
+                  <label for="cargo">Cargo / Função *</label>
+                  <input type="text" id="cargo" name="cargo" placeholder="Diretor Comercial" />
+                  <span class="err-msg">Por favor, informe seu cargo.</span>
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="field" id="f-email">
+                  <label for="email">E-mail corporativo *</label>
+                  <input type="email" id="email" name="email" placeholder="joao@empresa.com.br" autocomplete="email" />
+                  <span class="err-msg">Informe um e-mail válido.</span>
+                </div>
+                <div class="field" id="f-whatsapp">
+                  <label for="whatsapp">WhatsApp *</label>
+                  <input type="tel" id="whatsapp" name="whatsapp" placeholder="(11) 99999-9999" autocomplete="tel" />
+                  <span class="err-msg">Por favor, informe seu WhatsApp.</span>
+                </div>
+              </div>
+              <div class="field" id="f-empresa">
+                <label for="empresa">Nome da empresa *</label>
+                <input type="text" id="empresa" name="empresa" placeholder="Empresa S/A" autocomplete="organization" />
+                <span class="err-msg">Por favor, informe a empresa.</span>
+              </div>
+            </div>
+            <div class="form-nav">
+              <button type="button" class="btn-next" onclick="goTo(2)">Próximo →</button>
+            </div>
+          </div>
+
+          <!-- STEP 2: Seu negócio -->
+          <div class="step-panel" data-step="2">
+            <div class="step-title">Sobre o negócio</div>
+            <div class="step-desc">Ajuda a entender o contexto e o porte da operação antes de falar com você.</div>
+            <div class="fields">
+              <div class="field-row">
+                <div class="field" id="f-segmento">
+                  <label for="segmento">Segmento *</label>
+                  <select id="segmento" name="segmento">
+                    <option value="">Selecione...</option>
+                    <option>Indústria</option>
+                    <option>Distribuição</option>
+                    <option>B2B / Serviços</option>
+                    <option>Agronegócio</option>
+                    <option>Construção Civil</option>
+                    <option>Tecnologia B2B</option>
+                    <option>Atacado</option>
+                    <option>Outro</option>
+                  </select>
+                  <span class="err-msg">Selecione o segmento.</span>
+                </div>
+                <div class="field" id="f-faturamento">
+                  <label for="faturamento">Faturamento anual *</label>
+                  <select id="faturamento" name="faturamento">
+                    <option value="">Selecione...</option>
+                    <option>Até R$ 1 milhão</option>
+                    <option>R$ 1M – R$ 5M</option>
+                    <option>R$ 5M – R$ 20M</option>
+                    <option>R$ 20M – R$ 50M</option>
+                    <option>Acima de R$ 50M</option>
+                  </select>
+                  <span class="err-msg">Selecione o faturamento.</span>
+                </div>
+              </div>
+
+              <div class="field" id="f-time">
+                <label>Tamanho do time comercial *</label>
+                <div class="opt-group cols">
+                  <div class="opt-item">
+                    <input type="radio" name="time" id="t1" value="1 a 3 pessoas" />
+                    <label for="t1">1 a 3 pessoas</label>
+                  </div>
+                  <div class="opt-item">
+                    <input type="radio" name="time" id="t2" value="4 a 10 pessoas" />
+                    <label for="t2">4 a 10 pessoas</label>
+                  </div>
+                  <div class="opt-item">
+                    <input type="radio" name="time" id="t3" value="11 a 30 pessoas" />
+                    <label for="t3">11 a 30 pessoas</label>
+                  </div>
+                  <div class="opt-item">
+                    <input type="radio" name="time" id="t4" value="Mais de 30 pessoas" />
+                    <label for="t4">Mais de 30 pessoas</label>
+                  </div>
+                </div>
+                <span class="err-msg" id="err-time" style="display:none;color:var(--danger);font-size:12px;margin-top:4px;">Selecione o tamanho do time.</span>
+              </div>
+
+              <div class="field" id="f-ciclo">
+                <label for="ciclo">Ciclo médio de venda *</label>
+                <select id="ciclo" name="ciclo">
+                  <option value="">Selecione...</option>
+                  <option>Menos de 1 semana</option>
+                  <option>1 a 4 semanas</option>
+                  <option>1 a 3 meses</option>
+                  <option>3 a 6 meses</option>
+                  <option>Mais de 6 meses</option>
+                </select>
+                <span class="err-msg">Selecione o ciclo de venda.</span>
+              </div>
+            </div>
+            <div class="form-nav">
+              <button type="button" class="btn-back" onclick="goTo(1)">← Voltar</button>
+              <button type="button" class="btn-next" onclick="goTo(3)">Próximo →</button>
+            </div>
+          </div>
+
+          <!-- STEP 3: Desafios -->
+          <div class="step-panel" data-step="3">
+            <div class="step-title">Seus desafios comerciais</div>
+            <div class="step-desc">Marque os que mais se aplicam ao momento atual do seu negócio. Pode marcar mais de um.</div>
+            <div class="fields">
+
+              <div class="field" id="f-desafios">
+                <label>Principais dores (marque todos que se aplicam) *</label>
+                <div class="opt-group">
+                  <div class="opt-item">
+                    <input type="checkbox" name="desafios" id="d1" value="Pipeline cheio que não vira venda" />
+                    <label for="d1">Pipeline cheio que não vira venda</label>
+                  </div>
+                  <div class="opt-item">
+                    <input type="checkbox" name="desafios" id="d2" value="Falta de previsibilidade de receita" />
+                    <label for="d2">Falta de previsibilidade de receita</label>
+                  </div>
+                  <div class="opt-item">
+                    <input type="checkbox" name="desafios" id="d3" value="Time que não executa o processo" />
+                    <label for="d3">Time que não executa o processo</label>
+                  </div>
+                  <div class="opt-item">
+                    <input type="checkbox" name="desafios" id="d4" value="Baixa taxa de conversão de propostas" />
+                    <label for="d4">Baixa taxa de conversão de propostas</label>
+                  </div>
+                  <div class="opt-item">
+                    <input type="checkbox" name="desafios" id="d5" value="Processo comercial existe só na cabeça do fundador" />
+                    <label for="d5">Processo que vive só na cabeça do fundador</label>
+                  </div>
+                  <div class="opt-item">
+                    <input type="checkbox" name="desafios" id="d6" value="Orçamentos parados por semanas sem andamento" />
+                    <label for="d6">Orçamentos parados por semanas sem andamento</label>
+                  </div>
+                  <div class="opt-item">
+                    <input type="checkbox" name="desafios" id="d7" value="Dependência de poucos clientes" />
+                    <label for="d7">Dependência de poucos clientes</label>
+                  </div>
+                  <div class="opt-item">
+                    <input type="checkbox" name="desafios" id="d8" value="CRM não utilizado / sem processo" />
+                    <label for="d8">CRM não utilizado / sem processo</label>
+                  </div>
+                </div>
+                <span class="err-msg" id="err-desafios" style="display:none;color:var(--danger);font-size:12px;margin-top:4px;">Marque ao menos um desafio.</span>
+              </div>
+
+              <div class="field">
+                <label for="contexto">Contexto adicional (opcional)</label>
+                <textarea id="contexto" name="contexto" placeholder="Descreva brevemente o momento atual da sua operação comercial..."></textarea>
+              </div>
+
+              <div class="field" id="f-origem">
+                <label for="origem">Como nos encontrou?</label>
+                <select id="origem" name="origem">
+                  <option value="">Selecione...</option>
+                  <option>LinkedIn</option>
+                  <option>Instagram</option>
+                  <option>Indicação</option>
+                  <option>Google</option>
+                  <option>YouTube</option>
+                  <option>Outro</option>
+                </select>
+              </div>
+
+            </div>
+            <div class="form-nav">
+              <button type="button" class="btn-back" onclick="goTo(2)">← Voltar</button>
+              <button type="submit" class="btn-submit" id="btn-submit">Enviar diagnóstico</button>
+            </div>
+          </div>
+
+        </form>
+
+        <!-- SUCCESS -->
+        <div id="success">
+          <div class="success-icon">✓</div>
+          <h2>Diagnóstico recebido!</h2>
+          <p>Nosso especialista vai analisar suas respostas e entrar em contato em até <strong style="color:var(--gold)">1 dia útil</strong> pelo WhatsApp para agendar sua conversa.</p>
+          <div class="next-steps">
+            <h4>O que acontece agora</h4>
+            <ul>
+              <li>Analisamos suas respostas antes da ligação</li>
+              <li>Chegamos com um pré-diagnóstico do seu cenário</li>
+              <li>30 min de conversa objetiva, sem pitch de vendas</li>
+              <li>Você sai com clareza sobre o próximo passo</li>
+            </ul>
+          </div>
+          <a href="../home/index.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--gradient);color:#000;padding:14px 36px;border-radius:100px;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 8px 36px rgba(201,168,76,0.25);">
+            Voltar ao site
+          </a>
+        </div>
+
+      </div><!-- /form-body -->
+    </div><!-- /form-card -->
+  </main>
+
+  <footer>
+    <p>© 2026 Outpace. <a href="../home/index.html">outpace.com.br</a> · Seus dados são usados exclusivamente para contato comercial.</p>
+  </footer>
+
+  <script>
+  /* ══════════════════════════════════
+     CURSOR
+  ══════════════════════════════════ */
+  const dot = document.getElementById('cur-dot');
+  const ring = document.getElementById('cur-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX; my=e.clientY;
+    dot.style.left=mx+'px'; dot.style.top=my+'px';
+  });
+  (function moveRing(){
+    rx+=(mx-rx)*.11; ry+=(my-ry)*.11;
+    ring.style.left=rx+'px'; ring.style.top=ry+'px';
+    requestAnimationFrame(moveRing);
+  })();
+  document.querySelectorAll('a,button,label,input,select,textarea').forEach(el=>{
+    el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
+    el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
+  });
+
+  /* ══════════════════════════════════
+     MULTI-STEP NAVIGATION
+  ══════════════════════════════════ */
+  let currentStep = 1;
+  const totalSteps = 3;
+
+  function goTo(n) {
+    if (n > currentStep && !validateStep(currentStep)) return;
+    document.querySelector(`.step-panel[data-step="${currentStep}"]`).classList.remove('active');
+    currentStep = n;
+    document.querySelector(`.step-panel[data-step="${currentStep}"]`).classList.add('active');
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateProgress() {
+    for (let i = 1; i <= totalSteps; i++) {
+      const ps = document.getElementById('ps' + i);
+      ps.classList.remove('active','done');
+      if (i === currentStep) ps.classList.add('active');
+      else if (i < currentStep) ps.classList.add('done');
+    }
+    document.getElementById('pct').textContent =
+      Math.round((currentStep / totalSteps) * 100) + '%';
+  }
+
+  /* ══════════════════════════════════
+     VALIDATION
+  ══════════════════════════════════ */
+  function setErr(fieldId, show) {
+    const el = document.getElementById('f-' + fieldId);
+    if (!el) return;
+    el.classList.toggle('has-err', show);
+    const inp = el.querySelector('input, select, textarea');
+    if (inp) inp.classList.toggle('err', show);
+  }
+
+  function validateStep(step) {
+    let ok = true;
+
+    if (step === 1) {
+      ['nome','cargo','email','whatsapp','empresa'].forEach(id => {
+        const v = document.getElementById(id).value.trim();
+        const invalid = !v || (id === 'email' && !/\S+@\S+\.\S+/.test(v));
+        setErr(id, invalid);
+        if (invalid) ok = false;
+      });
+    }
+
+    if (step === 2) {
+      ['segmento','faturamento','ciclo'].forEach(id => {
+        const v = document.getElementById(id).value;
+        setErr(id, !v);
+        if (!v) ok = false;
+      });
+      const timeChecked = document.querySelector('input[name="time"]:checked');
+      document.getElementById('err-time').style.display = timeChecked ? 'none' : 'block';
+      if (!timeChecked) ok = false;
+    }
+
+    if (step === 3) {
+      const desafios = document.querySelectorAll('input[name="desafios"]:checked');
+      document.getElementById('err-desafios').style.display = desafios.length ? 'none' : 'block';
+      if (!desafios.length) ok = false;
+    }
+
+    return ok;
+  }
+
+  /* ══════════════════════════════════
+     GOOGLE FORMS SUBMIT
+     ─────────────────────────────────
+     HOW TO CONNECT YOUR GOOGLE FORM:
+     1. Create a Google Form with matching fields
+     2. In the form editor, click ⋮ → "Get pre-filled link"
+     3. Fill one answer per field and click "Get link"
+     4. From the URL, copy each "entry.XXXXXXXXX" parameter name
+     5. Replace GOOGLE_FORM_ACTION_URL and the entry IDs below
+  ══════════════════════════════════ */
+
+  // ▼▼▼ PASTE YOUR GOOGLE FORM ACTION URL HERE ▼▼▼
+  const FORM_ACTION = 'https://docs.google.com/forms/d/e/SEU_FORM_ID_AQUI/formResponse';
+
+  // ▼▼▼ MAP EACH FIELD TO ITS GOOGLE FORM entry ID ▼▼▼
+  const ENTRY = {
+    nome:       'entry.000000001',
+    cargo:      'entry.000000002',
+    email:      'entry.000000003',
+    whatsapp:   'entry.000000004',
+    empresa:    'entry.000000005',
+    segmento:   'entry.000000006',
+    faturamento:'entry.000000007',
+    time:       'entry.000000008',
+    ciclo:      'entry.000000009',
+    desafios:   'entry.000000010',
+    contexto:   'entry.000000011',
+    origem:     'entry.000000012',
+  };
+
+  document.getElementById('diag-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!validateStep(3)) return;
+
+    const btn = document.getElementById('btn-submit');
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+
+    // Collect values
+    const desafiosSelecionados = [...document.querySelectorAll('input[name="desafios"]:checked')]
+      .map(cb => cb.value).join(', ');
+
+    const data = {
+      nome:       document.getElementById('nome').value.trim(),
+      cargo:      document.getElementById('cargo').value.trim(),
+      email:      document.getElementById('email').value.trim(),
+      whatsapp:   document.getElementById('whatsapp').value.trim(),
+      empresa:    document.getElementById('empresa').value.trim(),
+      segmento:   document.getElementById('segmento').value,
+      faturamento:document.getElementById('faturamento').value,
+      time:       document.querySelector('input[name="time"]:checked')?.value || '',
+      ciclo:      document.getElementById('ciclo').value,
+      desafios:   desafiosSelecionados,
+      contexto:   document.getElementById('contexto').value.trim(),
+      origem:     document.getElementById('origem').value,
+    };
+
+    // Build FormData for Google Forms
+    const fd = new FormData();
+    Object.keys(data).forEach(key => {
+      if (data[key]) fd.append(ENTRY[key], data[key]);
+    });
+
+    try {
+      // mode: 'no-cors' → Google Forms accepts but browser can't read response (expected)
+      await fetch(FORM_ACTION, { method: 'POST', body: fd, mode: 'no-cors' });
+    } catch(_) {
+      // no-cors always throws — that's OK, the data was sent
+    }
+
+    // Show success regardless (no-cors means we can't read the response)
+    document.getElementById('diag-form').style.display = 'none';
+    document.querySelector('.progress-wrap').style.display = 'none';
+    const success = document.getElementById('success');
+    success.classList.add('visible');
+  });
+  </script>
+</body>
+</html>
