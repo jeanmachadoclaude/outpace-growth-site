@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sobre Nós · Outpace</title>
+  <meta name="description" content="Conheça a missão, visão e valores da Outpace, a consultoria comercial B2B que torna o complexo simples e aplicável com precisão." />
+  <link rel="icon" type="image/png" href="images/Logo Outpace.png" />
+  <link rel="apple-touch-icon" href="images/Logo Outpace.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root {
+      --bg:       #080F09;
+      --bg2:      #0B1A0D;
+      --card:     #101E12;
+      --border:   rgba(201,168,76,0.18);
+      --border2:  rgba(201,168,76,0.08);
+      --gold:     #C9A84C;
+      --gold-l:   #E2C56A;
+      --gold-d:   #A07B2A;
+      --gradient: linear-gradient(135deg,#C9A84C 0%,#E2C56A 55%,#C9A84C 100%);
+      --cream:    #EDE8DB;
+      --muted:    #6E8872;
+      --light:    #B8CDB9;
+    }
+    html { scroll-behavior:smooth; }
+    body {
+      font-family:'Playfair Display',Georgia,serif;
+      background:var(--bg);
+      color:var(--cream);
+      overflow-x:hidden;
+      min-height:100vh;
+    }
+    ::selection { background:var(--gold); color:#000; }
+
+    /* ── ROCKET BACKGROUND ── */
+    #rocket-bg {
+      position:fixed; inset:0; z-index:0;
+      pointer-events:none; overflow:hidden;
+    }
+    #rocket-video {
+      position:absolute; inset:0;
+      width:100%; height:100%; object-fit:cover;
+      opacity:0.72;
+      filter:saturate(1.1) brightness(0.82) contrast(1.08);
+      transition:opacity 2.8s ease;
+    }
+    #rocket-video.settled {
+      opacity:0.30;
+    }
+    #rocket-overlay {
+      position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 68% 55% at 50% 48%,
+          rgba(8,15,9,0.55) 0%,
+          rgba(8,15,9,0.28) 55%,
+          rgba(8,15,9,0.05) 100%),
+        linear-gradient(
+          to bottom,
+          rgba(8,15,9,0.28) 0%,
+          rgba(8,15,9,0.08) 38%,
+          rgba(8,15,9,0.22) 72%,
+          rgba(8,15,9,0.62) 100%
+        );
+    }
+
+    /* ── NAV ── */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:1000;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:28px 6%;
+      transition:background .4s, padding .4s;
+    }
+    nav.sc {
+      background:rgba(8,15,9,0.92);
+      backdrop-filter:blur(28px);
+      -webkit-backdrop-filter:blur(28px);
+      padding:16px 6%;
+      border-bottom:1px solid var(--border);
+    }
+    .logo {
+      font-family:'Playfair Display',Georgia,serif;
+      font-size:23px; font-weight:900; letter-spacing:-.5px;
+      background:var(--gradient); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text;
+      text-decoration:none;
+    }
+    .nav-links { display:flex; gap:36px; list-style:none; }
+    .nav-links a {
+      font-size:13px; font-weight:500; color:rgba(237,232,219,0.45);
+      text-decoration:none; letter-spacing:.3px; transition:color .3s;
+    }
+    .nav-links a:hover { color:var(--cream); }
+    .nav-links a.nav-active { color:var(--cream); }
+    .nav-cliente {
+      font-size:13px; font-weight:500; color:rgba(201,168,76,0.6);
+      text-decoration:none; letter-spacing:.3px;
+      border:1px solid rgba(201,168,76,0.22);
+      padding:9px 20px; border-radius:100px;
+      transition:color .3s, border-color .3s, background .3s;
+    }
+    .nav-cliente:hover { color:var(--gold); border-color:rgba(201,168,76,0.5); background:rgba(201,168,76,0.05); }
+    .nav-cta {
+      background:var(--gradient); color:#000;
+      padding:10px 26px; border-radius:100px;
+      font-size:13px; font-weight:700; text-decoration:none;
+      transition:opacity .3s, transform .3s;
+    }
+    .nav-cta:hover { opacity:.88; transform:scale(1.04); }
+
+    /* ── STACK ── */
+    .page { position:relative; z-index:2; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height:100vh;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      text-align:center;
+      padding:120px 6% 80px;
+    }
+    .hero-inner { max-width:860px; }
+    .hero-badge {
+      display:inline-flex; align-items:center; gap:10px;
+      font-size:12px; font-weight:700; letter-spacing:3px;
+      text-transform:uppercase; color:var(--gold); margin-bottom:36px;
+    }
+    .hero-badge::before {
+      content:''; width:6px; height:6px;
+      background:var(--gold); border-radius:50%;
+      animation:pulse 2s infinite;
+    }
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(1.7)}}
+    .hero-h1 {
+      font-family:'Playfair Display',Georgia,serif;
+      font-size:clamp(48px,6.5vw,88px);
+      font-weight:900; line-height:1.0; letter-spacing:-3px;
+      color:var(--cream); margin-bottom:20px;
+    }
+    .hero-h1 em {
+      font-style:italic;
+      background:var(--gradient); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .hero-sub {
+      font-size:clamp(14px,1.3vw,17px); font-weight:600;
+      letter-spacing:2px; text-transform:uppercase;
+      color:rgba(201,168,76,0.55); margin-bottom:28px;
+    }
+    .hero-p {
+      font-size:clamp(15px,1.4vw,18px); color:var(--light);
+      max-width:580px; margin:0 auto 0; line-height:1.85; font-weight:400;
+    }
+
+    /* ── LAUNCH FLASH ── */
+    #launch-flash {
+      position:fixed; inset:0; z-index:900;
+      background:radial-gradient(ellipse 80% 60% at 50% 80%, rgba(201,168,76,0.18) 0%, transparent 70%);
+      pointer-events:none;
+      opacity:1;
+      transition:opacity 1.8s ease;
+    }
+    #launch-flash.gone { opacity:0; }
+
+    /* ── SECTIONS ── */
+    section { position:relative; z-index:2; }
+
+    /* ── MVV ── */
+    .mvv-section {
+      position:relative; z-index:2;
+      max-width:1020px; margin:0 auto;
+      padding:0 6% 110px;
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+    }
+
+    .mvv-item {
+      padding:48px 44px;
+      border-left:1px solid var(--border2);
+      opacity:0; transform:translateY(28px);
+    }
+    .mvv-item:first-child { border-left:none; padding-left:0; }
+    .mvv-item:last-child { padding-right:0; }
+    .mvv-item.visible {
+      opacity:1; transform:translateY(0);
+      transition:opacity .85s ease, transform .85s ease;
+    }
+
+    .mvv-kicker {
+      font-size:13px; font-weight:700; letter-spacing:2.5px;
+      text-transform:uppercase; color:var(--gold);
+      display:block; margin-bottom:20px;
+    }
+    .mvv-title {
+      font-size:clamp(18px,1.8vw,23px); font-weight:700;
+      letter-spacing:-.3px; color:var(--cream);
+      line-height:1.45;
+    }
+
+    .values-list {
+      display:flex; flex-direction:column; gap:12px;
+    }
+    .val-item {
+      display:flex; align-items:center; gap:12px;
+      font-size:15px; color:var(--cream); line-height:1.5;
+      font-weight:700;
+    }
+    .val-dot {
+      width:4px; height:4px; border-radius:50%;
+      background:var(--gold); flex-shrink:0; opacity:0.6;
+    }
+
+    /* ── CTA SECTION ── */
+    .cta-section {
+      position:relative; z-index:2;
+      padding:100px 6%;
+      text-align:center;
+    }
+    .cta-section h2 {
+      font-family:'Playfair Display',Georgia,serif;
+      font-size:clamp(30px,4vw,52px);
+      font-weight:900; letter-spacing:-2px;
+      color:var(--cream); margin-bottom:18px;
+    }
+    .cta-section h2 em {
+      font-style:normal;
+      background:var(--gradient); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .cta-section p {
+      font-size:16px; color:var(--muted);
+      max-width:520px; margin:0 auto 40px; line-height:1.8;
+    }
+    .btn-g {
+      background:var(--gradient); color:#000; border:none;
+      padding:16px 42px; border-radius:100px; font-size:15px; font-weight:700;
+      cursor:pointer; text-decoration:none;
+      display:inline-block;
+      transition:transform .3s, box-shadow .3s;
+      box-shadow:0 8px 40px rgba(201,168,76,0.25);
+    }
+    .btn-g:hover { transform:translateY(-3px); box-shadow:0 20px 60px rgba(201,168,76,0.4); }
+
+    /* ── FOOTER ── */
+    footer {
+      position:relative; z-index:2;
+      border-top:1px solid var(--border2);
+      padding:28px 6%;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px; flex-wrap:wrap;
+    }
+    .foot-copy { font-size:13px; color:var(--muted); }
+
+    /* ── ENTRY ANIMATIONS ── */
+    .rv { opacity:0; transform:translateY(30px); }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:768px){
+      nav .nav-links, nav .nav-cta, nav .nav-cliente { display:none; }
+    }
+    @media(max-width:860px){
+      .mvv-section { grid-template-columns:1fr; }
+      .mvv-item {
+        border-left:none; border-top:1px solid var(--border2);
+        padding:36px 0;
+      }
+      .mvv-item:first-child { border-top:none; padding-top:0; }
+      .mvv-item:last-child { padding-bottom:0; }
+    }
+    @media(max-width:600px){
+      nav .nav-cta { display:none; }
+      .hero-h1 { letter-spacing:-2px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ROCKET LAUNCH FLASH -->
+  <div id="launch-flash"></div>
+
+  <!-- ROCKET BACKGROUND -->
+  <div id="rocket-bg">
+    <video id="rocket-video" src="rocket.mp4" autoplay muted playsinline></video>
+    <div id="rocket-overlay"></div>
+  </div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="index.html" class="logo">Outpace</a>
+    <ul class="nav-links">
+      <li><a href="index.html#hero">Home</a></li>
+      <li><a href="index.html#services">Serviços</a></li>
+      <li><a href="index.html#programs">Produtos</a></li>
+      <li><a href="index.html#process">Processo</a></li>
+      <li><a href="index.html#testi">Resultados</a></li>
+      <li><a href="sobre-nos.html" class="nav-active">Sobre nós</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <a href="cliente.html" class="nav-cliente">Área do Cliente</a>
+      <a href="https://wa.me/message/LETNMH3WWU3SC1" target="_blank" rel="noopener" class="nav-cta">Falar com especialista</a>
+    </div>
+  </nav>
+
+  <div class="page">
+
+    <!-- HERO -->
+    <section id="hero">
+      <div class="hero-inner">
+        <div class="hero-badge">Sobre nós</div>
+        <h1 class="hero-h1">
+          Aqui o Céu <em>não</em><br />é o limite.
+        </h1>
+        <p class="hero-sub">Com propósito e método.</p>
+        <p class="hero-p">Somos a Outpace, a consultoria comercial que acredita que crescimento real nasce de estratégia clara, execução precisa e pessoas comprometidas.</p>
+      </div>
+    </section>
+
+    <!-- MISSÃO · VISÃO · VALORES -->
+    <section>
+      <div class="mvv-section">
+
+        <!-- MISSÃO -->
+        <div class="mvv-item" data-delay="0">
+          <span class="mvv-kicker">Missão</span>
+          <div class="mvv-body">
+            <p class="mvv-title">Tornar o complexo simples e aplicável com precisão.</p>
+          </div>
+        </div>
+
+        <!-- VISÃO -->
+        <div class="mvv-item" data-delay="130">
+          <span class="mvv-kicker">Visão</span>
+          <div class="mvv-body">
+            <p class="mvv-title">Ser referência em crescimento estratégico para mais de 10.000 empresas.</p>
+          </div>
+        </div>
+
+        <!-- VALORES -->
+        <div class="mvv-item" data-delay="260">
+          <span class="mvv-kicker">Valores</span>
+          <div class="mvv-body">
+            <div class="values-list">
+              <div class="val-item"><span class="val-dot"></span>Integridade</div>
+              <div class="val-item"><span class="val-dot"></span>Simplicidade</div>
+              <div class="val-item"><span class="val-dot"></span>Desenvolvimento contínuo</div>
+              <div class="val-item"><span class="val-dot"></span>Comprometimento</div>
+              <div class="val-item"><span class="val-dot"></span>Empatia</div>
+              <div class="val-item"><span class="val-dot"></span>Qualidade</div>
+              <div class="val-item"><span class="val-dot"></span>Cliente no centro</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="cta-section rv">
+      <h2>Pronto para <em>decolar</em>?</h2>
+      <p>Converse com um especialista e descubra como a Outpace pode transformar o comercial da sua empresa.</p>
+      <a href="https://wa.me/message/LETNMH3WWU3SC1" target="_blank" rel="noopener" class="btn-g">Falar com especialista</a>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <span class="foot-copy">© 2026 Outpace. Todos os direitos reservados.</span>
+      <span class="foot-copy">Feito com estratégia e propósito.</span>
+    </footer>
+
+  </div><!-- /page -->
+
+<script>
+/* ── ROCKET TAKEOFF ── */
+(function () {
+  const video = document.getElementById('rocket-video');
+  const flash = document.getElementById('launch-flash');
+
+  /* Video plays at high opacity on load, settles after launch */
+  function settle() {
+    video.classList.add('settled');
+    setTimeout(() => flash.classList.add('gone'), 400);
+  }
+
+  /* Settle after 2.4 s (enough to feel the launch) or when video loops */
+  const settleTimer = setTimeout(settle, 2400);
+
+  video.addEventListener('ended', () => {
+    clearTimeout(settleTimer);
+    settle();
+    /* After takeoff, loop at low opacity */
+    video.loop = true;
+    video.play();
+  }, { once: true });
+
+  video.addEventListener('error', () => {
+    clearTimeout(settleTimer);
+    settle();
+  }, { once: true });
+})();
+
+/* ── NAV SCROLL ── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('sc', scrollY > 50), { passive:true });
+
+/* ── CARD REVEAL ON SCROLL ── */
+(function () {
+  const cards = document.querySelectorAll('.mvv-item');
+  const rvEls = document.querySelectorAll('.rv');
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const delay = parseInt(el.dataset.delay || '0', 10);
+      setTimeout(() => el.classList.add('visible'), delay);
+      io.unobserve(el);
+    });
+  }, { threshold: 0.12 });
+
+  cards.forEach(c => io.observe(c));
+
+  const ioRv = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.style.transition = 'opacity .9s ease, transform .9s ease';
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+      ioRv.unobserve(e.target);
+    });
+  }, { threshold: 0.1 });
+
+  rvEls.forEach(el => ioRv.observe(el));
+})();
+</script>
+
+</body>
+</html>

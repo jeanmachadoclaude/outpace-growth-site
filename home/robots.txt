@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /trilha-sellas
+Disallow: /trilha-partner
+Disallow: /trilha-vendeai
+
+Sitemap: https://outpacegrowth.com.br/sitemap.xml

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin · Outpace</title>
+  <link rel="icon" type="image/png" href="images/Logo Outpace.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:     #080F09;
+      --bg2:    #0B1A0D;
+      --card:   #0F2015;
+      --border: rgba(201,168,76,0.18);
+      --border2:rgba(201,168,76,0.08);
+      --gold:   #C9A84C;
+      --gold-l: #E2C56A;
+      --grad:   linear-gradient(135deg,#C9A84C 0%,#E2C56A 55%,#C9A84C 100%);
+      --cream:  #EDE8DB;
+      --muted:  #6E8872;
+      --light:  #B8CDB9;
+      --green:  #52b788;
+      --blue:   #4a7fd4;
+      --purple: #c084fc;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Playfair Display', Georgia, serif;
+      background: var(--bg);
+      color: var(--cream);
+      min-height: 100vh;
+    }
+
+    /* ── AUTH WALL ── */
+    #auth-wall {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+    }
+    .login-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 48px 40px;
+      width: 360px;
+      text-align: center;
+    }
+    .login-box h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+    .login-box p { font-size: 13px; color: var(--muted); margin-bottom: 32px; }
+    .login-box input {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-size: 14px;
+      color: var(--cream);
+      font-family: inherit;
+      outline: none;
+      margin-bottom: 12px;
+      transition: border-color .3s;
+    }
+    .login-box input:focus { border-color: var(--gold); }
+    .login-box input.shake { animation: shake .4s; }
+    @keyframes shake {
+      0%,100%{transform:translateX(0)}
+      20%{transform:translateX(-8px)}
+      40%{transform:translateX(8px)}
+      60%{transform:translateX(-6px)}
+      80%{transform:translateX(6px)}
+    }
+    .btn-entrar {
+      width: 100%;
+      background: var(--grad);
+      border: none;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #000;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity .2s;
+    }
+    .btn-entrar:hover { opacity: .88; }
+    .login-error { font-size: 12px; color: #e07070; margin-top: 10px; display: none; }
+
+    /* ── MAIN ── */
+    #main { display: none; }
+
+    header {
+      position: sticky; top: 0; z-index: 50;
+      padding: 16px 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(8,15,9,0.92);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border2);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 900; letter-spacing: -.5px;
+      background: var(--grad);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      text-decoration: none;
+    }
+    .admin-badge {
+      font-size: 10px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--gold);
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.25);
+      padding: 4px 12px; border-radius: 100px;
+    }
+    .btn-sair {
+      font-size: 12px; color: var(--muted); background: none;
+      border: none; cursor: pointer; font-family: inherit;
+      transition: color .2s;
+    }
+    .btn-sair:hover { color: var(--cream); }
+
+    .page { padding: 40px 5% 80px; max-width: 1200px; margin: 0 auto; }
+
+    /* ── STATS ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border2);
+      border-radius: 16px;
+      padding: 24px 22px;
+    }
+    .stat-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 10px;
+    }
+    .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px; font-weight: 900; letter-spacing: -2px;
+      background: var(--grad);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .stat-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    /* ── FILTER ── */
+    .filter-row {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 24px;
+    }
+    .filter-input {
+      flex: 1;
+      background: var(--card);
+      border: 1px solid var(--border2);
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-size: 14px;
+      color: var(--cream);
+      font-family: inherit;
+      outline: none;
+      transition: border-color .3s;
+      max-width: 380px;
+    }
+    .filter-input:focus { border-color: rgba(201,168,76,0.5); }
+    .filter-input::placeholder { color: var(--muted); }
+    .result-count { font-size: 13px; color: var(--muted); }
+
+    /* ── TABLE ── */
+    .table-wrap {
+      background: var(--card);
+      border: 1px solid var(--border2);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    thead tr {
+      background: rgba(201,168,76,0.05);
+      border-bottom: 1px solid var(--border2);
+    }
+    th {
+      text-align: left;
+      font-size: 10px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--muted);
+      padding: 16px 20px;
+      white-space: nowrap;
+    }
+    tbody tr {
+      border-bottom: 1px solid var(--border2);
+      transition: background .2s;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(201,168,76,0.03); }
+    td { padding: 16px 20px; font-size: 13px; vertical-align: middle; }
+    td.email-cell {
+      font-weight: 600; color: var(--cream);
+      max-width: 220px; overflow: hidden;
+      text-overflow: ellipsis; white-space: nowrap;
+    }
+    td.access-cell { color: var(--muted); font-size: 12px; white-space: nowrap; }
+
+    /* ── PROGRESS BAR INLINE ── */
+    .prog-wrap { display: flex; align-items: center; gap: 8px; min-width: 110px; }
+    .prog-bar {
+      flex: 1; height: 4px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 4px; overflow: hidden;
+    }
+    .prog-fill { height: 100%; border-radius: 4px; transition: width .5s; }
+    .prog-label { font-size: 11px; color: var(--muted); white-space: nowrap; min-width: 28px; }
+
+    /* ── EMPTY ── */
+    .empty-row td {
+      text-align: center; padding: 48px;
+      color: var(--muted); font-size: 14px;
+    }
+
+    /* ── TAG DE PRODUTO ── */
+    .prod-tag {
+      display: inline-block;
+      font-size: 9px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; padding: 2px 8px; border-radius: 100px;
+      border: 1px solid; margin-right: 4px; margin-bottom: 2px;
+    }
+    .tag-sellas  { color: var(--green);  border-color: rgba(82,183,136,0.35); background: rgba(82,183,136,0.06); }
+    .tag-vendeai { color: var(--blue);   border-color: rgba(74,127,212,0.35); background: rgba(74,127,212,0.06); }
+    .tag-partner { color: var(--gold);   border-color: rgba(201,168,76,0.35); background: rgba(201,168,76,0.06); }
+
+    /* ── LOADING ── */
+    .loading-row td { text-align: center; padding: 48px; }
+    .spinner {
+      width: 28px; height: 28px; border: 2px solid rgba(201,168,76,0.2);
+      border-top-color: var(--gold); border-radius: 50%;
+      animation: spin .8s linear infinite; margin: 0 auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media(max-width:900px) {
+      .stats-grid { grid-template-columns: repeat(2,1fr); }
+      th:nth-child(5), td:nth-child(5) { display: none; }
+    }
+    @media(max-width:600px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      th:nth-child(4), td:nth-child(4) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── AUTH WALL ── -->
+  <div id="auth-wall">
+    <div class="login-box">
+      <h2>Outpace Admin</h2>
+      <p>Área restrita · somente equipe interna</p>
+      <input type="password" id="admin-pass" placeholder="Senha de acesso" />
+      <button class="btn-entrar" id="btn-entrar">Entrar</button>
+      <p class="login-error" id="login-error">Senha incorreta.</p>
+    </div>
+  </div>
+
+  <!-- ── MAIN CONTENT ── -->
+  <div id="main">
+
+    <header>
+      <a href="dashboard.html" class="logo">Outpace</a>
+      <span class="admin-badge">Admin</span>
+      <button class="btn-sair" id="btn-sair">Sair</button>
+    </header>
+
+    <div class="page">
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total de alunos</div>
+          <div class="stat-value" id="stat-alunos">—</div>
+          <div class="stat-sub">com atividade registrada</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Módulos concluídos</div>
+          <div class="stat-value" id="stat-modulos">—</div>
+          <div class="stat-sub">no total</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Acessos totais</div>
+          <div class="stat-value" id="stat-acessos">—</div>
+          <div class="stat-sub">às trilhas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Último acesso</div>
+          <div class="stat-value" style="font-size:20px;letter-spacing:-1px" id="stat-ultimo">—</div>
+          <div class="stat-sub" id="stat-ultimo-sub"></div>
+        </div>
+      </div>
+
+      <!-- Filter -->
+      <div class="filter-row">
+        <input class="filter-input" type="text" id="filter-email" placeholder="Filtrar por e-mail..." />
+        <span class="result-count" id="result-count"></span>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>E-mail</th>
+              <th>SellAs Growth <span style="color:rgba(255,255,255,0.2);font-weight:400">(6 meses)</span></th>
+              <th>Partner Growth <span style="color:rgba(255,255,255,0.2);font-weight:400">(6 meses)</span></th>
+              <th>VendeAI <span style="color:rgba(255,255,255,0.2);font-weight:400">(5 módulos)</span></th>
+              <th>Último acesso</th>
+              <th>Acessos</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <tr class="loading-row"><td colspan="6"><div class="spinner"></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    /* ── CONFIG ── substitua com seus valores do Supabase */
+    const SUPABASE_URL      = 'https://gfwvnkodlfhafullpcyc.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_lVz6gXC317sgjOPfKacJTQ_8Nblccnv';
+    const ADMIN_PASSWORD    = 'Outpace@2026'; /* ← mude aqui */
+
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    /* ── LOGIN ── */
+    const passInput = document.getElementById('admin-pass');
+    const errEl     = document.getElementById('login-error');
+
+    function tryLogin() {
+      if (passInput.value === ADMIN_PASSWORD) {
+        document.getElementById('auth-wall').style.display = 'none';
+        document.getElementById('main').style.display = 'block';
+        loadData();
+      } else {
+        errEl.style.display = 'block';
+        passInput.classList.remove('shake');
+        void passInput.offsetWidth;
+        passInput.classList.add('shake');
+      }
+    }
+
+    document.getElementById('btn-entrar').addEventListener('click', tryLogin);
+    passInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
+
+    document.getElementById('btn-sair').addEventListener('click', () => {
+      document.getElementById('main').style.display = 'none';
+      document.getElementById('auth-wall').style.display = 'flex';
+      passInput.value = '';
+    });
+
+    /* ── DADOS ── */
+    let allEmailMap = {};
+
+    async function loadData() {
+      const [progRes, accessRes] = await Promise.all([
+        sb.from('module_progress').select('*').order('completed_at', { ascending: false }),
+        sb.from('page_access').select('*').order('accessed_at', { ascending: false }),
+      ]);
+
+      const progress = progRes.data  || [];
+      const access   = accessRes.data || [];
+
+      /* agrupa por email */
+      const map = {};
+
+      for (const r of progress) {
+        if (!map[r.user_email]) map[r.user_email] = { progress: {}, accesses: [] };
+        if (!map[r.user_email].progress[r.trilha]) map[r.user_email].progress[r.trilha] = new Set();
+        map[r.user_email].progress[r.trilha].add(r.modulo_id);
+      }
+
+      for (const r of access) {
+        if (!map[r.user_email]) map[r.user_email] = { progress: {}, accesses: [] };
+        map[r.user_email].accesses.push(r.accessed_at);
+      }
+
+      allEmailMap = map;
+
+      /* stats */
+      const totalAlunos  = Object.keys(map).length;
+      const totalModulos = progress.length;
+      const totalAcessos = access.length;
+
+      document.getElementById('stat-alunos').textContent  = totalAlunos;
+      document.getElementById('stat-modulos').textContent = totalModulos;
+      document.getElementById('stat-acessos').textContent = totalAcessos;
+
+      if (access.length > 0) {
+        const dt = new Date(access[0].accessed_at);
+        document.getElementById('stat-ultimo').textContent    = dt.toLocaleDateString('pt-BR');
+        document.getElementById('stat-ultimo-sub').textContent = access[0].user_email.split('@')[0];
+      }
+
+      /* filtro ao vivo */
+      document.getElementById('filter-email').addEventListener('input', e => {
+        renderTable(e.target.value.trim().toLowerCase());
+      });
+
+      renderTable('');
+    }
+
+    function renderTable(filter) {
+      const tbody = document.getElementById('tbody');
+      tbody.innerHTML = '';
+
+      const emails = Object.keys(allEmailMap)
+        .filter(e => !filter || e.toLowerCase().includes(filter))
+        .sort();
+
+      document.getElementById('result-count').textContent =
+        emails.length === Object.keys(allEmailMap).length
+          ? `${emails.length} aluno${emails.length !== 1 ? 's' : ''}`
+          : `${emails.length} de ${Object.keys(allEmailMap).length} alunos`;
+
+      if (emails.length === 0) {
+        tbody.innerHTML = '<tr class="empty-row"><td colspan="6">Nenhum aluno encontrado.</td></tr>';
+        return;
+      }
+
+      for (const email of emails) {
+        const d = allEmailMap[email];
+        const sellasCount  = (d.progress['sellas']  || new Set()).size;
+        const partnerCount = (d.progress['partner'] || new Set()).size;
+        const vendeaiCount = (d.progress['vendeai'] || new Set()).size;
+
+        const lastAccess   = d.accesses.length > 0
+          ? formatDate(d.accesses[0])
+          : '—';
+        const totalAcessos = d.accesses.length;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="email-cell" title="${email}">${email}</td>
+          <td>${progBar(sellasCount, 6, 'var(--green)')}</td>
+          <td>${progBar(partnerCount, 6, 'var(--gold)')}</td>
+          <td>${progBar(vendeaiCount, 5, 'var(--blue)')}</td>
+          <td class="access-cell">${lastAccess}</td>
+          <td class="access-cell">${totalAcessos}x</td>
+        `;
+        tbody.appendChild(tr);
+      }
+    }
+
+    function progBar(count, total, color) {
+      const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+      return `
+        <div class="prog-wrap">
+          <div class="prog-bar">
+            <div class="prog-fill" style="width:${pct}%;background:${color}"></div>
+          </div>
+          <span class="prog-label">${count}/${total}</span>
+        </div>`;
+    }
+
+    function formatDate(iso) {
+      const dt = new Date(iso);
+      const hoje = new Date();
+      const diff = Math.floor((hoje - dt) / 86400000);
+      if (diff === 0) return 'hoje, ' + dt.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+      if (diff === 1) return 'ontem';
+      if (diff < 7)  return `há ${diff} dias`;
+      return dt.toLocaleDateString('pt-BR');
+    }
+  </script>
+
+</body>
+</html>

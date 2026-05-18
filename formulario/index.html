@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diagnóstico Comercial · Outpace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #080F09;
+      --bg2:      #0B1A0D;
+      --card:     #0F2015;
+      --border:   rgba(201,168,76,0.18);
+      --border2:  rgba(201,168,76,0.08);
+      --gold:     #C9A84C;
+      --gold-l:   #E2C56A;
+      --gold-d:   #A07B2A;
+      --gradient: linear-gradient(135deg,#C9A84C 0%,#E2C56A 55%,#C9A84C 100%);
+      --cream:    #EDE8DB;
+      --muted:    #6E8872;
+      --light:    #B8CDB9;
+      --danger:   #e05555;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--cream);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      cursor: default;
+    }
+    ::selection { background: var(--gold); color: #000; }
+    a, button, select, label[for] { cursor: pointer; }
+
+    /* BACKGROUND GLOW */
+    .bg-glow {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(201,168,76,0.04) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 80% 20%, rgba(11,90,40,0.08) 0%, transparent 70%);
+    }
+
+    /* HEADER */
+    header {
+      position: relative; z-index: 10;
+      padding: 28px 6%;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border2);
+      background: rgba(8,15,9,0.9);
+      backdrop-filter: blur(20px);
+    }
+    .logo {
+      font-size: 22px; font-weight: 900; letter-spacing: -.5px;
+      background: var(--gradient); -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; background-clip: text;
+      text-decoration: none;
+    }
+    .back-link {
+      font-size: 13px; font-weight: 500; color: var(--muted);
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+      transition: color .3s;
+    }
+    .back-link:hover { color: var(--cream); }
+    .back-link::before { content: '←'; font-size: 16px; }
+
+    /* MAIN */
+    main {
+      flex: 1; position: relative; z-index: 2;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 60px 6%;
+    }
+
+    /* INTRO */
+    .intro {
+      text-align: center; max-width: 600px; margin-bottom: 48px;
+    }
+    .intro-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2);
+      padding: 6px 18px; border-radius: 100px;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 24px;
+    }
+    .intro-badge::before {
+      content: ''; width: 5px; height: 5px;
+      background: var(--gold); border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(1.6)} }
+    .intro h1 {
+      font-size: clamp(28px,4vw,48px); font-weight: 900;
+      letter-spacing: -2px; line-height: 1.1; margin-bottom: 16px;
+      color: var(--cream);
+    }
+    .intro h1 em {
+      font-style: normal;
+      background: var(--gradient); -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .intro p {
+      font-size: 16px; color: var(--muted); line-height: 1.75;
+    }
+
+    /* FORM CARD */
+    .form-card {
+      width: 100%; max-width: 680px;
+      background: rgba(11,26,13,0.95);
+      border: 1px solid var(--border);
+      border-radius: 28px; overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+    }
+    .form-body { padding: 40px; }
+
+    /* FIELD */
+    .fields { display: flex; flex-direction: column; gap: 20px; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field { display: flex; flex-direction: column; gap: 8px; }
+    .field label {
+      font-size: 12px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: rgba(201,168,76,0.7);
+    }
+    .field input,
+    .field select {
+      background: rgba(8,15,9,0.8);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 12px; padding: 14px 16px;
+      font-size: 15px; font-weight: 400;
+      color: var(--cream); font-family: inherit;
+      outline: none;
+      transition: border-color .3s, box-shadow .3s;
+      -webkit-appearance: none; appearance: none;
+    }
+    .field input::placeholder { color: rgba(255,255,255,0.15); }
+    .field input:focus,
+    .field select:focus {
+      border-color: rgba(201,168,76,0.5);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.08);
+    }
+    .field input.err,
+    .field select.err { border-color: var(--danger); }
+    .field .err-msg {
+      font-size: 12px; color: var(--danger); display: none;
+    }
+    .field.has-err .err-msg { display: block; }
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9A84C' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px; cursor: pointer;
+    }
+    .field select option { background: #0B1A0D; color: var(--cream); }
+
+    /* SUBMIT */
+    .form-footer {
+      margin-top: 32px;
+      display: flex; flex-direction: column; align-items: center; gap: 14px;
+    }
+    .btn-submit {
+      width: 100%;
+      background: var(--gradient); color: #000;
+      border: none; padding: 18px 44px; border-radius: 100px;
+      font-size: 15px; font-weight: 800; cursor: pointer;
+      font-family: inherit;
+      transition: transform .3s, box-shadow .3s, opacity .3s;
+      box-shadow: 0 8px 40px rgba(201,168,76,0.28);
+      letter-spacing: .3px;
+    }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 20px 60px rgba(201,168,76,0.4); }
+    .btn-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+    .form-note {
+      font-size: 12px; color: rgba(255,255,255,0.2); text-align: center;
+    }
+
+    /* SUCCESS STATE */
+    #success {
+      display: none;
+      text-align: center; padding: 72px 40px;
+    }
+    #success.visible { display: block; animation: fadeIn .5s ease; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    .success-icon {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--gradient);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px; margin: 0 auto 28px;
+      box-shadow: 0 16px 48px rgba(201,168,76,0.3);
+    }
+    #success h2 {
+      font-size: 28px; font-weight: 900; letter-spacing: -1px;
+      margin-bottom: 14px; color: var(--cream);
+    }
+    #success p {
+      font-size: 16px; color: var(--muted); line-height: 1.75;
+      max-width: 440px; margin: 0 auto 40px;
+    }
+    #success .next-steps {
+      background: rgba(8,15,9,0.8);
+      border: 1px solid var(--border2);
+      border-radius: 16px; padding: 24px 28px;
+      text-align: left; margin-bottom: 32px;
+      max-width: 440px; margin-left: auto; margin-right: auto;
+    }
+    #success .next-steps h4 {
+      font-size: 12px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 16px;
+    }
+    #success .next-steps ul {
+      list-style: none; display: flex; flex-direction: column; gap: 10px;
+    }
+    #success .next-steps li {
+      font-size: 14px; color: var(--light);
+      display: flex; align-items: center; gap: 10px;
+    }
+    #success .next-steps li::before {
+      content: '✓'; color: var(--gold); font-weight: 800; flex-shrink: 0;
+    }
+
+    /* FOOTER */
+    footer {
+      position: relative; z-index: 2;
+      padding: 24px 6%; text-align: center;
+      border-top: 1px solid var(--border2);
+    }
+    footer p { font-size: 12px; color: rgba(255,255,255,0.18); }
+    footer a { color: var(--gold); text-decoration: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .form-body { padding: 28px 24px 32px; }
+      .field-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-glow"></div>
+
+  <header>
+    <a href="../home/index.html" class="logo">Outpace</a>
+    <a href="../home/index.html" class="back-link">Voltar ao site</a>
+  </header>
+
+  <main>
+    <div class="intro">
+      <div class="intro-badge">Diagnóstico Gratuito</div>
+      <h1>Vamos entender o seu <em>negócio.</em></h1>
+      <p>Preencha os dados abaixo. Nosso especialista chega na conversa já com um diagnóstico do seu cenário — sem perguntas genéricas, sem enrolação.</p>
+    </div>
+
+    <div class="form-card">
+      <div class="form-body">
+        <form id="diag-form" novalidate>
+          <div class="fields">
+
+            <div class="field-row">
+              <div class="field" id="f-nome">
+                <label for="nome">Nome *</label>
+                <input type="text" id="nome" name="nome" placeholder="João da Silva" autocomplete="name" />
+                <span class="err-msg">Informe seu nome.</span>
+              </div>
+              <div class="field" id="f-cargo">
+                <label for="cargo">Cargo *</label>
+                <select id="cargo" name="cargo">
+                  <option value="">Selecione seu cargo...</option>
+                  <optgroup label="Liderança / Sócios">
+                    <option>CEO / Fundador</option>
+                    <option>Sócio / Co-fundador</option>
+                    <option>Dono / Proprietário</option>
+                    <option>Diretor Geral</option>
+                    <option>Diretor de Operações (COO)</option>
+                  </optgroup>
+                  <optgroup label="Comercial / Vendas">
+                    <option>Diretor Comercial</option>
+                    <option>Gerente Comercial</option>
+                    <option>Gerente de Vendas</option>
+                    <option>Coordenador Comercial</option>
+                    <option>Supervisor de Vendas</option>
+                    <option>Executivo de Vendas</option>
+                    <option>Representante Comercial</option>
+                    <option>Key Account Manager (KAM)</option>
+                    <option>SDR / Pré-vendas</option>
+                  </optgroup>
+                  <optgroup label="Marketing">
+                    <option>Diretor de Marketing (CMO)</option>
+                    <option>Gerente de Marketing</option>
+                    <option>Analista de Marketing</option>
+                  </optgroup>
+                  <optgroup label="Outros">
+                    <option>Consultor</option>
+                    <option>Outro</option>
+                  </optgroup>
+                </select>
+                <span class="err-msg">Selecione seu cargo.</span>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field" id="f-email">
+                <label for="email">E-mail *</label>
+                <input type="email" id="email" name="email" placeholder="joao@empresa.com.br" autocomplete="email" />
+                <span class="err-msg">Informe um e-mail válido.</span>
+              </div>
+              <div class="field" id="f-telefone">
+                <label for="telefone">Telefone / WhatsApp *</label>
+                <input type="tel" id="telefone" name="telefone" placeholder="(48) 99999-9999" autocomplete="tel" />
+                <span class="err-msg">Informe seu telefone.</span>
+              </div>
+            </div>
+
+            <div class="field" id="f-segmento">
+              <label for="segmento">Segmento *</label>
+              <select id="segmento" name="segmento">
+                <option value="">Selecione o segmento...</option>
+                <option>Indústria</option>
+                <option>Distribuição</option>
+                <option>B2B / Serviços</option>
+                <option>Agronegócio</option>
+                <option>Construção Civil</option>
+                <option>Tecnologia B2B</option>
+                <option>Atacado</option>
+                <option>Outro</option>
+              </select>
+              <span class="err-msg">Selecione o segmento.</span>
+            </div>
+
+            <div class="field-row">
+              <div class="field" id="f-faturamento">
+                <label for="faturamento">Faturamento médio mensal *</label>
+                <select id="faturamento" name="faturamento">
+                  <option value="">Selecione a faixa...</option>
+                  <option>Até R$ 50.000</option>
+                  <option>R$ 50.000 – R$ 100.000</option>
+                  <option>R$ 100.000 – R$ 250.000</option>
+                  <option>R$ 250.000 – R$ 500.000</option>
+                  <option>R$ 500.000 – R$ 1.000.000</option>
+                  <option>Acima de R$ 1.000.000</option>
+                </select>
+                <span class="err-msg">Selecione o faturamento.</span>
+              </div>
+              <div class="field" id="f-funcionarios">
+                <label for="funcionarios">Número de funcionários *</label>
+                <input type="text" id="funcionarios" name="funcionarios" placeholder="Ex: 30" />
+                <span class="err-msg">Informe o número de funcionários.</span>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="form-footer">
+            <button type="submit" class="btn-submit" id="btn-submit">Solicitar diagnóstico gratuito</button>
+            <p class="form-note">Seus dados são usados exclusivamente para contato comercial.</p>
+          </div>
+        </form>
+
+        <!-- SUCCESS -->
+        <div id="success">
+          <div class="success-icon">✓</div>
+          <h2>Solicitação enviada!</h2>
+          <p>Sua solicitação está em andamento. Aguarde os próximos passos em seu <strong style="color:var(--gold)">WhatsApp</strong> em breve.</p>
+          <a href="../home/index.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--gradient);color:#000;padding:14px 36px;border-radius:100px;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 8px 36px rgba(201,168,76,0.25);">
+            Voltar ao site
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Outpace. <a href="../home/index.html">outpace.com.br</a> · Seus dados são usados exclusivamente para contato comercial.</p>
+  </footer>
+
+  <script>
+  /* VALIDATION */
+  function setErr(fieldId, show) {
+    const el = document.getElementById('f-' + fieldId);
+    if (!el) return;
+    el.classList.toggle('has-err', show);
+    const inp = el.querySelector('input, select');
+    if (inp) inp.classList.toggle('err', show);
+  }
+
+  function validate() {
+    let ok = true;
+    const emailVal = document.getElementById('email').value.trim();
+
+    [['nome', v => !!v],
+     ['cargo', v => !!v],
+     ['email', () => /\S+@\S+\.\S+/.test(emailVal)],
+     ['telefone', v => !!v],
+     ['segmento', v => !!v],
+     ['faturamento', v => !!v],
+     ['funcionarios', v => !!v],
+    ].forEach(([id, check]) => {
+      const v = document.getElementById(id).value.trim();
+      const invalid = !check(v);
+      setErr(id, invalid);
+      if (invalid) ok = false;
+    });
+
+    return ok;
+  }
+
+  /* GOOGLE FORMS SUBMIT */
+  const FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSf6_6V1mFbFSkMZN-9O-RSR2kpU6MBkX4z5f-9aL6zn7MOqiw/formResponse';
+
+  const ENTRY = {
+    nome:         'entry.1581933124',
+    telefone:     'entry.1304108288',
+    email:        'entry.322016227',
+    cargo:        'entry.1043602418',
+    faturamento:  'entry.1547656005',
+    funcionarios: 'entry.981162110',
+    segmento:     'entry.766790484',
+  };
+
+  document.getElementById('diag-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    const btn = document.getElementById('btn-submit');
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+
+    const data = {
+      nome:         document.getElementById('nome').value.trim(),
+      telefone:     document.getElementById('telefone').value.trim(),
+      email:        document.getElementById('email').value.trim(),
+      cargo:        document.getElementById('cargo').value,
+      faturamento:  document.getElementById('faturamento').value,
+      funcionarios: document.getElementById('funcionarios').value.trim(),
+      segmento:     document.getElementById('segmento').value,
+    };
+
+    const fd = new FormData();
+    Object.keys(data).forEach(key => {
+      if (data[key]) fd.append(ENTRY[key], data[key]);
+    });
+
+    try {
+      await fetch(FORM_ACTION, { method: 'POST', body: fd, mode: 'no-cors' });
+    } catch(_) {}
+
+    document.getElementById('diag-form').style.display = 'none';
+    document.getElementById('success').classList.add('visible');
+  });
+  </script>
+</body>
+</html>

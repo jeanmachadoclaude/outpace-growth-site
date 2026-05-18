@@ -1,0 +1,29 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Home Page",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "3000", "--directory", "home"],
+      "port": 3000
+    },
+    {
+      "name": "Formulário",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "3001", "--directory", "formulario"],
+      "port": 3001
+    },
+    {
+      "name": "Sellas",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "3002"],
+      "port": 3002
+    },
+    {
+      "name": "Outpace (Netlify)",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "3003", "--directory", "Site Outpace Growth"],
+      "port": 3003
+    }
+  ]
+}

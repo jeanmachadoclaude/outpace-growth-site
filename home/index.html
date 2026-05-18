@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Outpace · Consultoria Comercial B2B | Crescimento com Método</title>
+  <meta name="description" content="Outpace é a consultoria comercial para empresas B2B que querem crescer com método, treinamento e acompanhamento contínuo. SellAs Growth, Partner Growth e VendeAI." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://outpacegrowth.com.br/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://outpacegrowth.com.br/" />
+  <meta property="og:title"       content="Outpace · Consultoria Comercial B2B" />
+  <meta property="og:description" content="Consultoria comercial para empresas B2B que querem crescer com método, treinamento e acompanhamento contínuo." />
+  <meta property="og:image"       content="https://outpacegrowth.com.br/images/Logo Outpace.png" />
+  <meta property="og:locale"      content="pt_BR" />
+  <meta property="og:site_name"   content="Outpace" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Outpace · Consultoria Comercial B2B" />
+  <meta name="twitter:description" content="Consultoria comercial para empresas B2B que querem crescer com método, treinamento e acompanhamento contínuo." />
+  <meta name="twitter:image"       content="https://outpacegrowth.com.br/images/Logo Outpace.png" />
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Outpace",
+    "description": "Consultoria comercial para empresas B2B",
+    "url": "https://outpacegrowth.com.br",
+    "logo": "https://outpacegrowth.com.br/images/Logo Outpace.png",
+    "address": { "@type": "PostalAddress", "addressCountry": "BR" },
+    "serviceType": "Consultoria Comercial B2B"
+  }
+  </script>
+  <link rel="icon" type="image/png" href="images/Logo Outpace.png" />
+  <link rel="apple-touch-icon" href="images/Logo Outpace.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L0CH9XR11X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-L0CH9XR11X');
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root {
+      --bg:        #080F09;
+      --bg2:       #0B1A0D;
+      --bg3:       #0F2115;
+      --card:      #101E12;
+      --border:    rgba(201,168,76,0.14);
+      --border2:   rgba(201,168,76,0.08);
+      --gold:      #C9A84C;
+      --gold-l:    #E2C56A;
+      --gold-d:    #A07B2A;
+      --gradient:  linear-gradient(135deg,#C9A84C 0%,#E2C56A 55%,#C9A84C 100%);
+      --cream:     #EDE8DB;
+      --white:     #FFFFFF;
+      --muted:     #6E8872;
+      --light:     #B8CDB9;
+    }
+    html { scroll-behavior:smooth; overflow-x:hidden; max-width:100%; }
+    body {
+      font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+      background:var(--bg);
+      color:var(--cream);
+      overflow-x:hidden;
+      max-width:100%;
+      position:relative;
+    }
+    a,button,.btn-g,.btn-o,.nav-cta,.logo-item { cursor:pointer; }
+    h1,h2,h3,h4,
+    .hero-h1,.stitle,.cta-h,.qt,.prog-title,.srv-title,.step-t,
+    .tname,.case-title,.logo,.nav-logo,.loader-logo {
+      font-family:'Playfair Display',Georgia,serif;
+    }
+    ::selection { background:var(--gold); color:#000; }
+
+    /* CURSOR — default system cursor; pointer on clickables */
+
+    /* ROCKET CANVAS BACKGROUND */
+    #rocket-bg {
+      position:fixed; inset:0; width:100%; height:100%;
+      z-index:0; pointer-events:none; overflow:hidden;
+    }
+    #rocket-canvas {
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      opacity:0.58;
+      filter:saturate(1) brightness(0.86) contrast(1.05);
+      image-rendering:-webkit-optimize-contrast;
+      image-rendering:auto;
+    }
+    #rocket-overlay {
+      position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 68% 55% at 50% 48%,
+          rgba(8,15,9,0.55) 0%,
+          rgba(8,15,9,0.30) 55%,
+          rgba(8,15,9,0.05) 100%),
+        linear-gradient(
+          to bottom,
+          rgba(8,15,9,0.32) 0%,
+          rgba(8,15,9,0.10) 35%,
+          rgba(8,15,9,0.18) 70%,
+          rgba(8,15,9,0.55) 100%
+        );
+    }
+
+    /* STACK */
+    nav,section,footer,#nums,#marquee { position:relative; z-index:2; }
+
+    /* NAV */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:1000;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:28px 6%;
+      transition:background .4s,padding .4s;
+    }
+    nav.sc {
+      background:rgba(8,15,9,0.92);
+      backdrop-filter:blur(28px);
+      -webkit-backdrop-filter:blur(28px);
+      padding:16px 6%;
+      border-bottom:1px solid var(--border);
+    }
+    .logo {
+      font-size:23px; font-weight:900; letter-spacing:-.5px;
+      background:var(--gradient); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text;
+      text-decoration:none;
+    }
+    .nav-links { display:flex; gap:36px; list-style:none; }
+    .nav-links a {
+      font-size:13px; font-weight:500; color:rgba(237,232,219,0.45);
+      text-decoration:none; letter-spacing:.3px; transition:color .3s;
+    }
+    .nav-links a:hover { color:var(--cream); }
+    .nav-links a.nav-active {
+      color: var(--cream);
+      transition: color .4s;
+    }
+    .nav-cliente {
+      font-size:13px; font-weight:500; color:rgba(201,168,76,0.6);
+      text-decoration:none; letter-spacing:.3px;
+      border:1px solid rgba(201,168,76,0.22);
+      padding:9px 20px; border-radius:100px;
+      transition:color .3s,border-color .3s,background .3s;
+    }
+    .nav-cliente:hover { color:var(--gold); border-color:rgba(201,168,76,0.5); background:rgba(201,168,76,0.05); }
+    .nav-cta {
+      background:var(--gradient); color:#000;
+      padding:10px 26px; border-radius:100px;
+      font-size:13px; font-weight:700; text-decoration:none;
+      transition:opacity .3s,transform .3s;
+    }
+    .nav-cta:hover { opacity:.88; transform:scale(1.04); }
+
+    /* HERO */
+    #hero {
+      min-height:100vh;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      text-align:center; padding:100px 6% 80px;
+    }
+    .hero-inner { max-width:960px; }
+    .hero-badge {
+      display:inline-flex; align-items:center; gap:10px;
+      background:transparent; border:0;
+      padding:0; border-radius:0;
+      font-size:12px; font-weight:700; letter-spacing:3px;
+      text-transform:uppercase; color:var(--gold); margin-bottom:32px;
+    }
+    .hero-badge::before {
+      content:''; width:6px; height:6px;
+      background:var(--gold); border-radius:50%;
+      animation:pulse 2s infinite;
+    }
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(1.7)}}
+    .hero-h1 {
+      font-size:clamp(44px,6.5vw,90px);
+      font-weight:900; line-height:1.03; letter-spacing:-3px; margin-bottom:30px;
+      color:var(--cream);
+    }
+    .hero-h1 em {
+      font-style:normal;
+      background:var(--gradient); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .hero-p {
+      font-size:clamp(15px,1.5vw,18px); color:var(--muted);
+      max-width:680px; margin:0 auto 56px; line-height:1.8; font-weight:400;
+    }
+    .hero-btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+    .btn-g {
+      background:var(--gradient); color:#000; border:none;
+      padding:16px 42px; border-radius:100px; font-size:15px; font-weight:700;
+      cursor:pointer; text-decoration:none;
+      transition:transform .3s,box-shadow .3s;
+      box-shadow:0 8px 40px rgba(201,168,76,0.25);
+    }
+    .btn-g:hover { transform:translateY(-3px); box-shadow:0 20px 60px rgba(201,168,76,0.4); }
+    .btn-o {
+      background:transparent; color:var(--cream);
+      border:1px solid rgba(201,168,76,0.3);
+      padding:16px 42px; border-radius:100px; font-size:15px; font-weight:500;
+      cursor:pointer; text-decoration:none;
+      transition:background .3s,border-color .3s;
+    }
+    .btn-o:hover { background:rgba(201,168,76,0.07); border-color:rgba(201,168,76,0.5); }
+    /* NUMS */
+    #nums {
+      background:rgba(8,15,9,0.72);
+      border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+      padding:76px 6%;
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:48px; text-align:center;
+      backdrop-filter:blur(12px);
+    }
+    .nv {
+      font-size:clamp(44px,5vw,70px); font-weight:900; letter-spacing:-3px;
+      background:var(--gradient); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text; line-height:1;
+    }
+    .nl { font-size:13px; color:var(--muted); margin-top:10px; letter-spacing:.3px; }
+
+    /* SECTIONS */
+    section { padding:130px 4%; }
+    .slabel {
+      font-size:11px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase;
+      color:var(--gold); margin-bottom:18px;
+    }
+    .stitle {
+      font-size:clamp(34px,4.5vw,62px); font-weight:900; letter-spacing:-1.5px;
+      line-height:1.08; margin-bottom:22px; color:var(--cream);
+    }
+    .ssub { font-size:clamp(15px,1.4vw,17px); color:var(--muted); max-width:660px; line-height:1.8; }
+
+    /* SPLIT */
+    .split { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+    .split.rev { direction:rtl; }
+    .split.rev>* { direction:ltr; }
+    .img-wrap { position:relative; border-radius:20px; overflow:hidden; aspect-ratio:4/5; border:1px solid var(--border); }
+    .img-wrap img { width:100%; height:120%; object-fit:cover; will-change:transform; }
+    .img-wrap.crop-right img { object-position: right center; }
+    .img-wrap.crop-left  img { object-position: 28% center; }
+    /* hi-res mode: preserve native pixels (no upscale, no parallax zoom) */
+    .img-wrap.hires { aspect-ratio: 3/2; }
+    .img-wrap.hires img {
+      height:100%;
+      image-rendering:-webkit-optimize-contrast;
+      image-rendering:auto;
+    }
+    .img-wrap::after {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(135deg,rgba(201,168,76,0.08) 0%,transparent 60%);
+    }
+    .feat-list { list-style:none; margin-top:36px; display:flex; flex-direction:column; gap:18px; }
+    .feat-list li {
+      display:flex; align-items:flex-start; gap:14px;
+      font-size:15px; color:var(--light); line-height:1.7;
+    }
+    .feat-list li::before {
+      content:''; flex-shrink:0; width:18px; height:18px; border-radius:50%;
+      background:var(--gradient); margin-top:3px;
+    }
+
+    /* SERVICES */
+    #services { background:rgba(8,15,9,0.68); backdrop-filter:blur(10px); }
+    .srv-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:1px; margin-top:72px; }
+    .srv-card {
+      background:rgba(11,20,12,0.72); padding:52px 40px; backdrop-filter:blur(8px);
+      border:1px solid var(--border2); position:relative; overflow:hidden;
+      transition:background .4s,border-color .4s;
+    }
+    .srv-card:first-child { border-radius:20px 0 0 0; }
+    .srv-card:nth-child(2) { border-radius:0 20px 0 0; }
+    .srv-card:nth-last-child(2){ border-radius:0 0 0 20px; }
+    .srv-card:last-child { border-radius:0 0 20px 0; }
+    .srv-card:hover { background:rgba(16,28,18,0.99); border-color:var(--border); }
+    .srv-icon {
+      width:52px; height:52px; border-radius:14px;
+      background:rgba(201,168,76,0.07); border:1px solid rgba(201,168,76,0.18);
+      display:flex; align-items:center; justify-content:center;
+      font-size:22px; margin-bottom:28px;
+    }
+    .srv-title { font-size:20px; font-weight:700; margin-bottom:12px; letter-spacing:-.3px; color:var(--cream); }
+    .srv-desc { font-size:14px; color:var(--muted); line-height:1.8; }
+
+    /* QUOTE */
+    #quote { padding:130px 6%; text-align:center; background:rgba(8,15,9,0.55); backdrop-filter:blur(8px); }
+    .qt {
+      font-size:clamp(28px,4vw,54px); font-weight:800; letter-spacing:-1.5px;
+      line-height:1.25; max-width:800px; margin:0 auto; color:var(--cream);
+    }
+    .qt em {
+      font-style:normal;
+      background:var(--gradient); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text;
+    }
+
+    /* PRODUTOS */
+    #programs { background:rgba(8,15,9,0.68); backdrop-filter:blur(10px); }
+    .prog-header { text-align:center; max-width:680px; margin:0 auto 88px; }
+    .prog-header .ssub { margin:0 auto; text-align:center; }
+    .prog-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+    a.prog-card, .prog-card { text-decoration:none; color:inherit; }
+    .prog-card {
+      background:rgba(11,20,12,0.72); border:1px solid var(--border2); backdrop-filter:blur(8px);
+      border-radius:24px; padding:44px 36px 36px; position:relative; overflow:hidden;
+      transition:transform .4s,box-shadow .4s,border-color .4s;
+      display:flex; flex-direction:column;
+    }
+    .prog-card:hover { transform:translateY(-8px); box-shadow:0 40px 80px rgba(0,0,0,0.6); border-color:rgba(201,168,76,0.32); }
+    .prog-kicker {
+      font-size:11px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase;
+      color:var(--gold); margin-bottom:28px;
+    }
+    .prog-icon {
+      width:40px; height:40px; color:var(--gold); margin-bottom:20px;
+    }
+    .prog-icon svg { width:100%; height:100%; stroke:currentColor; stroke-width:1.6; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+    .prog-title { font-size:24px; font-weight:800; margin-bottom:14px; letter-spacing:-.4px; color:var(--cream); }
+    .prog-desc { font-size:14px; color:var(--muted); line-height:1.75; margin-bottom:24px; }
+    .prog-feats { list-style:none; display:flex; flex-direction:column; gap:11px; margin-bottom:30px; }
+    .prog-feats li { font-size:13.5px; color:var(--light); display:flex; align-items:flex-start; gap:10px; line-height:1.55; }
+    .prog-feats li::before { content:'✓'; color:var(--gold); font-weight:800; flex-shrink:0; }
+    .prog-cta {
+      margin-top:auto; display:inline-flex; align-items:center; gap:8px;
+      color:var(--gold); font-size:12px; font-weight:700; letter-spacing:1.8px;
+      text-transform:uppercase;
+      padding-top:20px; border-top:1px solid rgba(201,168,76,0.15);
+      transition:color .3s;
+    }
+    .prog-cta::after { content:'→'; transition:transform .3s; }
+    .prog-card:hover .prog-cta { color:var(--cream); }
+    .prog-card:hover .prog-cta::after { transform:translateX(6px); }
+
+    /* ── COMPARATIVO DE PRODUTOS ── */
+    #comparativo { padding:100px 4%; }
+    .cmp-wrap { max-width:1100px; margin:0 auto; }
+    .cmp-head-block { text-align:center; max-width:680px; margin:0 auto 72px; }
+    .cmp-table { border-radius:20px; overflow:hidden; border:1px solid var(--border); }
+    .cmp-row { display:grid; grid-template-columns:2fr 1fr 1fr 1.15fr; }
+    .cmp-row-head { background:rgba(11,26,13,0.98); }
+    .cmp-row-body { border-top:1px solid var(--border2); transition:background .2s; }
+    .cmp-row-body:hover { background:rgba(11,20,12,.7); }
+    .cmp-row-excl { border-top:1px solid rgba(201,168,76,.2); }
+    .cmp-row-divider { border-top:1px solid rgba(201,168,76,.2); background:rgba(201,168,76,.04); }
+    .cmp-label { padding:18px 28px; font-size:13.5px; color:var(--light); display:flex; align-items:center; border-right:1px solid var(--border2); line-height:1.45; }
+    .cmp-label.divider-label { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gold); opacity:.8; }
+    .cmp-col { padding:18px 12px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; border-right:1px solid var(--border2); }
+    .cmp-col:last-child { border-right:none; }
+    .cmp-col.partner-col { background:rgba(201,168,76,.04); }
+    .cmp-col.partner-col-head { background:rgba(201,168,76,.07); }
+    .cmp-badge { background:var(--gradient); color:#000; font-size:10px; font-weight:800; letter-spacing:.5px; padding:4px 12px; border-radius:100px; margin-bottom:10px; display:inline-block; }
+    .cmp-ptag { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:6px; }
+    .cmp-pname { font-family:'Playfair Display',serif; font-size:17px; font-weight:800; color:var(--cream); }
+    .cmp-pname.featured { background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; font-size:19px; }
+    .cmp-ph { padding:28px 20px; }
+    .cyes { color:var(--gold); font-size:20px; line-height:1; font-weight:700; }
+    .cno { color:rgba(110,136,114,.5); font-size:18px; line-height:1; }
+    .cmp-cta-row { background:rgba(11,26,13,0.95); border-top:1px solid var(--border); }
+    .cmp-cta-cell { padding:28px 12px; display:flex; align-items:center; justify-content:center; border-right:1px solid var(--border2); }
+    .cmp-cta-cell:last-child { border-right:none; }
+    .cmp-cta-cell.partner-col { background:rgba(201,168,76,.06); }
+    .cmp-link { display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:700; color:var(--gold); letter-spacing:.3px; text-decoration:none; transition:gap .2s; }
+    .cmp-link:hover { gap:10px; }
+    .cmp-link-feat { background:var(--gradient); color:#000; padding:12px 24px; border-radius:100px; font-size:13px; font-weight:800; text-decoration:none; letter-spacing:.3px; transition:transform .2s,box-shadow .2s; }
+    .cmp-link-feat:hover { transform:translateY(-2px); box-shadow:0 12px 30px rgba(201,168,76,.25); }
+    @media(max-width:860px){
+      .cmp-row { grid-template-columns:1.4fr 1fr 1fr 1fr; }
+      .cmp-label { padding:14px 16px; font-size:12.5px; }
+      .cmp-pname { font-size:14px; }
+      .cmp-pname.featured { font-size:15px; }
+    }
+    @media(max-width:620px){
+      .cmp-row { grid-template-columns:1.2fr repeat(3,1fr); }
+      .cmp-label { padding:12px 10px; font-size:11px; }
+      .cmp-ph { padding:20px 8px; }
+      .cmp-badge { font-size:8px; padding:3px 8px; }
+    }
+
+    /* TRAINING — transparent, handled in open space block below */
+
+    /* PROCESS */
+    #process { background:rgba(8,15,9,0.65); backdrop-filter:blur(10px); }
+    .proc-header { text-align:center; max-width:580px; margin:0 auto 88px; }
+    .proc-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative; }
+    .proc-steps::before {
+      content:''; position:absolute; top:38px; left:12.5%; right:12.5%;
+      height:1px; background:linear-gradient(to right,transparent,rgba(201,168,76,.35),transparent);
+    }
+    .step { text-align:center; padding:0 20px; }
+    .step-n {
+      width:76px; height:76px; border-radius:50%;
+      background:var(--gradient); color:#000;
+      display:flex; align-items:center; justify-content:center;
+      font-size:24px; font-weight:900; margin:0 auto 28px;
+      position:relative; z-index:1; letter-spacing:-1px;
+      box-shadow:0 8px 36px rgba(201,168,76,0.22);
+    }
+    .step-t { font-size:17px; font-weight:700; margin-bottom:10px; color:var(--cream); }
+    .step-d { font-size:13px; color:var(--muted); line-height:1.75; }
+
+    /* TESTIMONIALS */
+    #testi { background:rgba(8,15,9,0.68); backdrop-filter:blur(10px); }
+    .testi-header { text-align:center; max-width:580px; margin:0 auto 80px; }
+    .testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .tcard {
+      background:rgba(11,20,12,0.72); border:1px solid var(--border2); backdrop-filter:blur(8px);
+      border-radius:20px; padding:40px; transition:transform .3s,border-color .3s;
+    }
+    .tcard:hover { transform:translateY(-5px); border-color:var(--border); }
+    .stars { color:var(--gold); font-size:14px; letter-spacing:3px; margin-bottom:22px; }
+    .ttext { font-size:15px; color:var(--light); line-height:1.8; margin-bottom:28px; }
+    .tauthor { display:flex; align-items:center; gap:14px; }
+    .tavatar {
+      width:42px; height:42px; border-radius:50%;
+      background:var(--gradient); display:flex; align-items:center; justify-content:center;
+      font-size:13px; font-weight:800; color:#000; flex-shrink:0;
+    }
+    .tname { font-size:14px; font-weight:700; color:var(--cream); }
+    .trole { font-size:12px; color:var(--muted); margin-top:3px; }
+
+    /* MARQUEE */
+    #marquee {
+      padding:72px 0;
+      border-top:1px solid var(--border2); border-bottom:1px solid var(--border2);
+      overflow:hidden; background:rgba(8,12,8,0.65);
+    }
+    .m-label { text-align:center; font-size:11px; letter-spacing:2.5px; text-transform:uppercase; color:var(--muted); margin-bottom:40px; }
+    .m-track { display:flex; gap:72px; animation:mq 24s linear infinite; width:max-content; }
+    .m-track:hover { animation-play-state:paused; }
+    .m-item { font-size:18px; font-weight:700; color:rgba(201,168,76,0.12); white-space:nowrap; }
+    .m-item span { color:rgba(201,168,76,0.3); }
+    @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+    /* CTA */
+    #cta {
+      padding:180px 6%; text-align:center; overflow:hidden; position:relative;
+      background:
+        radial-gradient(ellipse 100% 80% at 50% 50%, rgba(20,34,22,0.96) 0%, rgba(8,15,9,0.99) 60%, #050a06 100%),
+        var(--bg);
+    }
+    #cta::before {
+      /* solid shield above the fixed rocket canvas so nothing shows through */
+      content:''; position:absolute; inset:0; z-index:0;
+      background:linear-gradient(180deg, #070d08 0%, #050a06 100%);
+    }
+    .cta-glow {
+      position:absolute; inset:0; z-index:1; pointer-events:none;
+      background:radial-gradient(ellipse at center,rgba(201,168,76,0.07) 0%,transparent 65%);
+    }
+    .cta-inner { position:relative; z-index:2; max-width:680px; margin:0 auto; }
+    .cta-h {
+      font-size:clamp(40px,6vw,78px);
+      font-weight:900; letter-spacing:-3px; line-height:1.05; margin-bottom:22px; color:var(--cream);
+    }
+    .cta-h em {
+      font-style:normal;
+      background:var(--gradient); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .cta-p { font-size:17px; color:var(--muted); margin-bottom:52px; line-height:1.75; }
+    .cta-btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+    .cta-micro { margin-top:22px; font-size:12px; color:rgba(237,232,219,0.18); letter-spacing:.5px; }
+
+    /* FOOTER */
+    footer {
+      background:rgba(5,9,5,0.75);
+      border-top:1px solid var(--border2); padding:88px 6% 44px;
+    }
+    .foot-top { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:60px; margin-bottom:60px; }
+    .foot-brand .logo { font-size:26px; display:inline-block; margin-bottom:18px; }
+    .foot-brand p { font-size:14px; color:var(--muted); line-height:1.8; max-width:270px; }
+    .fcol h4 { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(201,168,76,0.4); margin-bottom:20px; }
+    .fcol ul { list-style:none; display:flex; flex-direction:column; gap:12px; }
+    .fcol ul li a { font-size:13px; color:var(--muted); text-decoration:none; transition:color .3s; }
+    .fcol ul li a:hover { color:var(--cream); }
+    .foot-bot { border-top:1px solid var(--border2); padding-top:30px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+    .foot-bot p { font-size:12px; color:rgba(237,232,219,0.18); }
+
+    /* FLASH GOLD/WHITE — pulse single word */
+    .flash-gold {
+      background:var(--gradient); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text;
+      animation:flashGold 2.4s ease-in-out infinite;
+      font-style:normal;
+    }
+    @keyframes flashGold {
+      0%,100% {
+        background:var(--gradient);
+        -webkit-background-clip:text; background-clip:text;
+        -webkit-text-fill-color:transparent; color:transparent;
+        filter:drop-shadow(0 0 6px rgba(201,168,76,0.0));
+      }
+      50% {
+        background:none;
+        -webkit-text-fill-color:#fff; color:#fff;
+        filter:drop-shadow(0 0 14px rgba(255,255,255,0.35));
+      }
+    }
+
+    /* TESTIMONIALS WORD FLIP (smaller variant) */
+    .word-flip-sm { position:relative; display:inline-block; min-width:clamp(160px,22vw,280px); vertical-align:baseline; }
+    .word-flip-sm .wf1,.word-flip-sm .wf2 {
+      background:var(--gradient); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text; font-style:normal;
+    }
+    .word-flip-sm .wf2 {
+      position:absolute; left:50%; top:0; white-space:nowrap;
+      transform:translateX(-50%) translateY(14px) scale(0.9);
+    }
+    .word-flip-sm .wf1 { animation:wflip1 5s cubic-bezier(.4,0,.2,1) infinite; }
+    .word-flip-sm .wf2 { animation:wflip2 5s cubic-bezier(.4,0,.2,1) infinite; }
+
+    /* HERO WORD FLIP */
+    .word-flip { position:relative; display:inline-block; min-width:clamp(200px,32vw,420px); }
+    .word-flip .wf1,.word-flip .wf2 {
+      background:var(--gradient); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text; font-style:normal;
+    }
+    .word-flip .wf2 {
+      position:absolute; left:50%; top:0; white-space:nowrap;
+      transform:translateX(-50%) translateY(16px) scale(0.88);
+    }
+    .word-flip .wf1 { animation:wflip1 5s cubic-bezier(.4,0,.2,1) infinite; }
+    .word-flip .wf2 { animation:wflip2 5s cubic-bezier(.4,0,.2,1) infinite; }
+    @keyframes wflip1 {
+      0%,38%  { opacity:1; transform:translateY(0) scale(1); }
+      46%,90% { opacity:0; transform:translateY(-16px) scale(0.92); }
+      100%    { opacity:1; transform:translateY(0) scale(1); }
+    }
+    @keyframes wflip2 {
+      0%,38%  { opacity:0; transform:translateX(-50%) translateY(16px) scale(0.88); }
+      50%     { opacity:1; transform:translateX(-50%) translateY(0) scale(1.06); }
+      55%,88% { opacity:1; transform:translateX(-50%) translateY(0) scale(1); }
+      98%,100%{ opacity:0; transform:translateX(-50%) translateY(-10px) scale(1.04); }
+    }
+
+    /* ROI — neon letreiro mal contato com faíscas */
+    .roi-bg {
+      position:absolute; inset:0; display:flex;
+      align-items:center; justify-content:center;
+      pointer-events:none; z-index:1; overflow:hidden;
+    }
+    .roi-bg span {
+      font-family:'Playfair Display',serif;
+      font-size:clamp(340px,60vw,880px);
+      font-weight:900; letter-spacing:-32px; line-height:0.78;
+      color:rgba(226,197,106,0.14);
+      opacity:0.55; user-select:none; white-space:nowrap;
+      text-shadow:
+        0 0 28px rgba(226,197,106,0.18),
+        0 0 110px rgba(201,168,76,0.12);
+      animation:roiFlicker 5s linear infinite;
+      transform:translateY(-8%);
+    }
+    @keyframes roiFlicker {
+      /* estável */
+      0%    { opacity:0.55; text-shadow:0 0 28px rgba(226,197,106,.18),0 0 110px rgba(201,168,76,.12); }
+      /* soluço rápido */
+      7%    { opacity:0.55; }
+      7.4%  { opacity:0.03; text-shadow:none; }
+      7.8%  { opacity:0.55; }
+      8.2%  { opacity:0.02; }
+      8.6%  { opacity:0.55; text-shadow:0 0 28px rgba(226,197,106,.18),0 0 110px rgba(201,168,76,.12); }
+      /* estável */
+      25%   { opacity:0.55; }
+      /* faísca grande 1 — arco elétrico */
+      29%   { opacity:0.55; text-shadow:0 0 28px rgba(226,197,106,.18),0 0 110px rgba(201,168,76,.12); }
+      29.5% { opacity:0.0;  text-shadow:0 0 140px rgba(226,197,106,.98),0 0 420px rgba(201,168,76,.75),0 0 8px #fff; }
+      30%   { opacity:0.75; text-shadow:0 0 90px rgba(226,197,106,.65),0 0 260px rgba(201,168,76,.55); }
+      30.4% { opacity:0.03; }
+      30.8% { opacity:0.62; text-shadow:0 0 50px rgba(226,197,106,.4),0 0 180px rgba(201,168,76,.3); }
+      31.2% { opacity:0.0;  }
+      31.6% { opacity:0.55; text-shadow:0 0 28px rgba(226,197,106,.18),0 0 110px rgba(201,168,76,.12); }
+      /* estável */
+      55%   { opacity:0.55; }
+      /* stutter nervoso */
+      57%   { opacity:0.05; }
+      57.3% { opacity:0.55; }
+      57.6% { opacity:0.02; }
+      58%   { opacity:0.55; }
+      58.3% { opacity:0.06; }
+      58.6% { opacity:0.55; }
+      /* estável */
+      72%   { opacity:0.55; }
+      /* faísca grande 2 — mais intensa */
+      74%   { opacity:0.55; text-shadow:0 0 28px rgba(226,197,106,.18),0 0 110px rgba(201,168,76,.12); }
+      74.4% { opacity:0.0;  text-shadow:0 0 180px rgba(226,197,106,1),0 0 500px rgba(201,168,76,.9),0 0 12px #fff8dc; }
+      74.9% { opacity:0.82; text-shadow:0 0 110px rgba(226,197,106,.72),0 0 320px rgba(201,168,76,.62); }
+      75.3% { opacity:0.0;  }
+      75.7% { opacity:0.70; text-shadow:0 0 70px rgba(226,197,106,.5),0 0 200px rgba(201,168,76,.4); }
+      76%   { opacity:0.02; }
+      76.4% { opacity:0.55; text-shadow:0 0 28px rgba(226,197,106,.18),0 0 110px rgba(201,168,76,.12); }
+      76.7% { opacity:0.04; }
+      77%   { opacity:0.55; text-shadow:0 0 28px rgba(226,197,106,.18),0 0 110px rgba(201,168,76,.12); }
+      /* estável até o fim */
+      100%  { opacity:0.55; text-shadow:0 0 28px rgba(226,197,106,.18),0 0 110px rgba(201,168,76,.12); }
+    }
+
+    /* Faíscas */
+    .roi-spark {
+      position:absolute; border-radius:50%;
+      pointer-events:none; opacity:0;
+      background:rgba(226,197,106,1);
+      box-shadow:0 0 6px rgba(226,197,106,.9),0 0 18px rgba(226,197,106,.6);
+    }
+    .roi-spark.s1 { width:5px; height:5px; top:36%; left:26%; animation:spark1 5s linear infinite; }
+    .roi-spark.s2 { width:3px; height:3px; top:58%; left:52%; animation:spark1 5s .1s linear infinite; }
+    .roi-spark.s3 { width:4px; height:4px; top:40%; right:25%; animation:spark2 5s linear infinite; }
+    .roi-spark.s4 { width:3px; height:3px; top:64%; left:40%; animation:spark2 5s .12s linear infinite; }
+    @keyframes spark1 {
+      0%,28%,33%,73%,78%,100% { opacity:0; transform:scale(1) translate(0,0); }
+      29%   { opacity:1;   transform:scale(2.8) translate(0,0); }
+      30.5% { opacity:.6;  transform:scale(1.4) translate(-10px,-16px); }
+      32%   { opacity:0;   transform:scale(.4) translate(-18px,-28px); }
+      74%   { opacity:1;   transform:scale(3.2) translate(0,0); }
+      75.5% { opacity:.5;  transform:scale(1.3) translate(12px,-18px); }
+      77%   { opacity:0;   transform:scale(.3) translate(22px,-32px); }
+    }
+    @keyframes spark2 {
+      0%,28%,33%,73%,78%,100% { opacity:0; transform:scale(1) translate(0,0); }
+      29%   { opacity:.85; transform:scale(2.2) translate(0,0); }
+      30.5% { opacity:.4;  transform:scale(1.1) translate(7px,-11px); }
+      32%   { opacity:0;   transform:scale(.3) translate(14px,-20px); }
+      74%   { opacity:.95; transform:scale(2.8) translate(0,0); }
+      75.5% { opacity:.4;  transform:scale(1) translate(-9px,-14px); }
+      77%   { opacity:0;   transform:scale(.2) translate(-18px,-24px); }
+    }
+    /* CTA — minimalista, sem caixa */
+    #cta .cta-inner {
+      background:transparent;
+      border:0;
+      border-radius:0;
+      padding:64px 24px;
+      text-align:center;
+    }
+
+    /* QUEM SOU EU */
+    #quem { background:rgba(8,15,9,0.66); backdrop-filter:blur(10px); }
+    .quem-wrap { display:grid; grid-template-columns:1fr 2fr; gap:72px; align-items:start; }
+    .quem-photo { position:relative; border-radius:20px; overflow:hidden; aspect-ratio:3/4; border:0; background:#0a1810; }
+    .quem-photo img {
+      width:100%; height:calc(100% + 10px);
+      margin-top:-10px;  /* crop 10px off the top to remove the white line */
+      object-fit:cover; object-position:center top; display:block;
+    }
+    .quem-photo::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(201,168,76,0.1) 0%,transparent 55%); }
+    .quem-badge {
+      position:absolute; bottom:0; left:0; right:0; z-index:2;
+      background:linear-gradient(to top,rgba(8,15,9,0.97) 0%,rgba(8,15,9,0.7) 60%,transparent 100%);
+      padding:36px 24px 24px;
+    }
+    .quem-badge-name { font-family:'Playfair Display',serif; font-size:17px; font-weight:700; color:var(--cream); margin-bottom:4px; }
+    .quem-badge-role { font-size:12px; color:var(--gold); letter-spacing:.5px; }
+    .quem-bio { display:flex; flex-direction:column; gap:16px; }
+    .quem-bio p { font-size:15px; color:var(--light); line-height:1.9; }
+    .quem-bio p.lead { font-size:16px; color:var(--cream); font-weight:500; }
+    .quem-bio p.highlight {
+      border-left:2px solid var(--gold); padding-left:18px;
+      color:var(--cream); font-size:15px;
+    }
+    .quem-tags { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+    .quem-tag {
+      font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+      color:var(--gold); border:1px solid rgba(201,168,76,0.25);
+      padding:7px 16px; border-radius:100px; background:rgba(201,168,76,0.05);
+    }
+
+    /* LOGOS (CLIENTES) */
+    #logos { padding:100px 6%; }
+    .logos-header { text-align:center; max-width:580px; margin:0 auto 72px; }
+    .logos-grid {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:2px;
+    }
+    .logo-item {
+      display:flex; align-items:center; justify-content:center;
+      padding:56px 40px; min-height:160px;
+      background:rgba(11,20,12,0.55); border:1px solid var(--border2);
+      transition:background .35s,border-color .35s,transform .35s;
+      position:relative; cursor:default; overflow:hidden;
+    }
+    .logo-item::before {
+      content:''; position:absolute; inset:0; opacity:0;
+      background:radial-gradient(ellipse at center,rgba(201,168,76,0.07) 0%,transparent 70%);
+      transition:opacity .35s;
+    }
+    .logo-item:hover::before { opacity:1; }
+    .logo-item:hover { background:rgba(18,32,20,0.88); border-color:rgba(201,168,76,0.22); transform:scale(1.04); z-index:1; }
+    .logo-item:first-child  { border-radius:20px 0 0 0; }
+    .logo-item:nth-child(4) { border-radius:0 20px 0 0; }
+    .logo-item:nth-last-child(4) { border-radius:0 0 0 20px; }
+    .logo-item:last-child   { border-radius:0 0 20px 0; }
+    .logo-item img {
+      height:64px; width:auto; max-width:200px;
+      object-fit:contain;
+      filter:grayscale(1) brightness(2.2) opacity(.5);
+      transition:filter .35s,transform .35s;
+    }
+    /* squarish logos need more height to match visual weight of wide ones */
+    .logo-item.size-lg img { height:96px; max-width:230px; }
+    /* Claro: destaque grande, fundo removido no PNG */
+    .logo-item.size-xl img { height:118px; max-width:260px; }
+    .logo-item:hover img { filter:grayscale(0) brightness(1) opacity(1); transform:scale(1.1); }
+    .logo-item .logo-name {
+      font-size:13px; font-weight:700; color:rgba(201,168,76,0.35);
+      letter-spacing:.5px; text-align:center; transition:color .3s;
+    }
+    .logo-item:hover .logo-name { color:var(--cream); }
+    .logos-note { text-align:center; margin-top:60px; font-size:13px; color:var(--muted); }
+    .logos-note strong { color:var(--gold); }
+
+    /* REVEAL OPEN SPACE — some sections fully transparent */
+    #training { background:transparent; }
+    #quote    { background:transparent; }
+    #process  { background:transparent; }
+
+    /* REVEALS */
+    .rv  { opacity:0; transform:translateY(40px); }
+    .rvl { opacity:0; transform:translateX(-60px); }
+    .rvr { opacity:0; transform:translateX(60px); }
+    .rvs { opacity:0; transform:scale(0.93); }
+
+    /* ── HAMBURGER MENU ── */
+    .nav-hamburger{display:none;flex-direction:column;justify-content:space-between;width:24px;height:18px;cursor:pointer;z-index:1100;background:none;border:none;padding:0;flex-shrink:0}
+    .nav-hamburger span{display:block;width:100%;height:2px;background:var(--cream);border-radius:2px;transition:transform .3s,opacity .3s}
+    .nav-hamburger.open span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+    .nav-hamburger.open span:nth-child(2){opacity:0}
+    .nav-hamburger.open span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+    /* Botões fixos no nav mobile */
+    .nav-m-fixed{display:none;align-items:center;gap:8px}
+    .nav-m-sobre{font-size:13px;font-weight:600;color:var(--light);text-decoration:none;letter-spacing:.2px;white-space:nowrap}
+    .nav-m-sobre:hover{color:var(--gold)}
+    .nav-m-area{font-size:12px;font-weight:700;color:var(--gold);border:1px solid rgba(201,168,76,.45);padding:7px 14px;border-radius:100px;text-decoration:none;white-space:nowrap;letter-spacing:.3px}
+    /* Menu overlay — só os links de navegação */
+    .nav-mobile-menu{display:none;position:fixed;inset:0;background:rgba(5,10,6,0.97);backdrop-filter:blur(16px);z-index:1050;flex-direction:column;align-items:center;justify-content:center;gap:0;padding:80px 32px 40px}
+    .nav-mobile-menu.open{display:flex}
+    .nav-m-links{list-style:none;display:flex;flex-direction:column;align-items:center;gap:4px;width:100%;margin-bottom:28px}
+    .nav-m-links a{font-family:'Playfair Display',serif;font-size:30px;font-weight:800;color:var(--cream);text-decoration:none;letter-spacing:-.5px;padding:10px 0;display:block;text-align:center;transition:color .2s}
+    .nav-m-links a:hover{color:var(--gold)}
+    .nav-m-divider{width:40px;height:1px;background:rgba(201,168,76,.25);margin:4px auto 24px}
+    .nav-m-cta{background:var(--gradient);color:#000;padding:14px 40px;border-radius:100px;font-size:14px;font-weight:700;letter-spacing:.3px;text-decoration:none;display:inline-block}
+
+    /* MOBILE */
+    @media(max-width:900px){
+      .split{grid-template-columns:1fr;gap:52px;}
+      .split.rev{direction:ltr;}
+      .prog-grid{grid-template-columns:1fr;}
+      .testi-grid{grid-template-columns:1fr;}
+      .proc-steps{grid-template-columns:repeat(2,1fr);gap:44px;}
+      .proc-steps::before{display:none;}
+      .foot-top{grid-template-columns:1fr 1fr;}
+      nav .nav-links,nav .nav-cta,nav .nav-cliente{display:none;}
+      .nav-hamburger{display:flex;}
+      .nav-m-fixed{display:flex;}
+      #hero{padding-top:80px;}
+      .quem-wrap{grid-template-columns:1fr;gap:52px;}
+      .logos-grid{grid-template-columns:repeat(2,1fr);}
+      .logos-grid .logo-item:first-child{border-radius:20px 0 0 0;}
+      .logos-grid .logo-item:nth-child(2){border-radius:0 20px 0 0;}
+      .logos-grid .logo-item:nth-child(4){border-radius:0;}
+      .logos-grid .logo-item:nth-last-child(2){border-radius:0 0 0 20px;}
+      .logos-grid .logo-item:last-child{border-radius:0 0 20px 0;}
+    }
+    @media(max-width:600px){
+      .foot-top{grid-template-columns:1fr;}
+      .srv-grid{grid-template-columns:1fr;}
+      .logos-grid{grid-template-columns:repeat(2,1fr);}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ROCKET CANVAS BACKGROUND -->
+  <div id="rocket-bg">
+    <canvas id="rocket-canvas"></canvas>
+    <div id="rocket-overlay"></div>
+  </div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="logo">Outpace</a>
+    <ul class="nav-links">
+      <li><a href="#hero" id="nav-home" class="nav-active">Home</a></li>
+      <li><a href="#services">Serviços</a></li>
+      <li><a href="#programs">Produtos</a></li>
+      <li><a href="#process">Processo</a></li>
+      <li><a href="#testi">Resultados</a></li>
+      <li><a href="sobre-nos.html">Sobre nós</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <a href="cliente.html" class="nav-cliente">Área do Cliente</a>
+      <a href="https://wa.me/message/LETNMH3WWU3SC1" target="_blank" rel="noopener" class="nav-cta">Falar com especialista</a>
+    </div>
+    <!-- Fixos no nav mobile: Sobre nós + Área do Cliente -->
+    <div class="nav-m-fixed">
+      <a href="sobre-nos.html" class="nav-m-sobre">Sobre nós</a>
+      <a href="cliente.html" class="nav-m-area">Área do Cliente</a>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Menu mobile overlay — só links de navegação + CTA WhatsApp -->
+  <div class="nav-mobile-menu" id="nav-mobile-menu" role="dialog" aria-label="Menu de navegação">
+    <ul class="nav-m-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#services">Serviços</a></li>
+      <li><a href="#programs">Produtos</a></li>
+      <li><a href="#process">Processo</a></li>
+      <li><a href="#testi">Resultados</a></li>
+    </ul>
+    <div class="nav-m-divider"></div>
+    <a href="https://wa.me/message/LETNMH3WWU3SC1" target="_blank" rel="noopener" class="nav-m-cta">Falar com especialista</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">Aceleração Comercial</div>
+      <h1 class="hero-h1">
+        Times que<br />
+        <span class="word-flip">
+          <span class="wf1">ultrapassam</span>
+          <span class="wf2">Outpace</span>
+        </span><br />
+        resultados
+      </h1>
+      <p style="font-size:clamp(13px,1.2vw,15px);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(201,168,76,0.6);margin-bottom:28px;margin-top:-16px;">Só crescer não basta. É preciso ultrapassar a concorrência.</p>
+      <p class="hero-p">
+        Treinamos e mentoramos times comerciais e donos de indústrias para escalar vendas com estratégia, método e acompanhamento contínuo.
+      </p>
+      <div class="hero-btns">
+        <a href="../formulario/index.html" class="btn-g">Quero acelerar agora</a>
+        <a href="#programs" class="btn-o">Conhecer produtos</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- NUMBERS -->
+  <div id="nums">
+    <div><div class="nv" data-target="100" data-suffix="+">0</div><div class="nl">Empresas transformadas</div></div>
+    <div><div class="nv" data-target="30" data-prefix="+" data-suffix="%">0</div><div class="nl">Aumento médio das vendas</div></div>
+    <div><div class="nv" data-target="18" data-suffix="">0</div><div class="nl">Anos de experiência</div></div>
+    <div><div class="nv" data-target="1000" data-suffix="+" data-format="br">0</div><div class="nl">Profissionais treinados</div></div>
+  </div>
+
+  <!-- TRAINING SPLIT -->
+  <section id="training">
+    <div class="split">
+      <div class="img-wrap rvl">
+        <img src="images/foto-treinamento.png" alt="Treinamento comercial ao vivo" />
+      </div>
+      <div class="rvr">
+        <p class="slabel">Treinamento de Times</p>
+        <h2 class="stitle">Seu time pronto para fechar mais</h2>
+        <p class="ssub">Desenvolvemos habilidades técnicas e comportamentais do seu time comercial, criando uma máquina de vendas consistente e escalável.</p>
+        <ul class="feat-list">
+          <li>Metodologia proprietária de vendas consultivas</li>
+          <li>Playbook comercial personalizado para seu mercado</li>
+          <li>Treinamentos ao vivo e acompanhamento em campo</li>
+          <li>Indicadores de performance e gestão por resultados</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PALESTRAS / TREINAMENTOS PRÁTICOS -->
+  <section id="palestras" style="background:rgba(8,15,9,0.68);backdrop-filter:blur(10px)">
+    <div class="split rev">
+      <div class="img-wrap crop-left rvr">
+        <img src="images/foto-palestra.png" alt="Palestra e treinamento prático ao vivo" />
+      </div>
+      <div class="rvl">
+        <p class="slabel">Treinamentos Práticos</p>
+        <h2 class="stitle"><span class="flash-gold">Aprendizado</span> que vira resultado</h2>
+        <p class="ssub">Palestras e workshops imersivos onde o time vivencia, pratica e aplica as técnicas comerciais em tempo real, saindo pronto para executar no dia seguinte.</p>
+        <ul class="feat-list">
+          <li>Dinâmicas reais de prospecção, negociação e fechamento</li>
+          <li>Simulações ao vivo com cases do seu mercado</li>
+          <li>Ferramentas e templates aplicáveis imediatamente</li>
+          <li>Conteúdo customizado para o desafio da sua operação</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div>
+      <p class="slabel">Nossos Serviços</p>
+      <h2 class="stitle rv">O que entregamos para o seu negócio</h2>
+    </div>
+    <div class="srv-grid">
+      <div class="srv-card rv"><div class="srv-icon">🎯</div><h3 class="srv-title">Diagnóstico Comercial</h3><p class="srv-desc">Mapeamos gargalos e oportunidades no seu funil de vendas com análise profunda do processo atual.</p></div>
+      <div class="srv-card rv"><div class="srv-icon">🚀</div><h3 class="srv-title">Aceleração de Vendas</h3><p class="srv-desc">Implementamos estratégias de go-to-market e técnicas avançadas para escalar receita rapidamente.</p></div>
+      <div class="srv-card rv"><div class="srv-icon">🏭</div><h3 class="srv-title">Mentoria para Indústrias</h3><p class="srv-desc">Acompanhamento estratégico para donos de indústria construírem operações comerciais de alta performance.</p></div>
+      <div class="srv-card rv"><div class="srv-icon">📊</div><h3 class="srv-title">Gestão de Pipeline</h3><p class="srv-desc">Estruturamos seu CRM e processos de pipeline para visibilidade total e previsibilidade de receita.</p></div>
+      <div class="srv-card rv"><div class="srv-icon">🧠</div><h3 class="srv-title">Liderança Comercial</h3><p class="srv-desc">Formamos líderes de vendas capazes de engajar e inspirar times de alta performance.</p></div>
+      <div class="srv-card rv"><div class="srv-icon">🔄</div><h3 class="srv-title">Acompanhamento Contínuo</h3><p class="srv-desc">Presença ativa no seu negócio com reuniões de ritmo, revisão de metas e ajustes em tempo real.</p></div>
+      <div class="srv-card rv"><div class="srv-icon">📈</div><h3 class="srv-title">Geração de Demanda</h3><p class="srv-desc">Estruturamos a máquina de prospecção ativa do seu negócio, criando fluxo constante e previsível de novas oportunidades.</p></div>
+      <div class="srv-card rv"><div class="srv-icon">💼</div><h3 class="srv-title">Estruturação de Canais</h3><p class="srv-desc">Desenhamos e ativamos redes de distribuidores, representantes e parceiros B2B para ampliar sua capilaridade de vendas.</p></div>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <section id="quote">
+    <p class="qt rv">
+      "Não treinamos vendedores.<br />
+      Formamos <em>protagonistas</em><br />
+      de negócios."
+    </p>
+  </section>
+
+  <!-- PRODUTOS -->
+  <section id="programs">
+    <div class="prog-header">
+      <p class="slabel">Produtos</p>
+      <h2 class="stitle rv">Três frentes, uma máquina<br/>comercial completa</h2>
+      <p class="ssub rv">Do diagnóstico estratégico à tecnologia que sustenta a operação. Escolha o que seu estágio pede.</p>
+    </div>
+    <div class="prog-grid">
+      <a href="produtos/advisory.html" class="prog-card rvs">
+        <div class="prog-kicker">Parceria</div>
+        <div class="prog-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+        </div>
+        <h3 class="prog-title">Partner Growth</h3>
+        <p class="prog-desc">Parceria estratégica e operacional: atuamos com CEO, gestores e time para fechar o gap entre decisão e execução.</p>
+        <ul class="prog-feats">
+          <li>Reunião mensal com o CEO</li>
+          <li>Reunião semanal com líderes (KPIs e pipeline)</li>
+          <li>1:1 com vendedores e PDI individual</li>
+          <li>Diagnóstico da operação comercial</li>
+          <li>Playbook e processos documentados</li>
+          <li>Pagamento por assinatura</li>
+        </ul>
+        <span class="prog-cta">Saiba mais</span>
+      </a>
+      <a href="produtos/growth.html" class="prog-card rvs">
+        <div class="prog-kicker">Time Comercial</div>
+        <div class="prog-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <h3 class="prog-title">SellAs Growth</h3>
+        <p class="prog-desc">Foco no time comercial: reuniões quinzenais, playbook de vendas e acompanhamento por assinatura para melhorar execução e conversão.</p>
+        <ul class="prog-feats">
+          <li>Reunião quinzenal com o time comercial</li>
+          <li>Reunião quinzenal com gestores</li>
+          <li>Playbook de vendas (scripts e follow-up)</li>
+          <li>Padrão de abordagem definido</li>
+          <li>Diagnóstico de execução contínuo</li>
+          <li>Pagamento por assinatura</li>
+        </ul>
+        <span class="prog-cta">Saiba mais</span>
+      </a>
+      <a href="produtos/vendeai.html" class="prog-card rvs">
+        <div class="prog-kicker">CRM</div>
+        <div class="prog-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h3 class="prog-title">VendeAi</h3>
+        <p class="prog-desc">Implementação de CRM, ajuste de funil, automações e playbook, com acompanhamento contínuo para o CRM virar ferramenta de gestão.</p>
+        <ul class="prog-feats">
+          <li>Implementação e configuração de CRM</li>
+          <li>Ajustes de funil e critérios de etapa</li>
+          <li>Automações de follow-up e tarefas</li>
+          <li>Playbook por área dentro do CRM</li>
+          <li>Organização de dados e pipeline</li>
+          <li>Pagamento por assinatura</li>
+        </ul>
+        <span class="prog-cta">Saiba mais</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- COMPARATIVO DE PRODUTOS -->
+  <section id="comparativo">
+    <div class="cmp-wrap">
+      <div class="cmp-head-block">
+        <p class="slabel rv">Comparativo</p>
+        <h2 class="stitle rv">Qual programa é o certo<br/><em>para o seu momento?</em></h2>
+        <p class="ssub rv">Cada produto foi desenhado para um estágio diferente do negócio. Veja o que está incluído em cada um e escolha com clareza.</p>
+      </div>
+
+      <div class="cmp-table">
+
+        <!-- CABEÇALHO DOS PRODUTOS -->
+        <div class="cmp-row cmp-row-head">
+          <div class="cmp-label cmp-ph" style="color:var(--muted);font-size:12px;letter-spacing:1px;text-transform:uppercase;">Entregáveis</div>
+          <div class="cmp-col cmp-ph">
+            <p class="cmp-ptag">CRM</p>
+            <p class="cmp-pname">VendeAi</p>
+          </div>
+          <div class="cmp-col cmp-ph">
+            <p class="cmp-ptag">Time Comercial</p>
+            <p class="cmp-pname">SellAs Growth</p>
+          </div>
+          <div class="cmp-col cmp-ph partner-col-head">
+            <p class="cmp-ptag">Parceria</p>
+            <p class="cmp-pname featured">Partner Growth</p>
+          </div>
+        </div>
+
+        <!-- FEATURES BASE -->
+        <div class="cmp-row cmp-row-body">
+          <div class="cmp-label">Reunião quinzenal com o time comercial</div>
+          <div class="cmp-col"><span class="cno">—</span></div>
+          <div class="cmp-col"><span class="cyes">✓</span></div>
+          <div class="cmp-col partner-col"><span class="cyes">✓</span></div>
+        </div>
+        <div class="cmp-row cmp-row-body">
+          <div class="cmp-label">Reunião quinzenal com gestores</div>
+          <div class="cmp-col"><span class="cyes">✓</span></div>
+          <div class="cmp-col"><span class="cyes">✓</span></div>
+          <div class="cmp-col partner-col"><span class="cyes">✓</span></div>
+        </div>
+        <div class="cmp-row cmp-row-body">
+          <div class="cmp-label">Playbook de vendas e scripts</div>
+          <div class="cmp-col"><span class="cno">—</span></div>
+          <div class="cmp-col"><span class="cyes">✓</span></div>
+          <div class="cmp-col partner-col"><span class="cyes">✓</span></div>
+        </div>
+        <div class="cmp-row cmp-row-body">
+          <div class="cmp-label">Padrão de abordagem definido</div>
+          <div class="cmp-col"><span class="cno">—</span></div>
+          <div class="cmp-col"><span class="cyes">✓</span></div>
+          <div class="cmp-col partner-col"><span class="cyes">✓</span></div>
+        </div>
+        <div class="cmp-row cmp-row-body">
+          <div class="cmp-label">Diagnóstico de execução contínuo</div>
+          <div class="cmp-col"><span class="cno">—</span></div>
+          <div class="cmp-col"><span class="cyes">✓</span></div>
+          <div class="cmp-col partner-col"><span class="cyes">✓</span></div>
+        </div>
+        <div class="cmp-row cmp-row-body">
+          <div class="cmp-label">Acompanhamento por assinatura</div>
+          <div class="cmp-col"><span class="cyes">✓</span></div>
+          <div class="cmp-col"><span class="cyes">✓</span></div>
+          <div class="cmp-col partner-col"><span class="cyes">✓</span></div>
+        </div>
+
+        <!-- DIVISOR — EXCLUSIVO PARTNER -->
+        <div class="cmp-row cmp-row-divider">
+          <div class="cmp-label divider-label">Exclusivo Partner Growth</div>
+          <div class="cmp-col"><span class="cno">—</span></div>
+          <div class="cmp-col"><span class="cno">—</span></div>
+          <div class="cmp-col partner-col"></div>
+        </div>
+
+        <div class="cmp-row cmp-row-body cmp-row-excl">
+          <div class="cmp-label">1:1 com vendedores e PDI individual</div>
+          <div class="cmp-col"><span class="cno">—</span></div>
+          <div class="cmp-col"><span class="cno">—</span></div>
+          <div class="cmp-col partner-col"><span class="cyes">✓</span></div>
+        </div>
+        <div class="cmp-row cmp-row-body cmp-row-excl">
+          <div class="cmp-label">Reunião semanal com gestão</div>
+          <div class="cmp-col"><span class="cno">—</span></div>
+          <div class="cmp-col"><span class="cno">—</span></div>
+          <div class="cmp-col partner-col"><span class="cyes">✓</span></div>
+        </div>
+        <div class="cmp-row cmp-row-body cmp-row-excl">
+          <div class="cmp-label">1 reunião por mês com o CEO</div>
+          <div class="cmp-col"><span class="cno">—</span></div>
+          <div class="cmp-col"><span class="cno">—</span></div>
+          <div class="cmp-col partner-col"><span class="cyes">✓</span></div>
+        </div>
+        <div class="cmp-row cmp-row-body cmp-row-excl">
+          <div class="cmp-label">Playbook e processos documentados</div>
+          <div class="cmp-col"><span class="cno">—</span></div>
+          <div class="cmp-col"><span class="cno">—</span></div>
+          <div class="cmp-col partner-col"><span class="cyes">✓</span></div>
+        </div>
+        <div class="cmp-row cmp-row-body cmp-row-excl">
+          <div class="cmp-label">Marketing / Geração de demanda</div>
+          <div class="cmp-col"><span class="cno">—</span></div>
+          <div class="cmp-col"><span class="cno">—</span></div>
+          <div class="cmp-col partner-col"><span class="cyes">✓</span></div>
+        </div>
+        <div class="cmp-row cmp-row-body cmp-row-excl">
+          <div class="cmp-label">Operação / Treinamentos institucionais</div>
+          <div class="cmp-col"><span class="cno">—</span></div>
+          <div class="cmp-col"><span class="cno">—</span></div>
+          <div class="cmp-col partner-col"><span class="cyes">✓</span></div>
+        </div>
+        <div class="cmp-row cmp-row-body cmp-row-excl">
+          <div class="cmp-label">Financeiro / Gestão de receita</div>
+          <div class="cmp-col"><span class="cno">—</span></div>
+          <div class="cmp-col"><span class="cno">—</span></div>
+          <div class="cmp-col partner-col"><span class="cyes">✓</span></div>
+        </div>
+
+        <!-- LINHA DE CTAs -->
+        <div class="cmp-row cmp-cta-row">
+          <div class="cmp-cta-cell" style="justify-content:flex-start;padding-left:28px;">
+            <span style="font-size:12px;color:var(--muted);">Escolha o programa ideal para o seu negócio</span>
+          </div>
+          <div class="cmp-cta-cell">
+            <a href="produtos/vendeai.html" class="cmp-link">Ver VendeAi →</a>
+          </div>
+          <div class="cmp-cta-cell">
+            <a href="produtos/growth.html" class="cmp-link">Ver SellAs →</a>
+          </div>
+          <div class="cmp-cta-cell partner-col">
+            <a href="produtos/advisory.html" class="cmp-link-feat">Ver Partner →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MENTORIA SPLIT -->
+  <section id="mentoria" style="background:rgba(8,15,9,0.68);backdrop-filter:blur(10px)">
+    <div class="split rev">
+      <div class="img-wrap hires crop-right rvr" data-noparallax="1">
+        <img src="images/foto-google-meet.png" alt="Mentoria estratégica ao vivo por videoconferência" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&q=80'" />
+      </div>
+      <div class="rvl">
+        <p class="slabel">Mentoria para Donos de Indústria</p>
+        <h2 class="stitle"><span class="flash-gold">Estratégia</span> que move indústrias</h2>
+        <p class="ssub">Trabalhamos lado a lado com donos de indústrias para construir uma visão comercial sólida, times preparados e processos que sustentam o crescimento.</p>
+        <ul class="feat-list">
+          <li>Visão estratégica de longo prazo para o comercial</li>
+          <li>Estruturação de canais de distribuição e B2B</li>
+          <li>Desenvolvimento de liderança e cultura de vendas</li>
+          <li>Governança comercial e tomada de decisão</li>
+        </ul>
+        <a href="../formulario/index.html" class="btn-g" style="display:inline-block;margin-top:40px;">Quero ser mentorado</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUEM SOU EU -->
+  <section id="quem">
+    <div class="quem-wrap">
+      <div class="rvl">
+        <div class="quem-photo">
+          <img src="images/foto-perfil.png" alt="Jean Machado" />
+          <div class="quem-badge">
+            <div class="quem-badge-name">Jean Machado</div>
+            <div class="quem-badge-role">Especialista em Crescimento Comercial B2B</div>
+          </div>
+        </div>
+      </div>
+      <div class="quem-bio rvr">
+        <p class="slabel">Quem sou eu</p>
+        <h2 class="stitle">O <span class="flash-gold">estrategista</span> por trás da aceleração</h2>
+        <p style="font-size:clamp(15px,1.4vw,18px);font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:-10px 0 14px;">De promotor a mentor</p>
+        <p class="lead">Sou especialista em crescimento comercial B2B, diretor comercial e mentor de diversos empresários da indústria.</p>
+        <p>Atuo diretamente na estruturação e aceleração de operações de vendas em empresas industriais e B2B, ajudando a transformar um comercial reativo e desorganizado em um processo previsível, com geração constante de demanda e maior controle sobre o faturamento.</p>
+        <p>Na prática, isso significa resolver problemas que são comuns na maioria das empresas: falta de previsibilidade, pipeline sem controle, CRM mal utilizado, leads sem critério claro de qualificação e vendas que dependem mais de esforço individual do que de processo.</p>
+        <p class="highlight">"Meu trabalho é transformar o comercial em um sistema."</p>
+        <p>Com processos bem definidos, indicadores claros e uma rotina de execução disciplinada, ajudo empresas a entenderem de onde vêm suas oportunidades, como elas avançam no funil e o que precisa ser feito para aumentar a taxa de fechamento.</p>
+        <p>Não trabalho com teoria. Atuo dentro da operação, organizo o processo, estruturo o playbook e acompanho a execução junto ao time até que os resultados comecem a aparecer de forma consistente.</p>
+        <div class="quem-tags">
+          <span class="quem-tag">Indústria B2B</span>
+          <span class="quem-tag">Playbook Comercial</span>
+          <span class="quem-tag">Pipeline &amp; CRM</span>
+          <span class="quem-tag">18 Anos de Experiência</span>
+          <span class="quem-tag">Gestão de Times</span>
+        </div>
+        <a href="../formulario/index.html" class="btn-g" style="display:inline-block;margin-top:40px;">Quero trabalhar com você</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <div class="proc-header">
+      <p class="slabel">Nosso Processo</p>
+      <h2 class="stitle rv">Do diagnóstico à transformação</h2>
+    </div>
+    <div class="proc-steps">
+      <div class="step rv"><div class="step-n">01</div><h3 class="step-t">Diagnóstico</h3><p class="step-d">Mapeamos a realidade do seu comercial: time, processo, funil e cultura.</p></div>
+      <div class="step rv"><div class="step-n">02</div><h3 class="step-t">Estratégia</h3><p class="step-d">Construímos um plano de aceleração customizado para o seu negócio.</p></div>
+      <div class="step rv"><div class="step-n">03</div><h3 class="step-t">Implementação</h3><p class="step-d">Treinamos, acompanhamos e ajustamos junto com o seu time em campo.</p></div>
+      <div class="step rv"><div class="step-n">04</div><h3 class="step-t">Resultados</h3><p class="step-d">Medimos, celebramos e continuamos evoluindo com você.</p></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testi">
+    <div class="testi-header">
+      <p class="slabel">Prova Real</p>
+      <h2 class="stitle rv">O que dizem quem já <span class="word-flip-sm"><span class="wf1">ultrapassou</span><span class="wf2">Outpace</span></span></h2>
+    </div>
+    <div class="testi-grid">
+      <div class="tcard rvs" style="border-color:rgba(201,168,76,0.25);background:rgba(14,22,10,0.82)">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:28px;">
+          <div style="width:120px;height:56px;border-radius:10px;border:1px solid var(--border);overflow:hidden;background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:8px;">
+            <img src="images/logo-strazmaq.png" alt="Strazmaq" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;filter:none;opacity:1;transform:none;" />
+          </div>
+          <div>
+            <div class="tname">Alcinei</div>
+            <div class="trole">CEO e Diretor · Strazmaq · Indústria</div>
+          </div>
+          <div style="margin-left:auto;font-size:32px;font-family:'Playfair Display',serif;color:rgba(201,168,76,0.22);line-height:1;">"</div>
+        </div>
+        <div class="stars">★★★★★</div>
+        <p class="ttext">"Nosso time evoluiu muito, nossa coordenadora tem outra mentalidade, e temos novos canais de aquisição."</p>
+      </div>
+      <div class="tcard rvs">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:28px;">
+          <div style="width:120px;height:56px;border-radius:10px;border:1px solid var(--border);overflow:hidden;background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:8px;">
+            <img src="images/logo-grupo-sul.png" alt="Grupo Fornecedor Sul" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;filter:none;opacity:1;transform:none;" />
+          </div>
+          <div>
+            <div class="tname">Carla Souza</div>
+            <div class="trole">Diretora Comercial · Grupo Fornecedor Sul</div>
+          </div>
+          <div style="margin-left:auto;font-size:32px;font-family:'Playfair Display',serif;color:rgba(201,168,76,0.22);line-height:1;">"</div>
+        </div>
+        <div class="stars">★★★★★</div>
+        <p class="ttext">"O acompanhamento contínuo faz toda a diferença. Não é só treinamento, é uma transformação completa na cultura do time."</p>
+      </div>
+      <div class="tcard rvs">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:28px;">
+          <div style="width:120px;height:56px;border-radius:10px;border:1px solid var(--border);overflow:hidden;background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:8px;">
+            <img src="images/logo-lima.png" alt="Lima Equipamentos" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;filter:none;opacity:1;transform:none;" />
+          </div>
+          <div>
+            <div class="tname">Paulo Lima</div>
+            <div class="trole">Fundador · Lima Equipamentos</div>
+          </div>
+          <div style="margin-left:auto;font-size:32px;font-family:'Playfair Display',serif;color:rgba(201,168,76,0.22);line-height:1;">"</div>
+        </div>
+        <div class="stars">★★★★★</div>
+        <p class="ttext">"A mentoria estratégica me ajudou a enxergar o comercial de forma completamente diferente. Escalamos 40% em um semestre."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGOS CLIENTES -->
+  <section id="logos">
+    <div class="logos-header">
+      <p class="slabel">Quem já acelerou com a Outpace</p>
+      <h2 class="stitle rv">Empresas que escolheram crescer<br /><em>com método</em></h2>
+      <p class="ssub rv" style="margin:0 auto;text-align:center;">Indústrias, distribuidoras e empresas B2B que transformaram seus resultados comerciais.</p>
+    </div>
+    <div class="logos-grid">
+      <div class="logo-item rvs"><img src="images/logo-strazmaq.png" alt="Strazmaq" onload="this.nextSibling.style.display='none'" onerror="this.style.display='none'" /><span class="logo-name">Strazmaq</span></div>
+      <div class="logo-item rvs"><img src="images/logo-lebes.png" alt="Lebes" onload="this.nextSibling.style.display='none'" onerror="this.style.display='none'" /><span class="logo-name">Lebes</span></div>
+      <div class="logo-item rvs size-xl"><img src="images/logo-claro.png" alt="Claro" onload="this.nextSibling.style.display='none'" onerror="this.style.display='none'" /><span class="logo-name">Claro</span></div>
+      <div class="logo-item rvs"><img src="images/logo-vivo.png" alt="Vivo" onload="this.nextSibling.style.display='none'" onerror="this.style.display='none'" /><span class="logo-name">Vivo</span></div>
+      <div class="logo-item rvs size-lg"><img src="images/logo-ibs.png" alt="IBS" onload="this.nextSibling.style.display='none'" onerror="this.style.display='none'" /><span class="logo-name">IBS</span></div>
+      <div class="logo-item rvs"><img src="images/logo-escola-empresarios.png" alt="Escola de Empresários" onload="this.nextSibling.style.display='none'" onerror="this.style.display='none'" /><span class="logo-name">Escola de Empresários</span></div>
+      <div class="logo-item rvs size-lg"><img src="images/logo-villerose.png" alt="Ville Rose" onload="this.nextSibling.style.display='none'" onerror="this.style.display='none'" /><span class="logo-name">Ville Rose Cerâmica</span></div>
+      <div class="logo-item rvs size-lg"><img src="images/logo-lepetit.png" alt="Le Petit" onload="this.nextSibling.style.display='none'" onerror="this.style.display='none'" /><span class="logo-name">Le Petit</span></div>
+    </div>
+    <p class="logos-note">e muitas outras empresas que escolheram <strong>ultrapassar a concorrência.</strong></p>
+  </section>
+
+  <!-- MARQUEE -->
+  <div id="marquee">
+    <p class="m-label">Segmentos que atendemos</p>
+    <div style="overflow:hidden;">
+      <div class="m-track">
+        <span class="m-item">Indústria <span>●</span></span>
+        <span class="m-item">B2B <span>●</span></span>
+        <span class="m-item">Tecnologia <span>●</span></span>
+        <span class="m-item">Serviços <span>●</span></span>
+        <span class="m-item">Distribuição <span>●</span></span>
+        <span class="m-item">Indústria <span>●</span></span>
+        <span class="m-item">B2B <span>●</span></span>
+        <span class="m-item">Tecnologia <span>●</span></span>
+        <span class="m-item">Serviços <span>●</span></span>
+        <span class="m-item">Distribuição <span>●</span></span>
+        <span class="m-item">Indústria <span>●</span></span>
+        <span class="m-item">B2B <span>●</span></span>
+        <span class="m-item">Tecnologia <span>●</span></span>
+        <span class="m-item">Serviços <span>●</span></span>
+        <span class="m-item">Distribuição <span>●</span></span>
+        <span class="m-item">Indústria <span>●</span></span>
+        <span class="m-item">B2B <span>●</span></span>
+        <span class="m-item">Tecnologia <span>●</span></span>
+        <span class="m-item">Serviços <span>●</span></span>
+        <span class="m-item">Distribuição <span>●</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <section id="cta" style="position:relative;">
+    <div class="roi-bg"><span>ROI</span><em class="roi-spark s1"></em><em class="roi-spark s2"></em><em class="roi-spark s3"></em><em class="roi-spark s4"></em></div>
+    <div class="cta-glow"></div>
+    <div class="cta-inner">
+      <h2 class="cta-h rv">Pronto para<br /><em>acelerar?</em></h2>
+      <p class="cta-p rv">Fale com um especialista Outpace e descubra qual programa é ideal para o estágio do seu negócio.</p>
+      <div class="cta-btns rv">
+        <a href="https://wa.me/message/LETNMH3WWU3SC1" target="_blank" rel="noopener" class="btn-g">Falar no WhatsApp</a>
+        <a href="mailto:contato@outpacegrowth.com.br" class="btn-o">Enviar e-mail</a>
+      </div>
+      <p class="cta-micro">Sem compromisso. Só resultado.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="foot-top">
+      <div class="foot-brand">
+        <span class="logo">Outpace</span>
+        <p>Aceleração comercial para empresas B2B e indústrias que querem crescer com método e estratégia.</p>
+      </div>
+      <div class="fcol">
+        <h4>Serviços</h4>
+        <ul>
+          <li><a href="#">Treinamento de Times</a></li>
+          <li><a href="#">Mentoria Estratégica</a></li>
+          <li><a href="#">Diagnóstico Comercial</a></li>
+          <li><a href="#">Gestão de Pipeline</a></li>
+        </ul>
+      </div>
+      <div class="fcol">
+        <h4>Produtos</h4>
+        <ul>
+          <li><a href="produtos/advisory.html">Partner Growth</a></li>
+          <li><a href="produtos/growth.html">SellAs Growth</a></li>
+          <li><a href="produtos/vendeai.html">VendeAi</a></li>
+        </ul>
+      </div>
+      <div class="fcol">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="#">contato@outpacegrowth.com.br</a></li>
+          <li><a href="#">WhatsApp</a></li>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <p>© 2026 Outpace. Todos os direitos reservados.</p>
+      <p>Feito com estratégia e propósito.</p>
+    </div>
+  </footer>
+
+<script>
+/* ════════════════════════════════════════════════
+   ROCKET — scroll-driven video scrubbing
+   Controla video.currentTime diretamente via scroll.
+   Sem extração de frames, sem loader, resolução infinita.
+   ════════════════════════════════════════════════ */
+(function () {
+  const START_PCT   = 0.20;  // ignora o início estático do vídeo
+  const SCROLL_GAIN = 1.6;   // fração do scroll total que rege a animação
+  const MAX_DPR     = 2;
+
+  const canvas = document.getElementById('rocket-canvas');
+  const ctx    = canvas.getContext('2d');
+
+  const video       = document.createElement('video');
+  video.src         = 'rocket-scrub.mp4';
+  video.muted       = true;
+  video.preload     = 'auto';
+  video.playsInline = true;
+
+  let ready = false;
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
+    canvas.width  = Math.round(window.innerWidth  * dpr);
+    canvas.height = Math.round(window.innerHeight * dpr);
+    canvas.style.width  = window.innerWidth  + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+  }
+
+  function draw() {
+    if (!ready) return;
+    const W = canvas.width, H = canvas.height;
+    const vW = video.videoWidth, vH = video.videoHeight;
+    const scale = Math.max(W / vW, H / vH);
+    const sw = vW * scale, sh = vH * scale;
+    ctx.clearRect(0, 0, W, H);
+    ctx.drawImage(video, (W - sw) / 2, (H - sh) / 2, sw, sh);
+  }
+
+  function scrollProgress() {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    if (max <= 0) return 0;
+    return Math.pow(Math.min((window.scrollY / max) * SCROLL_GAIN, 1), 0.55);
+  }
+
+  function seek() {
+    if (!ready) return;
+    video.currentTime = (START_PCT + scrollProgress() * (1 - START_PCT)) * video.duration;
+  }
+
+  video.addEventListener('loadedmetadata', () => {
+    ready = true;
+    resize();
+    seek();
+  });
+
+  /* Renderiza cada novo frame decodificado pelo browser */
+  if ('requestVideoFrameCallback' in HTMLVideoElement.prototype) {
+    (function onFrame() {
+      draw();
+      video.requestVideoFrameCallback(onFrame);
+    }());
+  } else {
+    (function loop() {
+      requestAnimationFrame(loop);
+      draw();
+    }());
+  }
+
+  /* Throttle: um seek por frame de animação, no máximo */
+  let pending = false;
+  window.addEventListener('scroll', () => {
+    if (pending) return;
+    pending = true;
+    requestAnimationFrame(() => { seek(); pending = false; });
+  }, { passive: true });
+
+  window.addEventListener('resize', () => { resize(); draw(); });
+
+  resize();
+  video.load();
+})();
+
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('sc',scrollY>60));
+
+/* ── HAMBURGER MENU ── */
+(function(){
+  const btn  = document.getElementById('nav-hamburger');
+  const menu = document.getElementById('nav-mobile-menu');
+  if(!btn || !menu) return;
+
+  function openMenu(){
+    btn.classList.add('open');
+    menu.classList.add('open');
+    btn.setAttribute('aria-expanded','true');
+    document.body.style.overflow='hidden';
+  }
+  function closeMenu(){
+    btn.classList.remove('open');
+    menu.classList.remove('open');
+    btn.setAttribute('aria-expanded','false');
+    document.body.style.overflow='';
+  }
+  btn.addEventListener('click', ()=> btn.classList.contains('open') ? closeMenu() : openMenu());
+
+  // Fecha ao clicar em qualquer link do menu
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+  // Fecha ao apertar Esc
+  document.addEventListener('keydown', e => { if(e.key==='Escape') closeMenu(); });
+})();
+
+/* ── NAV ACTIVE SECTION ── */
+(function(){
+  const navMap = [
+    { href:'#hero',     id:'hero'      },
+    { href:'#services', id:'services'  },
+    { href:'#programs', id:'programs'  },
+    { href:'#process',  id:'process'   },
+    { href:'#testi',    id:'testi'     },
+  ];
+  const links = navMap.map(m => ({
+    el: document.querySelector(`.nav-links a[href="${m.href}"]`),
+    section: document.getElementById(m.id),
+  })).filter(x => x.el && x.section);
+
+  function setActive(id) {
+    links.forEach(({ el, section }) => {
+      el.classList.toggle('nav-active', section.id === id);
+    });
+  }
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); });
+  }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+
+  links.forEach(({ section }) => io.observe(section));
+})();
+
+/* ══════════════════════════════════════════
+   GSAP
+══════════════════════════════════════════ */
+gsap.registerPlugin(ScrollTrigger);
+gsap.from('.hero-badge',{opacity:0,y:20,duration:.8,delay:.35,ease:'power3.out'});
+gsap.from('.hero-h1',  {opacity:0,y:44,duration:1, delay:.55,ease:'power3.out'});
+gsap.from('.hero-p',   {opacity:0,y:30,duration:.9,delay:.75,ease:'power3.out'});
+gsap.from('.hero-btns',{opacity:0,y:28,duration:.9,delay:.95,ease:'power3.out'});
+gsap.to('.hero-inner',{opacity:0,y:-50,ease:'power2.in',
+  scrollTrigger:{trigger:'#hero',start:'top top',end:'+=220',scrub:true}
+});
+
+gsap.utils.toArray('.rv,.rv-alias').forEach(el=>{
+  gsap.to(el,{opacity:1,y:0,duration:.9,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none reverse'}
+  });
+});
+gsap.utils.toArray('.rvl').forEach(el=>{
+  gsap.to(el,{opacity:1,x:0,duration:1,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 85%',toggleActions:'play none none reverse'}
+  });
+});
+gsap.utils.toArray('.rvr').forEach(el=>{
+  gsap.to(el,{opacity:1,x:0,duration:1,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 85%',toggleActions:'play none none reverse'}
+  });
+});
+gsap.utils.toArray('.rvs').forEach((el,i)=>{
+  gsap.to(el,{opacity:1,scale:1,duration:.8,ease:'power3.out',delay:i*.08,
+    scrollTrigger:{trigger:el.parentElement,start:'top 86%',toggleActions:'play none none reverse'}
+  });
+});
+gsap.utils.toArray('.step.rv').forEach((s,i)=>{
+  gsap.to(s,{opacity:1,y:0,duration:.7,ease:'power3.out',delay:i*.13,
+    scrollTrigger:{trigger:'.proc-steps',start:'top 82%',toggleActions:'play none none none'}
+  });
+});
+document.querySelectorAll('.img-wrap img').forEach(img=>{
+  if (img.closest('.img-wrap').dataset.noparallax) return;
+  gsap.to(img,{yPercent:-18,ease:'none',
+    scrollTrigger:{trigger:img.closest('.img-wrap'),start:'top bottom',end:'bottom top',scrub:true}
+  });
+});
+
+// Also reveal srv-cards and non-classed items
+document.querySelectorAll('.srv-card.rv,.tcard.rvs,.prog-card.rvs').forEach((el,i)=>{
+  gsap.to(el,{opacity:1,y:0,scale:1,duration:.75,ease:'power3.out',delay:(i%3)*.08,
+    scrollTrigger:{trigger:el.parentElement,start:'top 88%',toggleActions:'play none none reverse'}
+  });
+});
+
+/* ══════════════════════════════════════════
+   NUMBER COUNTER
+══════════════════════════════════════════ */
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting) return;
+    const el=e.target;
+    const target=parseInt(el.dataset.target);
+    const suffix=el.dataset.suffix!==undefined?el.dataset.suffix:'+';
+    const prefix=el.dataset.prefix||'';
+    const fmt=el.dataset.format||'';
+    const t0=performance.now(),dur=1800;
+    (function tick(now){
+      const prog=Math.min((now-t0)/dur,1);
+      const ease=1-Math.pow(1-prog,3);
+      const val=Math.round(ease*target);
+      const display=fmt==='br'?val.toLocaleString('pt-BR'):String(val);
+      el.textContent=prefix+display+suffix;
+      if(prog<1) requestAnimationFrame(tick);
+    })(t0);
+    io.unobserve(el);
+  });
+},{threshold:.5});
+document.querySelectorAll('.nv[data-target]').forEach(el=>io.observe(el));
+</script>
+
+<!-- WHATSAPP FLOATING BUTTON -->
+<a id="waBtn" href="https://wa.me/message/LETNMH3WWU3SC1" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.114.554 4.1 1.524 5.823L.057 23.714a.5.5 0 00.63.63l5.97-1.461A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.698-.512-5.238-1.406l-.374-.224-3.893.952.976-3.788-.245-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+</a>
+<style>
+  #waBtn {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 9000;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: #25D366;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  #waBtn:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(37,211,102,0.6); }
+  @media (max-width: 480px) { #waBtn { bottom: 16px; right: 16px; } }
+</style>
+
+  <script>
+    /* Repassa tokens do Netlify Identity para a página de login */
+    if (window.location.hash && (
+      window.location.hash.includes('confirmation_token') ||
+      window.location.hash.includes('recovery_token') ||
+      window.location.hash.includes('invite_token')
+    )) {
+      window.location.replace('/cliente' + window.location.hash);
+    }
+  </script>
+</body>
+</html>

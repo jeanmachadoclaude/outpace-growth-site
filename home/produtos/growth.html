@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SellAs Growth · Treinamento Comercial B2B | Outpace</title>
+  <meta name="description" content="SellAs Growth é o programa de aceleração comercial da Outpace para times de vendas B2B. 6 meses de treinamento, playbook e acompanhamento semanal." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://outpacegrowth.com.br/produtos/growth" />
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://outpacegrowth.com.br/produtos/growth" />
+  <meta property="og:title"       content="SellAs Growth · Treinamento Comercial B2B | Outpace" />
+  <meta property="og:description" content="6 meses de aceleração comercial com método, treinamento prático e acompanhamento semanal do seu time de vendas." />
+  <meta property="og:image"       content="https://outpacegrowth.com.br/images/Logo Outpace.png" />
+  <meta property="og:site_name"   content="Outpace" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L0CH9XR11X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-L0CH9XR11X');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;0,900;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#080F09;--card:#101E12;--border:rgba(201,168,76,0.14);--border2:rgba(201,168,76,0.08);
+      --gold:#C9A84C;--gold-l:#E2C56A;--gradient:linear-gradient(135deg,#C9A84C 0%,#E2C56A 55%,#C9A84C 100%);
+      --cream:#EDE8DB;--muted:#6E8872;--light:#B8CDB9;
+    }
+    html{scroll-behavior:smooth;overflow-x:hidden;max-width:100%}
+    body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:var(--cream);overflow-x:hidden;max-width:100%;position:relative}
+    a{color:inherit;text-decoration:none}
+    h1,h2,h3,.title,.h-kicker{font-family:'Playfair Display',Georgia,serif}
+    ::selection{background:var(--gold);color:#000}
+
+    #rocket-bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden}
+    #rocket-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0.42;filter:saturate(0.95) brightness(0.78) contrast(1.05)}
+    #rocket-overlay{position:absolute;inset:0;background:
+      radial-gradient(ellipse 75% 65% at 50% 45%,rgba(8,15,9,0.62) 0%,rgba(8,15,9,0.38) 55%,rgba(8,15,9,0.18) 100%),
+      linear-gradient(to bottom,rgba(8,15,9,0.42) 0%,rgba(8,15,9,0.22) 30%,rgba(8,15,9,0.6) 100%)}
+
+    nav,section,footer{position:relative;z-index:2}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:24px 4%;transition:background .4s,padding .4s}
+    nav.sc{background:rgba(8,15,9,0.92);padding:16px 4%;backdrop-filter:blur(10px)}
+    .nav-logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;letter-spacing:-.5px;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .nav-back{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--light);letter-spacing:.3px}
+    .nav-back:hover{color:var(--gold)}
+    .nav-back::before{content:'←';font-size:16px}
+
+    #hero{min-height:92vh;display:flex;align-items:center;padding:140px 4% 80px}
+    .hero-inner{max-width:920px}
+    .h-kicker{display:inline-flex;align-items:center;gap:10px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:28px}
+    .h-kicker::before{content:'';width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(1.7)}}
+    h1.title{font-size:clamp(44px,6vw,86px);font-weight:900;line-height:1.03;letter-spacing:-3px;margin-bottom:28px;color:var(--cream)}
+    h1.title em{font-style:normal;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .h-lead{font-size:clamp(17px,1.6vw,20px);color:var(--light);line-height:1.7;max-width:720px;margin-bottom:40px}
+    .h-btns{display:flex;gap:14px;flex-wrap:wrap}
+    .btn-g{background:var(--gradient);color:#000;padding:16px 38px;border-radius:100px;font-size:14px;font-weight:700;letter-spacing:.5px;display:inline-block;transition:transform .3s,box-shadow .3s}
+    .btn-g:hover{transform:translateY(-2px);box-shadow:0 20px 40px rgba(201,168,76,0.28)}
+    .btn-o{background:transparent;color:var(--cream);padding:16px 34px;border-radius:100px;font-size:14px;font-weight:700;letter-spacing:.5px;border:1px solid rgba(237,232,219,0.28);display:inline-block;transition:border-color .3s,color .3s}
+    .btn-o:hover{border-color:var(--gold);color:var(--gold)}
+
+    section{padding:110px 4%}
+    .sec-inner{max-width:1180px;margin:0 auto}
+    .sec-head{max-width:780px;margin:0 auto 68px;text-align:center}
+    .sec-kicker{font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+    .sec-title{font-size:clamp(32px,4.2vw,54px);font-weight:900;letter-spacing:-1.2px;line-height:1.08;color:var(--cream);margin-bottom:18px}
+    .sec-sub{font-size:clamp(15px,1.4vw,17px);color:var(--muted);line-height:1.8;max-width:660px;margin:0 auto}
+
+    #deliverables{background:rgba(8,15,9,0.62);backdrop-filter:blur(10px)}
+    .del-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .del-card{background:rgba(11,20,12,0.78);border:1px solid var(--border2);border-radius:20px;padding:36px 30px;transition:border-color .3s,transform .3s}
+    .del-card:hover{border-color:rgba(201,168,76,0.28);transform:translateY(-4px)}
+    .del-n{font-family:'Playfair Display',serif;font-size:42px;font-weight:900;line-height:1;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;opacity:.4;margin-bottom:16px}
+    .del-h{font-size:19px;font-weight:800;color:var(--cream);margin-bottom:10px;letter-spacing:-.2px}
+    .del-d{font-size:14px;color:var(--light);line-height:1.75}
+
+    #journey{background:transparent}
+    .jr-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+    .jr-steps::before{content:'';position:absolute;top:28px;left:12.5%;right:12.5%;height:1px;background:linear-gradient(to right,transparent,rgba(201,168,76,.35),transparent)}
+    .jr-step{text-align:center;padding:0 16px}
+    .jr-dot{width:56px;height:56px;margin:0 auto 22px;border-radius:50%;background:rgba(11,20,12,0.95);border:1px solid rgba(201,168,76,0.28);display:flex;align-items:center;justify-content:center;color:var(--gold);font-family:'Playfair Display',serif;font-size:18px;font-weight:800;position:relative;z-index:2}
+    .jr-h{font-size:16px;font-weight:800;color:var(--cream);margin-bottom:8px}
+    .jr-d{font-size:13px;color:var(--muted);line-height:1.7}
+
+    #outcomes{background:rgba(8,15,9,0.62);backdrop-filter:blur(10px)}
+    .out-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .out-card{border-left:2px solid var(--gold);padding:10px 0 10px 22px}
+    .out-v{font-family:'Playfair Display',serif;font-size:38px;font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-1px;line-height:1;margin-bottom:8px}
+    .out-l{font-size:14px;color:var(--cream);line-height:1.6}
+
+    #cta{padding:180px 4%;text-align:center;position:relative;overflow:hidden;background:radial-gradient(ellipse 100% 80% at 50% 50%,rgba(20,34,22,0.96) 0%,rgba(8,15,9,0.99) 60%,#050a06 100%),var(--bg)}
+    #cta::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,#070d08 0%,#050a06 100%);z-index:0}
+    .cta-inner{position:relative;z-index:2;max-width:720px;margin:0 auto}
+    .cta-h{font-size:clamp(40px,5.5vw,68px);font-weight:900;letter-spacing:-2px;line-height:1.05;color:var(--cream);margin-bottom:22px}
+    .cta-h em{font-style:normal;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .cta-p{font-size:17px;color:var(--muted);line-height:1.7;margin-bottom:42px;max-width:560px;margin-left:auto;margin-right:auto}
+
+    footer{background:#050a06;padding:40px 4%;text-align:center;font-size:13px;color:var(--muted)}
+    footer .brand{font-family:'Playfair Display',serif;font-size:18px;font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px;display:inline-block}
+
+    /* ── TIMELINE 6 MESES ── */
+    #trilha-meses{background:rgba(8,15,9,0.62);backdrop-filter:blur(10px)}
+    .tl-outer{max-width:1080px;margin:0 auto}
+    .tl-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+    /* ROW TOP */
+    .tl-row-top{align-items:flex-end}
+    .tl-slot-top{display:flex;flex-direction:column;align-items:center}
+    .tl-slot-top .tl-card{margin-bottom:0;width:100%}
+    .tl-slot-top .tl-conn{margin-top:0}
+    .tl-slot-empty{visibility:hidden}
+    /* ROW MID */
+    .tl-row-mid{position:relative;align-items:center}
+    .tl-row-mid::before{content:'';position:absolute;top:50%;left:26px;right:26px;height:1px;background:linear-gradient(to right,transparent,rgba(201,168,76,.5) 8%,rgba(201,168,76,.5) 92%,transparent);transform:translateY(-50%);pointer-events:none}
+    .tl-node{display:flex;justify-content:center;align-items:center;padding:10px 0;position:relative;z-index:2}
+    /* ROW BOT */
+    .tl-row-bot{align-items:flex-start}
+    .tl-slot-bot{display:flex;flex-direction:column;align-items:center}
+    .tl-slot-bot .tl-card{margin-top:0;width:100%}
+    /* SHARED */
+    .tl-conn{width:1px;height:26px;background:rgba(201,168,76,.35);flex-shrink:0}
+    .tl-dot{width:52px;height:52px;border-radius:50%;background:rgba(11,20,12,0.98);border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold);font-family:'Playfair Display',serif;font-size:19px;font-weight:800;box-shadow:0 0 18px rgba(201,168,76,.12)}
+    .tl-card{background:rgba(11,20,12,0.9);border:1px solid var(--border);border-radius:18px;padding:22px 14px;text-align:center;transition:border-color .3s,transform .3s}
+    .tl-card:hover{border-color:rgba(201,168,76,.32);transform:translateY(-3px)}
+    .tl-mes{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+    .tl-title{font-size:15px;font-weight:800;color:var(--cream);margin-bottom:8px;letter-spacing:-.2px;line-height:1.2}
+    .tl-desc{font-size:12px;color:var(--muted);line-height:1.65}
+
+    /* MOBILE TIMELINE */
+    .tl-mobile{display:none}
+    @media(max-width:900px){
+      .del-grid,.jr-steps,.out-grid{grid-template-columns:1fr}
+      .jr-steps::before{display:none}
+      h1.title{letter-spacing:-1.5px}
+      /* esconde desktop, mostra mobile */
+      .tl-outer{display:none}
+      .tl-mobile{display:flex;flex-direction:column;gap:0;position:relative;max-width:520px;margin:0 auto}
+      .tl-mobile::before{content:'';position:absolute;left:25px;top:26px;bottom:26px;width:1px;background:linear-gradient(to bottom,transparent,rgba(201,168,76,.4) 8%,rgba(201,168,76,.4) 92%,transparent)}
+      .tl-m-item{display:flex;align-items:flex-start;gap:18px;padding-bottom:28px;position:relative}
+      .tl-m-item:last-child{padding-bottom:0}
+      .tl-m-dot{width:52px;height:52px;border-radius:50%;background:rgba(11,20,12,0.98);border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold);font-family:'Playfair Display',serif;font-size:19px;font-weight:800;flex-shrink:0;position:relative;z-index:2;box-shadow:0 0 16px rgba(201,168,76,.12)}
+      .tl-m-card{flex:1;background:rgba(11,20,12,0.9);border:1px solid var(--border);border-radius:16px;padding:18px 16px}
+      .tl-m-card .tl-mes{text-align:left;margin-bottom:6px}
+      .tl-m-card .tl-title{text-align:left;font-size:16px}
+      .tl-m-card .tl-desc{text-align:left;font-size:13px}
+    }
+  </style>
+</head>
+<body>
+
+  <div id="rocket-bg">
+    <canvas id="rocket-canvas"></canvas>
+    <div id="rocket-overlay"></div>
+  </div>
+
+  <nav id="nav">
+    <a href="../index.html" class="nav-logo">Outpace</a>
+    <a href="../index.html#programs" class="nav-back">Voltar aos produtos</a>
+  </nav>
+
+  <section id="hero">
+    <div class="hero-inner">
+      <p class="h-kicker">Time Comercial · SellAs Growth</p>
+      <h1 class="title">Seu time vendendo<br/>com mais <em>consistência</em></h1>
+      <p class="h-lead">SellAs Growth foca no time comercial. Reuniões quinzenais, playbook de vendas e acompanhamento por assinatura para que a execução melhore de verdade e o padrão se mantenha.</p>
+      <div class="h-btns">
+        <a href="../../formulario/index.html" class="btn-g">Quero me inscrever</a>
+        <a href="#deliverables" class="btn-o">Ver entregáveis</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="deliverables">
+    <div class="sec-inner">
+      <div class="sec-head">
+        <p class="sec-kicker">O que você recebe</p>
+        <h2 class="sec-title">O que está incluído</h2>
+        <p class="sec-sub">Acompanhamento quinzenal com time e gestores, playbook de vendas e suporte contínuo por assinatura, para melhorar execução, conversão e padrão de venda.</p>
+      </div>
+      <div class="del-grid">
+        <div class="del-card"><div class="del-n">01</div><h3 class="del-h">Reunião quinzenal com o time</h3><p class="del-d">Análise de carteira, oportunidades em andamento e próximas ações. O time sai com clareza do que fazer até o próximo encontro, sem depender de impulso individual.</p></div>
+        <div class="del-card"><div class="del-n">02</div><h3 class="del-h">Reunião quinzenal com gestores</h3><p class="del-d">Pipeline, KPIs e decisões táticas. O gestor tem apoio para corrigir rota e gerenciar performance sem improvisar ou adivinhar.</p></div>
+        <div class="del-card"><div class="del-n">03</div><h3 class="del-h">Playbook de vendas</h3><p class="del-d">Scripts de abordagem, cadências de follow-up e como tratar objeções. Documentado, prático e ajustado à realidade do seu mercado, não um modelo genérico.</p></div>
+        <div class="del-card"><div class="del-n">04</div><h3 class="del-h">Padrão de abordagem</h3><p class="del-d">Definimos como o time abre, conduz e fecha uma negociação. O bom resultado deixa de depender de quem é bom e passa a depender do processo.</p></div>
+        <div class="del-card"><div class="del-n">05</div><h3 class="del-h">Acompanhamento por assinatura</h3><p class="del-d">Presença contínua, não pontual. O acompanhamento mensal garante que o que foi combinado está sendo executado. O que precisa ajustar, ajusta.</p></div>
+        <div class="del-card"><div class="del-n">06</div><h3 class="del-h">Diagnóstico de execução</h3><p class="del-d">Identificamos onde está a quebra: prospecção, proposta, follow-up ou fechamento. Atacamos o problema certo, não o sintoma mais visível.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="journey">
+    <div class="sec-inner">
+      <div class="sec-head">
+        <p class="sec-kicker">Como funciona</p>
+        <h2 class="sec-title">Como o acompanhamento funciona</h2>
+      </div>
+      <div class="jr-steps">
+        <div class="jr-step"><div class="jr-dot">1</div><h4 class="jr-h">Diagnóstico</h4><p class="jr-d">Entendemos o time, o funil e onde a execução está quebrando.</p></div>
+        <div class="jr-step"><div class="jr-dot">2</div><h4 class="jr-h">Playbook</h4><p class="jr-d">Criamos scripts, cadências e abordagens ajustados ao seu mercado.</p></div>
+        <div class="jr-step"><div class="jr-dot">3</div><h4 class="jr-h">Cadência</h4><p class="jr-d">Instalamos as reuniões quinzenais com time e gestores.</p></div>
+        <div class="jr-step"><div class="jr-dot">4</div><h4 class="jr-h">Continuidade</h4><p class="jr-d">Acompanhamento por assinatura para manter o que foi construído.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="outcomes">
+    <div class="sec-inner">
+      <div class="sec-head">
+        <p class="sec-kicker">Resultados esperados</p>
+        <h2 class="sec-title">O que muda com o SellAs Growth</h2>
+      </div>
+      <div class="out-grid">
+        <div class="out-card"><div class="out-v">Conversão</div><div class="out-l">Melhora com mudança real de abordagem, não só de esforço</div></div>
+        <div class="out-card"><div class="out-v">Padrão</div><div class="out-l">Time executando com processo definido, não improvisando</div></div>
+        <div class="out-card"><div class="out-v">Gestão</div><div class="out-l">Gestor com dados para gerenciar sem depender de feeling</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE 6 MESES SELLAS GROWTH -->
+  <section id="trilha-meses">
+    <div class="sec-inner">
+      <div class="sec-head">
+        <p class="sec-kicker">Trilha SellAs Growth</p>
+        <h2 class="sec-title">6 meses de capacitação comercial</h2>
+        <p class="sec-sub">Da definição de quem compra até o domínio do fechamento — um módulo por mês, com progressão lógica e aplicação imediata na operação.</p>
+      </div>
+      <div class="tl-outer">
+
+        <!-- LINHA 1: CARDS TOPO (meses 1, 3, 5) -->
+        <div class="tl-row tl-row-top">
+          <div class="tl-slot-top">
+            <div class="tl-card">
+              <p class="tl-mes">Mês 1</p>
+              <h4 class="tl-title">ICP</h4>
+              <p class="tl-desc">Pra quem vendemos: perfil ideal, fit e critérios de entrada</p>
+            </div>
+            <div class="tl-conn"></div>
+          </div>
+          <div class="tl-slot-empty"><div class="tl-card"><p class="tl-mes">-</p></div></div>
+          <div class="tl-slot-top">
+            <div class="tl-card">
+              <p class="tl-mes">Mês 3</p>
+              <h4 class="tl-title">NABT</h4>
+              <p class="tl-desc">Como qualificamos: critérios de avanço e filtro de oportunidade</p>
+            </div>
+            <div class="tl-conn"></div>
+          </div>
+          <div class="tl-slot-empty"><div class="tl-card"><p class="tl-mes">-</p></div></div>
+          <div class="tl-slot-top">
+            <div class="tl-card">
+              <p class="tl-mes">Mês 5</p>
+              <h4 class="tl-title">ROI</h4>
+              <p class="tl-desc">Como geramos valor: demonstração de retorno e justificativa</p>
+            </div>
+            <div class="tl-conn"></div>
+          </div>
+          <div class="tl-slot-empty"><div class="tl-card"><p class="tl-mes">-</p></div></div>
+        </div>
+
+        <!-- LINHA 2: BOLINHAS NUMERADAS + LINHA HORIZONTAL -->
+        <div class="tl-row tl-row-mid">
+          <div class="tl-node"><div class="tl-dot">1</div></div>
+          <div class="tl-node"><div class="tl-dot">2</div></div>
+          <div class="tl-node"><div class="tl-dot">3</div></div>
+          <div class="tl-node"><div class="tl-dot">4</div></div>
+          <div class="tl-node"><div class="tl-dot">5</div></div>
+          <div class="tl-node"><div class="tl-dot">6</div></div>
+        </div>
+
+        <!-- LINHA 3: CARDS BASE (meses 2, 4, 6) -->
+        <div class="tl-row tl-row-bot">
+          <div class="tl-slot-empty"><div class="tl-card"><p class="tl-mes">-</p></div></div>
+          <div class="tl-slot-bot">
+            <div class="tl-conn"></div>
+            <div class="tl-card">
+              <p class="tl-mes">Mês 2</p>
+              <h4 class="tl-title">Apresentação + PV</h4>
+              <p class="tl-desc">Como abordamos: pitch, proposta de valor e diferenciação</p>
+            </div>
+          </div>
+          <div class="tl-slot-empty"><div class="tl-card"><p class="tl-mes">-</p></div></div>
+          <div class="tl-slot-bot">
+            <div class="tl-conn"></div>
+            <div class="tl-card">
+              <p class="tl-mes">Mês 4</p>
+              <h4 class="tl-title">SPIN</h4>
+              <p class="tl-desc">Como sondamos: perguntas que revelam dor e constroem valor</p>
+            </div>
+          </div>
+          <div class="tl-slot-empty"><div class="tl-card"><p class="tl-mes">-</p></div></div>
+          <div class="tl-slot-bot">
+            <div class="tl-conn"></div>
+            <div class="tl-card">
+              <p class="tl-mes">Mês 6</p>
+              <h4 class="tl-title">FUP e Fechamento</h4>
+              <p class="tl-desc">Como criamos urgência nos decisores e avançamos o negócio</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- MOBILE TIMELINE (ordem correta: 1→2→3→4→5→6) -->
+      <div class="tl-mobile">
+        <div class="tl-m-item">
+          <div class="tl-m-dot">1</div>
+          <div class="tl-m-card">
+            <p class="tl-mes">Mês 1</p>
+            <h4 class="tl-title">ICP</h4>
+            <p class="tl-desc">Pra quem vendemos: perfil ideal, fit e critérios de entrada</p>
+          </div>
+        </div>
+        <div class="tl-m-item">
+          <div class="tl-m-dot">2</div>
+          <div class="tl-m-card">
+            <p class="tl-mes">Mês 2</p>
+            <h4 class="tl-title">Apresentação + PV</h4>
+            <p class="tl-desc">Como abordamos: pitch, proposta de valor e diferenciação</p>
+          </div>
+        </div>
+        <div class="tl-m-item">
+          <div class="tl-m-dot">3</div>
+          <div class="tl-m-card">
+            <p class="tl-mes">Mês 3</p>
+            <h4 class="tl-title">NABT</h4>
+            <p class="tl-desc">Como qualificamos: critérios de avanço e filtro de oportunidade</p>
+          </div>
+        </div>
+        <div class="tl-m-item">
+          <div class="tl-m-dot">4</div>
+          <div class="tl-m-card">
+            <p class="tl-mes">Mês 4</p>
+            <h4 class="tl-title">SPIN</h4>
+            <p class="tl-desc">Como sondamos: perguntas que revelam dor e constroem valor</p>
+          </div>
+        </div>
+        <div class="tl-m-item">
+          <div class="tl-m-dot">5</div>
+          <div class="tl-m-card">
+            <p class="tl-mes">Mês 5</p>
+            <h4 class="tl-title">ROI</h4>
+            <p class="tl-desc">Como geramos valor: demonstração de retorno e justificativa</p>
+          </div>
+        </div>
+        <div class="tl-m-item">
+          <div class="tl-m-dot">6</div>
+          <div class="tl-m-card">
+            <p class="tl-mes">Mês 6</p>
+            <h4 class="tl-title">FUP e Fechamento</h4>
+            <p class="tl-desc">Como criamos urgência nos decisores e avançamos o negócio</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="cta">
+    <div class="cta-inner">
+      <h2 class="cta-h">Pronto para <em>treinar o time?</em></h2>
+      <p class="cta-p">Preencha o formulário e receba um contato em até 24h para entender seu time e o que precisa mudar na execução.</p>
+      <a href="../../formulario/index.html" class="btn-g">Quero me inscrever</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="brand">Outpace</div>
+    <p>© 2026 Outpace. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+  (function(){
+    const c=document.getElementById('rocket-canvas');const ctx=c.getContext('2d');
+    function resize(){const dpr=Math.min(window.devicePixelRatio||1,2);c.width=Math.round(innerWidth*dpr);c.height=Math.round(innerHeight*dpr);c.style.width=innerWidth+'px';c.style.height=innerHeight+'px';if(window._rocketBmp)draw();}
+    function draw(){const bmp=window._rocketBmp;if(!bmp)return;const W=c.width,H=c.height;const s=Math.max(W/bmp.width,H/bmp.height);const sw=bmp.width*s,sh=bmp.height*s;ctx.clearRect(0,0,W,H);ctx.drawImage(bmp,(W-sw)/2,(H-sh)/2,sw,sh);}
+    const v=document.createElement('video');v.src='../rocket.mp4';v.muted=true;v.preload='auto';v.addEventListener('loadedmetadata',()=>{v.currentTime=v.duration*0.55;},{once:true});v.addEventListener('seeked',()=>{const tmp=document.createElement('canvas');tmp.width=1280;tmp.height=720;tmp.getContext('2d').drawImage(v,0,0,1280,720);createImageBitmap(tmp).then(b=>{window._rocketBmp=b;resize();});},{once:true});v.load();
+    window.addEventListener('resize',resize);resize();
+  })();
+  const nav=document.getElementById('nav');
+  window.addEventListener('scroll',()=>nav.classList.toggle('sc',scrollY>40));
+  </script>
+</body>
+</html>
