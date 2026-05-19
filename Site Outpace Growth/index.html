@@ -337,15 +337,26 @@
     .prog-feats li { font-size:13.5px; color:var(--light); display:flex; align-items:flex-start; gap:10px; line-height:1.55; }
     .prog-feats li::before { content:'✓'; color:var(--gold); font-weight:800; flex-shrink:0; }
     .prog-cta {
-      margin-top:auto; display:inline-flex; align-items:center; gap:8px;
+      margin-top:auto; align-self:flex-start;
+      display:inline-flex; align-items:center; gap:10px;
+      padding:11px 22px 11px 18px;
+      border-radius:50px;
+      border:1.5px solid var(--gold);
+      background:rgba(201,168,76,0.06);
       color:var(--gold); font-size:12px; font-weight:700; letter-spacing:1.8px;
       text-transform:uppercase;
-      padding-top:20px; border-top:1px solid rgba(201,168,76,0.15);
-      transition:color .3s;
+      transition:background .25s, color .25s, border-color .25s, box-shadow .25s;
     }
-    .prog-cta::after { content:'→'; transition:transform .3s; }
-    .prog-card:hover .prog-cta { color:var(--cream); }
-    .prog-card:hover .prog-cta::after { transform:translateX(6px); }
+    .prog-cta::after {
+      content:'→'; font-size:14px; letter-spacing:0;
+      transition:transform .3s;
+    }
+    .prog-card:hover .prog-cta {
+      background:var(--gradient); color:#080f09;
+      border-color:transparent;
+      box-shadow:0 8px 32px rgba(201,168,76,0.35);
+    }
+    .prog-card:hover .prog-cta::after { transform:translateX(5px); }
 
     /* ── COMPARATIVO DE PRODUTOS ── */
     #comparativo { padding:100px 4%; }
@@ -1050,7 +1061,7 @@
           <li>Playbook e processos documentados</li>
           <li>Pagamento por assinatura</li>
         </ul>
-        <span class="prog-cta">Saiba mais</span>
+        <span class="prog-cta">Acesse a trilha</span>
       </a>
       <a href="produtos/growth.html" class="prog-card rvs">
         <div class="prog-kicker">Time Comercial</div>
@@ -1067,7 +1078,7 @@
           <li>Diagnóstico de execução contínuo</li>
           <li>Pagamento por assinatura</li>
         </ul>
-        <span class="prog-cta">Saiba mais</span>
+        <span class="prog-cta">Acesse a trilha</span>
       </a>
       <a href="produtos/vendeai.html" class="prog-card rvs">
         <div class="prog-kicker">CRM</div>
@@ -1084,7 +1095,7 @@
           <li>Organização de dados e pipeline</li>
           <li>Pagamento por assinatura</li>
         </ul>
-        <span class="prog-cta">Saiba mais</span>
+        <span class="prog-cta">Acesse a trilha</span>
       </a>
     </div>
   </section>
