@@ -782,6 +782,88 @@
       .srv-grid{grid-template-columns:1fr;}
       .logos-grid{grid-template-columns:repeat(2,1fr);}
     }
+
+    /* ── BOTÃO ASSISTA AGORA ────────────────────── */
+    .watch-btn {
+      display:inline-flex; align-items:center; gap:0;
+      margin-top:32px; cursor:pointer; background:none; border:none; padding:0;
+      text-decoration:none;
+    }
+    .watch-btn-inner {
+      display:flex; align-items:center; gap:14px;
+      background:var(--gradient); border-radius:50px;
+      padding:14px 28px 14px 18px;
+      box-shadow:0 8px 40px rgba(201,168,76,0.35);
+      transition:transform .25s, box-shadow .25s;
+    }
+    .watch-btn:hover .watch-btn-inner {
+      transform:translateY(-3px);
+      box-shadow:0 16px 56px rgba(201,168,76,0.5);
+    }
+    .watch-btn-icon {
+      width:40px; height:40px; border-radius:50%;
+      background:rgba(0,0,0,0.18);
+      display:flex; align-items:center; justify-content:center;
+      flex-shrink:0;
+    }
+    .watch-btn-icon svg { fill:#080f09; margin-left:3px; }
+    .watch-btn-text { display:flex; flex-direction:column; line-height:1.2; }
+    .watch-btn-label {
+      font-size:11px; font-weight:700; letter-spacing:2px;
+      text-transform:uppercase; color:rgba(8,15,9,0.65);
+    }
+    .watch-btn-title {
+      font-family:'Playfair Display',serif; font-size:16px;
+      font-weight:900; color:#080f09; letter-spacing:-.3px;
+    }
+    .watch-btn-arrow {
+      margin-left:4px; width:36px; height:36px; border-radius:50%;
+      background:rgba(0,0,0,0.14);
+      display:flex; align-items:center; justify-content:center;
+      transition:transform .25s;
+    }
+    .watch-btn:hover .watch-btn-arrow { transform:translateX(4px); }
+    .watch-btn-arrow svg { fill:#080f09; }
+
+    /* play overlay na foto */
+    .img-play-ring {
+      position:absolute; top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      z-index:3; width:68px; height:68px; border-radius:50%;
+      background:rgba(8,15,9,0.72);
+      border:2px solid var(--gold);
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer;
+      transition:transform .25s, background .25s;
+    }
+    .img-play-ring:hover { transform:translate(-50%,-50%) scale(1.12); background:var(--gold); }
+    .img-play-ring:hover svg { fill:#080f09; }
+    .img-play-ring svg { fill:var(--gold); margin-left:4px; }
+
+    /* modal */
+    .vmodal-backdrop {
+      display:none; position:fixed; inset:0; z-index:9999;
+      background:rgba(0,0,0,0.88); backdrop-filter:blur(6px);
+      align-items:center; justify-content:center;
+    }
+    .vmodal-backdrop.open { display:flex; }
+    .vmodal-box {
+      position:relative; width:min(880px,94vw);
+      border-radius:16px; overflow:hidden;
+      border:1px solid var(--border);
+      box-shadow:0 0 80px rgba(201,168,76,0.2);
+      background:#000;
+    }
+    .vmodal-box iframe { display:block; width:100%; aspect-ratio:16/9; border:0; }
+    .vmodal-close {
+      position:absolute; top:12px; right:14px; z-index:2;
+      background:rgba(8,15,9,0.85); border:1px solid var(--border);
+      color:var(--gold); font-size:22px; line-height:1;
+      width:38px; height:38px; border-radius:50%; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition:background .2s;
+    }
+    .vmodal-close:hover { background:var(--gold); color:#080f09; }
   </style>
 </head>
 <body>
@@ -864,8 +946,11 @@
   <!-- TRAINING SPLIT -->
   <section id="training">
     <div class="split">
-      <div class="img-wrap rvl">
+      <div class="img-wrap rvl" style="cursor:pointer;" onclick="openVideoModal()">
         <img src="images/foto-treinamento-nova.png" alt="Treinamento comercial ao vivo" />
+        <button class="img-play-ring" aria-label="Assistir vídeo">
+          <svg width="26" height="26" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </button>
       </div>
       <div class="rvr">
         <p class="slabel">Treinamento de Times</p>
@@ -877,6 +962,20 @@
           <li>Treinamentos ao vivo e acompanhamento em campo</li>
           <li>Indicadores de performance e gestão por resultados</li>
         </ul>
+        <button class="watch-btn" onclick="openVideoModal()">
+          <div class="watch-btn-inner">
+            <div class="watch-btn-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <div class="watch-btn-text">
+              <span class="watch-btn-label">Degustação gratuita</span>
+              <span class="watch-btn-title">Assista agora</span>
+            </div>
+            <div class="watch-btn-arrow">
+              <svg width="16" height="16" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        </button>
       </div>
     </div>
   </section>
@@ -1605,6 +1704,34 @@ document.querySelectorAll('.nv[data-target]').forEach(el=>io.observe(el));
     )) {
       window.location.replace('/cliente' + window.location.hash);
     }
+  </script>
+
+  <!-- VIDEO MODAL -->
+  <div class="vmodal-backdrop" id="vmodal" onclick="handleBackdropClick(event)">
+    <div class="vmodal-box">
+      <button class="vmodal-close" onclick="closeVideoModal()" aria-label="Fechar">&times;</button>
+      <iframe id="vmodal-iframe" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <script>
+    function openVideoModal() {
+      document.getElementById('vmodal-iframe').src =
+        'https://www.youtube.com/embed/3yZzIYzj9pc?autoplay=1&rel=0';
+      document.getElementById('vmodal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeVideoModal() {
+      document.getElementById('vmodal-iframe').src = '';
+      document.getElementById('vmodal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function handleBackdropClick(e) {
+      if (e.target === document.getElementById('vmodal')) closeVideoModal();
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeVideoModal();
+    });
   </script>
 </body>
 </html>
