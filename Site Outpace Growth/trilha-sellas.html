@@ -162,6 +162,15 @@
     .modal-complete-btn:hover { opacity:0.88; transform:translateY(-2px); }
     .modal-complete-btn:disabled { opacity:0.55; cursor:not-allowed; transform:none; }
     @media(max-width:600px){ .modal-header{padding:20px 20px 16px;} .modal-body{padding:20px 20px 28px;} }
+    .mod-thumb { width:88px; height:50px; border-radius:8px; object-fit:cover; flex-shrink:0; border:1px solid var(--border2); }
+    .video-thumb-wrap { position:relative; border-radius:12px; overflow:hidden; cursor:pointer; line-height:0; }
+    .video-thumb-wrap img { width:100%; display:block; }
+    .video-thumb-overlay { position:absolute; inset:0; background:rgba(0,0,0,0.22); display:flex; align-items:center; justify-content:center; transition:background .2s; }
+    .video-thumb-wrap:hover .video-thumb-overlay { background:rgba(0,0,0,0.38); }
+    .video-thumb-play-btn { width:64px; height:64px; background:rgba(8,15,9,0.82); border:2px solid var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; padding-left:5px; transition:background .2s,transform .2s; }
+    .video-thumb-play-btn svg { fill:var(--gold); }
+    .video-thumb-wrap:hover .video-thumb-play-btn { background:var(--gold); transform:scale(1.1); }
+    .video-thumb-wrap:hover .video-thumb-play-btn svg { fill:#080f09; }
   </style>
 </head>
 <body>
@@ -197,10 +206,7 @@
         </div>
         <div>
           <p class="modal-section-label">Aula em Vídeo</p>
-          <div class="video-placeholder">
-            <div class="video-play-icon">▶</div>
-            <div class="video-label">Vídeo em breve</div>
-          </div>
+          <div id="modal-video-wrap"></div>
         </div>
         <div>
           <p class="modal-section-label">Transcrição</p>
@@ -332,6 +338,12 @@
 
     const TRILHA_ID = 'sellas';
     const TOTAL_MODULOS = 6;
+    const VIDEOS = {
+      1: '2elHMrMOjI0',
+      2: 'AMt39G4CvHE',
+      3: 'Bj0beN-rocM',
+    };
+
     const TITULOS = {
       1: 'ICP',
       2: 'Apresentação + PV',
@@ -426,6 +438,14 @@
           statusEl.className = 'mod-status locked';
           statusEl.textContent = '🔒 Bloqueado';
         }
+
+        if (VIDEOS[id] && !el.querySelector('.mod-thumb')) {
+          const thumb = document.createElement('img');
+          thumb.className = 'mod-thumb';
+          thumb.src = 'https://img.youtube.com/vi/' + VIDEOS[id] + '/mqdefault.jpg';
+          thumb.alt = TITULOS[id] || '';
+          numEl.insertAdjacentElement('afterend', thumb);
+        }
       }
     }
 
@@ -435,6 +455,18 @@
       document.getElementById('modal-kicker').textContent = 'Módulo ' + String(id).padStart(2, '0');
       document.getElementById('modal-title-text').textContent = TITULOS[id] || '—';
       document.getElementById('modal-sinopse').textContent = SINOPSES[id] || '—';
+
+      const videoWrap = document.getElementById('modal-video-wrap');
+      const vid = VIDEOS[id];
+      if (vid) {
+        const thumb = 'https://img.youtube.com/vi/' + vid + '/maxresdefault.jpg';
+        videoWrap.innerHTML = '<div class="video-thumb-wrap" onclick="playVideo(this,\'' + vid + '\')">'
+          + '<img src="' + thumb + '" alt="' + (TITULOS[id] || 'Aula') + '">'
+          + '<div class="video-thumb-overlay"><div class="video-thumb-play-btn"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>'
+          + '</div>';
+      } else {
+        videoWrap.innerHTML = '<div class="video-placeholder"><div class="video-play-icon">▶</div><div class="video-label">Vídeo em breve</div></div>';
+      }
 
       const wrap = document.getElementById('modal-action-wrap');
       if (isDone) {
@@ -447,9 +479,14 @@
       document.body.style.overflow = 'hidden';
     }
 
+    function playVideo(wrap, vid) {
+      wrap.outerHTML = '<iframe style="width:100%;aspect-ratio:16/9;border-radius:12px;border:0;display:block;" src="https://www.youtube.com/embed/' + vid + '?autoplay=1&rel=0" allow="autoplay;encrypted-media" allowfullscreen></iframe>';
+    }
+
     function closeModal() {
       document.getElementById('aula-modal').classList.remove('open');
       document.body.style.overflow = '';
+      document.getElementById('modal-video-wrap').innerHTML = '';
       _currentModalId = null;
     }
 
