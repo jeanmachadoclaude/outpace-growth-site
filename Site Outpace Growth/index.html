@@ -1515,8 +1515,11 @@
     canvas.style.height = window.innerHeight + 'px';
   }
 
+  let seekTarget = 0;
+
   function draw() {
-    if (!ready || video.seeking) return;
+    if (!ready) return;
+    if (Math.abs(video.currentTime - seekTarget) > 0.5) return;
     const W = canvas.width, H = canvas.height;
     const vW = video.videoWidth, vH = video.videoHeight;
     const scale = Math.max(W / vW, H / vH);
@@ -1535,7 +1538,8 @@
 
   function seek() {
     if (!ready) return;
-    video.currentTime = (START_PCT + scrollProgress() * (1 - START_PCT)) * video.duration;
+    seekTarget = (START_PCT + scrollProgress() * (1 - START_PCT)) * video.duration;
+    video.currentTime = seekTarget;
   }
 
   video.addEventListener('loadedmetadata', () => {
