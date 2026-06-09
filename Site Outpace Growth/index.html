@@ -112,6 +112,7 @@
     }
     @media(max-width:768px) {
       #rocket-mobile { display:block; }
+      #rocket-canvas { transition: opacity 0.3s ease; }
     }
     #rocket-overlay {
       position:absolute; inset:0;
@@ -1582,7 +1583,9 @@
     var mo = document.getElementById('rocket-mobile');
     if (!mo) return;
     function syncOverlay() {
-      mo.style.opacity = window.scrollY < 60 ? '0.58' : '0';
+      var atTop = window.scrollY < 60;
+      mo.style.opacity     = atTop ? '0.58' : '0';
+      canvas.style.opacity = atTop ? '0'    : '0.58';
     }
     window.addEventListener('scroll', syncOverlay, { passive: true });
     syncOverlay();
