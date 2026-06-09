@@ -102,17 +102,6 @@
       image-rendering:-webkit-optimize-contrast;
       image-rendering:auto;
     }
-    #rocket-frames { display:none; position:absolute; inset:0; }
-    .rf {
-      position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-      opacity:0; transition:opacity 0.18s ease;
-      filter:saturate(1) brightness(0.86) contrast(1.05);
-    }
-    .rf.active { opacity:0.58; }
-    @media(max-width:768px) {
-      #rocket-canvas  { display:none; }
-      #rocket-frames  { display:block; }
-    }
     #rocket-overlay {
       position:absolute; inset:0;
       background:
@@ -917,12 +906,6 @@
   <!-- ROCKET CANVAS BACKGROUND -->
   <div id="rocket-bg">
     <canvas id="rocket-canvas"></canvas>
-    <div id="rocket-frames">
-      <img class="rf active" src="images/rocket-ground.jpg" alt="">
-      <img class="rf" src="images/rocket-m1.jpg" alt="">
-      <img class="rf" src="images/rocket-air.jpg" alt="">
-      <img class="rf" src="images/rocket-m2.jpg" alt="">
-    </div>
     <div id="rocket-overlay"></div>
   </div>
 
@@ -1503,8 +1486,12 @@
   </footer>
 
 <script>
-/* ROCKET — desktop only (mobile usa rocket-ground.jpg estático) */
-if (window.innerWidth > 768) (function () {
+/* ════════════════════════════════════════════════
+   ROCKET — scroll-driven video scrubbing
+   Controla video.currentTime diretamente via scroll.
+   Sem extração de frames, sem loader, resolução infinita.
+   ════════════════════════════════════════════════ */
+(function () {
   const START_PCT   = 0.20;  // ignora o início estático do vídeo
   const SCROLL_GAIN = 1.6;   // fração do scroll total que rege a animação
   const MAX_DPR     = 2;
@@ -1580,24 +1567,7 @@ if (window.innerWidth > 768) (function () {
 
   resize();
   video.load();
-}());
-
-/* Mobile: flip-book scroll com 4 frames estáticos */
-if (window.innerWidth <= 768) {
-  var frames = document.querySelectorAll('.rf');
-  var lastIdx = 0;
-  function mobileRocket() {
-    var max = document.documentElement.scrollHeight - window.innerHeight;
-    var pct = max <= 0 ? 0 : Math.pow(Math.min((window.scrollY / max) * 1.6, 1), 0.55);
-    var idx = Math.min(Math.floor(pct * frames.length), frames.length - 1);
-    if (idx !== lastIdx) {
-      frames[lastIdx].classList.remove('active');
-      frames[idx].classList.add('active');
-      lastIdx = idx;
-    }
-  }
-  window.addEventListener('scroll', mobileRocket, { passive: true });
-}
+})();
 
 /* ══════════════════════════════════════════
    NAV
