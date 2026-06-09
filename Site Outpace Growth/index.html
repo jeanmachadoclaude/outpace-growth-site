@@ -102,6 +102,17 @@
       image-rendering:-webkit-optimize-contrast;
       image-rendering:auto;
     }
+    #rocket-mobile {
+      display:none;
+      position:absolute; inset:0;
+      width:100%; height:100%; object-fit:cover;
+      opacity:0.58;
+      filter:saturate(1) brightness(0.86) contrast(1.05);
+    }
+    @media(max-width:768px) {
+      #rocket-canvas { display:none; }
+      #rocket-mobile  { display:block; }
+    }
     #rocket-overlay {
       position:absolute; inset:0;
       background:
@@ -906,6 +917,7 @@
   <!-- ROCKET CANVAS BACKGROUND -->
   <div id="rocket-bg">
     <canvas id="rocket-canvas"></canvas>
+    <img id="rocket-mobile" src="images/rocket-ground.jpg" alt="">
     <div id="rocket-overlay"></div>
   </div>
 
@@ -1486,12 +1498,8 @@
   </footer>
 
 <script>
-/* ════════════════════════════════════════════════
-   ROCKET — scroll-driven video scrubbing
-   Controla video.currentTime diretamente via scroll.
-   Sem extração de frames, sem loader, resolução infinita.
-   ════════════════════════════════════════════════ */
-(function () {
+/* ROCKET — desktop only (mobile usa rocket-ground.jpg estático) */
+if (window.innerWidth > 768) (function () {
   const START_PCT   = 0.20;  // ignora o início estático do vídeo
   const SCROLL_GAIN = 1.6;   // fração do scroll total que rege a animação
   const MAX_DPR     = 2;
@@ -1567,7 +1575,7 @@
 
   resize();
   video.load();
-})();
+}());
 
 /* ══════════════════════════════════════════
    NAV
