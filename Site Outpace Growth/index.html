@@ -108,10 +108,10 @@
       width:100%; height:100%; object-fit:cover;
       opacity:0.58;
       filter:saturate(1) brightness(0.86) contrast(1.05);
+      transition: opacity 0.3s ease;
     }
     @media(max-width:768px) {
-      #rocket-canvas { display:none; }
-      #rocket-mobile  { display:block; }
+      #rocket-mobile { display:block; }
     }
     #rocket-overlay {
       position:absolute; inset:0;
@@ -1576,6 +1576,17 @@
   }, { passive: true });
 
   window.addEventListener('resize', () => { resize(); draw(); });
+
+  /* Mobile overlay: cobre o canvas no topo para esconder lag de seek do iOS */
+  (function(){
+    var mo = document.getElementById('rocket-mobile');
+    if (!mo) return;
+    function syncOverlay() {
+      mo.style.opacity = window.scrollY < 60 ? '0.58' : '0';
+    }
+    window.addEventListener('scroll', syncOverlay, { passive: true });
+    syncOverlay();
+  })();
 
   resize();
   video.load();
