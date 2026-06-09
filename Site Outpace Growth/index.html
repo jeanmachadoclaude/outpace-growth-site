@@ -102,18 +102,6 @@
       image-rendering:-webkit-optimize-contrast;
       image-rendering:auto;
     }
-    #rocket-mobile {
-      display:none;
-      position:absolute; inset:0;
-      width:100%; height:100%; object-fit:cover;
-      opacity:0.58;
-      filter:saturate(1) brightness(0.86) contrast(1.05);
-      transition: opacity 0.3s ease;
-    }
-    @media(max-width:768px) {
-      #rocket-mobile { display:block; }
-      #rocket-canvas { transition: opacity 0.3s ease; }
-    }
     #rocket-overlay {
       position:absolute; inset:0;
       background:
@@ -918,7 +906,6 @@
   <!-- ROCKET CANVAS BACKGROUND -->
   <div id="rocket-bg">
     <canvas id="rocket-canvas"></canvas>
-    <img id="rocket-mobile" src="images/rocket-ground.jpg" alt="">
     <div id="rocket-overlay"></div>
   </div>
 
@@ -1577,19 +1564,6 @@
   }, { passive: true });
 
   window.addEventListener('resize', () => { resize(); draw(); });
-
-  /* Mobile overlay: cobre o canvas no topo para esconder lag de seek do iOS */
-  (function(){
-    var mo = document.getElementById('rocket-mobile');
-    if (!mo) return;
-    function syncOverlay() {
-      var atTop = window.scrollY < 60;
-      mo.style.opacity     = atTop ? '0.58' : '0';
-      canvas.style.opacity = atTop ? '0'    : '0.58';
-    }
-    window.addEventListener('scroll', syncOverlay, { passive: true });
-    syncOverlay();
-  })();
 
   resize();
   video.load();
