@@ -1516,7 +1516,7 @@
   }
 
   function draw() {
-    if (!ready) return;
+    if (!ready || video.seeking) return;
     const W = canvas.width, H = canvas.height;
     const vW = video.videoWidth, vH = video.videoHeight;
     const scale = Math.max(W / vW, H / vH);
@@ -1524,6 +1524,8 @@
     ctx.clearRect(0, 0, W, H);
     ctx.drawImage(video, (W - sw) / 2, (H - sh) / 2, sw, sh);
   }
+
+  video.addEventListener('seeked', draw);
 
   function scrollProgress() {
     const max = document.documentElement.scrollHeight - window.innerHeight;
