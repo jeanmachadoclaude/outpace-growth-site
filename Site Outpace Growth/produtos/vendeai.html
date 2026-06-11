@@ -63,7 +63,10 @@
     h1.title{font-size:clamp(44px,6vw,86px);font-weight:900;line-height:1.03;letter-spacing:-3px;margin-bottom:28px;color:var(--cream)}
     h1.title em{font-style:normal;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
     .h-lead{font-size:clamp(17px,1.6vw,20px);color:var(--light);line-height:1.7;max-width:720px;margin-bottom:40px}
-    .h-btns{display:flex;gap:14px;flex-wrap:wrap}
+    .h-btns{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+    .btn-demo{background:transparent;color:var(--gold);padding:16px 34px;border-radius:100px;font-size:14px;font-weight:700;letter-spacing:.5px;border:1.5px solid var(--gold);display:inline-block;transition:background .3s,color .3s}
+    .btn-demo:hover{background:var(--gold);color:#000}
+    .demo-hint{font-size:11px;color:var(--muted);margin-top:12px;letter-spacing:.3px}
     .btn-g{background:var(--gradient);color:#000;padding:16px 38px;border-radius:100px;font-size:14px;font-weight:700;letter-spacing:.5px;display:inline-block;transition:transform .3s,box-shadow .3s}
     .btn-g:hover{transform:translateY(-2px);box-shadow:0 20px 40px rgba(201,168,76,0.28)}
     .btn-o{background:transparent;color:var(--cream);padding:16px 34px;border-radius:100px;font-size:14px;font-weight:700;letter-spacing:.5px;border:1px solid rgba(237,232,219,0.28);display:inline-block;transition:border-color .3s,color .3s}
@@ -135,7 +138,9 @@
       <div class="h-btns">
         <a href="../../formulario/index.html" class="btn-g">Quero me inscrever</a>
         <a href="#deliverables" class="btn-o">Ver recursos</a>
+        <a href="https://www.otpvendeai.com.br/" target="_blank" rel="noopener" class="btn-demo">Acessar Demo</a>
       </div>
+      <p class="demo-hint">* No acesso demo, selecione a opção <strong style="color:var(--gold)">DEMO</strong> para entrar</p>
     </div>
   </section>
 
