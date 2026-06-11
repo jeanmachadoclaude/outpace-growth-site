@@ -350,7 +350,11 @@
       width:40px; height:40px; color:var(--gold); margin-bottom:20px;
     }
     .prog-icon svg { width:100%; height:100%; stroke:currentColor; stroke-width:1.6; fill:none; stroke-linecap:round; stroke-linejoin:round; }
-    .prog-title { font-size:24px; font-weight:800; margin-bottom:14px; letter-spacing:-.4px; color:var(--cream); }
+    .prog-title { font-size:24px; font-weight:800; margin-bottom:14px; letter-spacing:-.4px; color:var(--cream); text-align:center; }
+    .prog-kicker { font-size:11px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--gold); margin-bottom:28px; text-align:center; }
+    .prog-card--featured { border-color:rgba(201,168,76,0.55); background:rgba(14,24,10,0.88); box-shadow:0 0 0 1px rgba(201,168,76,0.18), 0 24px 60px rgba(0,0,0,0.5); }
+    .prog-card--featured .prog-badge { display:inline-block; }
+    .prog-badge { display:none; background:var(--gradient); color:#080f09; font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; padding:4px 12px; border-radius:50px; margin-bottom:16px; align-self:center; }
     .prog-desc { font-size:14px; color:var(--muted); line-height:1.75; margin-bottom:24px; }
     .prog-feats { list-style:none; display:flex; flex-direction:column; gap:11px; margin-bottom:30px; }
     .prog-feats li { font-size:13.5px; color:var(--light); display:flex; align-items:flex-start; gap:10px; line-height:1.55; }
@@ -1070,19 +1074,20 @@
       <p class="ssub rv">Do diagnóstico estratégico à tecnologia que sustenta a operação. Escolha o que seu estágio pede.</p>
     </div>
     <div class="prog-grid">
-      <a href="produtos/advisory.html" class="prog-card rvs">
-        <div class="prog-kicker">Parceria</div>
+      <a href="produtos/vendeai.html" class="prog-card rvs prog-card--featured">
+        <span class="prog-badge">Mais popular</span>
+        <div class="prog-kicker">CRM</div>
         <div class="prog-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
         </div>
-        <h3 class="prog-title">Partner Growth</h3>
-        <p class="prog-desc">Parceria estratégica e operacional: atuamos com CEO, gestores e time para fechar o gap entre decisão e execução.</p>
+        <h3 class="prog-title">VendeAi</h3>
+        <p class="prog-desc">Implementação de CRM, ajuste de funil, automações e playbook, com acompanhamento contínuo para o CRM virar ferramenta de gestão.</p>
         <ul class="prog-feats">
-          <li>Reunião mensal com o CEO</li>
-          <li>Reunião semanal com líderes (KPIs e pipeline)</li>
-          <li>1:1 com vendedores e PDI individual</li>
-          <li>Diagnóstico da operação comercial</li>
-          <li>Playbook e processos documentados</li>
+          <li>Implementação e configuração de CRM</li>
+          <li>Ajustes de funil e critérios de etapa</li>
+          <li>Automações de follow-up e tarefas</li>
+          <li>Playbook por área dentro do CRM</li>
+          <li>Organização de dados e pipeline</li>
           <li>Pagamento por assinatura</li>
         </ul>
         <span class="prog-cta">Acesse a trilha</span>
@@ -1104,19 +1109,19 @@
         </ul>
         <span class="prog-cta">Acesse a trilha</span>
       </a>
-      <a href="produtos/vendeai.html" class="prog-card rvs">
-        <div class="prog-kicker">CRM</div>
+      <a href="produtos/advisory.html" class="prog-card rvs">
+        <div class="prog-kicker">Parceria</div>
         <div class="prog-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
         </div>
-        <h3 class="prog-title">VendeAi</h3>
-        <p class="prog-desc">Implementação de CRM, ajuste de funil, automações e playbook, com acompanhamento contínuo para o CRM virar ferramenta de gestão.</p>
+        <h3 class="prog-title">Partner Growth</h3>
+        <p class="prog-desc">Parceria estratégica e operacional: atuamos com CEO, gestores e time para fechar o gap entre decisão e execução.</p>
         <ul class="prog-feats">
-          <li>Implementação e configuração de CRM</li>
-          <li>Ajustes de funil e critérios de etapa</li>
-          <li>Automações de follow-up e tarefas</li>
-          <li>Playbook por área dentro do CRM</li>
-          <li>Organização de dados e pipeline</li>
+          <li>Reunião mensal com o CEO</li>
+          <li>Reunião semanal com líderes (KPIs e pipeline)</li>
+          <li>1:1 com vendedores e PDI individual</li>
+          <li>Diagnóstico da operação comercial</li>
+          <li>Playbook e processos documentados</li>
           <li>Pagamento por assinatura</li>
         </ul>
         <span class="prog-cta">Acesse a trilha</span>
