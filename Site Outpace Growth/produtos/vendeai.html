@@ -69,7 +69,12 @@
     .btn-demo::after{content:'';position:absolute;inset:0;border-radius:100px;background:linear-gradient(105deg,transparent 40%,rgba(255,220,100,0.55) 50%,transparent 60%);background-size:200% 100%;animation:shine 2.8s linear infinite;pointer-events:none}
     .btn-demo:hover{background:var(--gold);color:#000}
     .btn-demo:hover::after{display:none}
-    .demo-hint{font-size:11px;color:var(--muted);margin-top:12px;letter-spacing:.3px;transition:font-size .3s ease,color .3s ease;min-height:40px;display:flex;align-items:center}
+    .demo-hint{font-size:11px;color:var(--muted);margin-top:12px;letter-spacing:.3px;transition:font-size .3s ease,color .3s ease;min-height:44px;display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+    .hint-demo-word{color:var(--gold);font-weight:800;margin:0 2px;transition:opacity .2s}
+    .hint-demo-btn{display:none;align-items:center;gap:8px;background:#0b122e;border:1.5px solid rgba(80,100,220,0.45);border-radius:50px;padding:7px 18px;color:#c8d0ff;font-size:13px;font-weight:600;letter-spacing:.2px;white-space:nowrap;opacity:0;transition:opacity .25s ease}
+    .demo-hint.expanded{font-size:17px;color:var(--cream)}
+    .demo-hint.expanded .hint-demo-word{display:none}
+    .demo-hint.expanded .hint-demo-btn{display:inline-flex;opacity:1}
     .btn-g{background:var(--gradient);color:#000;padding:16px 38px;border-radius:100px;font-size:14px;font-weight:700;letter-spacing:.5px;display:inline-block;transition:transform .3s,box-shadow .3s}
     .btn-g:hover{transform:translateY(-2px);box-shadow:0 20px 40px rgba(201,168,76,0.28)}
     .btn-o{background:transparent;color:var(--cream);padding:16px 34px;border-radius:100px;font-size:14px;font-weight:700;letter-spacing:.5px;border:1px solid rgba(237,232,219,0.28);display:inline-block;transition:border-color .3s,color .3s}
@@ -144,7 +149,7 @@
         <a href="#deliverables" class="btn-o">Ver recursos</a>
         <a href="https://www.otpvendeai.com.br/" target="_blank" rel="noopener" class="btn-demo">Acessar Demo</a>
       </div>
-      <p class="demo-hint">* No acesso demo, selecione a opção <strong style="color:var(--gold)">DEMO</strong> para entrar</p>
+      <p class="demo-hint">* No acesso demo, selecione a opção <span class="hint-demo-word">DEMO</span><span class="hint-demo-btn">🚀 Entrar em modo demo</span> para entrar</p>
     </div>
   </section>
 
@@ -213,8 +218,8 @@
   const demoBtn=document.querySelector('.btn-demo');
   const demoHint=document.querySelector('.demo-hint');
   if(demoBtn&&demoHint){
-    demoBtn.addEventListener('mouseenter',()=>{demoHint.style.fontSize='33px';demoHint.style.color='var(--cream)'});
-    demoBtn.addEventListener('mouseleave',()=>{demoHint.style.fontSize='';demoHint.style.color=''});
+    demoBtn.addEventListener('mouseenter',()=>demoHint.classList.add('expanded'));
+    demoBtn.addEventListener('mouseleave',()=>demoHint.classList.remove('expanded'));
   }
   </script>
 </body>
