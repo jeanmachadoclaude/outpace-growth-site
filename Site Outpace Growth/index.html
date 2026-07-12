@@ -194,19 +194,6 @@
       text-align:center; padding:100px 6% 80px;
     }
     .hero-inner { max-width:960px; }
-    .hero-badge {
-      display:inline-flex; align-items:center; gap:10px;
-      background:transparent; border:0;
-      padding:0; border-radius:0;
-      font-size:12px; font-weight:700; letter-spacing:3px;
-      text-transform:uppercase; color:var(--gold); margin-bottom:32px;
-    }
-    .hero-badge::before {
-      content:''; width:6px; height:6px;
-      background:var(--gold); border-radius:50%;
-      animation:pulse 2s infinite;
-    }
-    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(1.7)}}
     .hero-h1 {
       font-size:clamp(44px,6.5vw,90px);
       font-weight:900; line-height:1.03; letter-spacing:-3px; margin-bottom:30px;
@@ -256,10 +243,6 @@
 
     /* SECTIONS */
     section { padding:130px 4%; }
-    .slabel {
-      font-size:11px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase;
-      color:var(--gold); margin-bottom:18px;
-    }
     .stitle {
       font-size:clamp(34px,4.5vw,62px); font-weight:900; letter-spacing:-1.5px;
       line-height:1.08; margin-bottom:22px; color:var(--cream);
@@ -297,25 +280,49 @@
 
     /* SERVICES */
     #services { background:rgba(8,15,9,0.68); backdrop-filter:blur(10px); }
-    .srv-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:1px; margin-top:72px; }
-    .srv-card {
-      background:rgba(11,20,12,0.72); padding:52px 40px; backdrop-filter:blur(8px);
-      border:1px solid var(--border2); position:relative; overflow:hidden;
-      transition:background .4s,border-color .4s; text-align:center;
+    /* TRILHA DE SERVIÇOS: linha central, bolinhas numeradas e cards em zigue-zague */
+    .srv-path { position:relative; max-width:980px; margin:72px auto 0; }
+    .srv-path::before {
+      content:''; position:absolute; left:50%; top:26px; bottom:26px; width:1px;
+      transform:translateX(-50%);
+      background:linear-gradient(to bottom,transparent,rgba(201,168,76,.5) 5%,rgba(201,168,76,.5) 95%,transparent);
     }
-    .srv-card:first-child { border-radius:20px 0 0 0; }
-    .srv-card:nth-child(2) { border-radius:0 20px 0 0; }
-    .srv-card:nth-last-child(2){ border-radius:0 0 0 20px; }
-    .srv-card:last-child { border-radius:0 0 20px 0; }
-    .srv-card:hover { background:rgba(16,28,18,0.99); border-color:var(--border); }
-    .srv-icon {
-      width:52px; height:52px; border-radius:14px;
-      background:rgba(201,168,76,0.07); border:1px solid rgba(201,168,76,0.18);
+    .srv-step { position:relative; display:grid; grid-template-columns:1fr 120px 1fr; align-items:center; margin-bottom:18px; }
+    .srv-step:last-child { margin-bottom:0; }
+    /* conector horizontal entre o card e a bolinha */
+    .srv-step::after {
+      content:''; position:absolute; top:50%; height:1px; width:34px;
+      background:rgba(201,168,76,.35);
+    }
+    .srv-step:nth-child(odd)::after  { left:calc(50% - 60px); }
+    .srv-step:nth-child(even)::after { left:calc(50% + 26px); }
+    .srv-dot {
+      grid-column:2; grid-row:1; justify-self:center;
+      width:52px; height:52px; border-radius:50%;
+      background:rgba(11,20,12,0.98); border:1.5px solid var(--gold);
       display:flex; align-items:center; justify-content:center;
-      font-size:22px; margin:0 auto 28px;
+      color:var(--gold); font-family:'Playfair Display',serif; font-size:19px; font-weight:800;
+      box-shadow:0 0 18px rgba(201,168,76,.12); position:relative; z-index:2;
     }
-    .srv-title { font-size:20px; font-weight:700; margin-bottom:12px; letter-spacing:-.3px; color:var(--cream); }
+    .srv-card {
+      grid-row:1;
+      background:rgba(11,20,12,0.9); border:1px solid var(--border); border-radius:18px;
+      padding:28px 30px; backdrop-filter:blur(8px);
+      transition:border-color .3s, transform .3s, box-shadow .3s;
+    }
+    .srv-step:nth-child(odd)  .srv-card { grid-column:1; }
+    .srv-step:nth-child(even) .srv-card { grid-column:3; }
+    .srv-card:hover { border-color:rgba(201,168,76,.45); transform:translateY(-4px); box-shadow:0 0 32px rgba(201,168,76,.12), 0 16px 36px rgba(0,0,0,.4); }
+    .srv-passo { font-size:11px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+    .srv-title { font-size:20px; font-weight:700; margin-bottom:10px; letter-spacing:-.3px; color:var(--cream); }
     .srv-desc { font-size:14px; color:var(--muted); line-height:1.8; }
+    @media(max-width:900px){
+      .srv-path::before { left:26px; transform:none; }
+      .srv-step { display:flex; align-items:flex-start; gap:18px; margin-bottom:22px; }
+      .srv-step::after { display:none; }
+      .srv-dot { flex-shrink:0; }
+      .srv-card { flex:1; }
+    }
 
     /* QUOTE */
     #quote { padding:130px 6%; text-align:center; background:rgba(8,15,9,0.55); backdrop-filter:blur(8px); }
@@ -355,6 +362,49 @@
     .prog-card--featured { border-color:rgba(201,168,76,0.55); background:rgba(14,24,10,0.88); box-shadow:0 0 0 1px rgba(201,168,76,0.18), 0 24px 60px rgba(0,0,0,0.5); }
     .prog-card--featured .prog-badge { display:inline-block; }
     .prog-badge { display:none; background:var(--gradient); color:#080f09; font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; padding:4px 12px; border-radius:50px; margin-bottom:16px; align-self:center; }
+
+    /* ── CARD IA (VendeAI): primeiro CRM com IA que ajuda a fechar venda ── */
+    .prog-card--ai { border-color:transparent; }
+    .prog-card--ai > * { position:relative; z-index:1; }
+    .prog-card--ai::before {
+      content:''; position:absolute; inset:-75%; z-index:0;
+      background:conic-gradient(from 0deg,
+        transparent 0deg, rgba(201,168,76,.9) 40deg, rgba(226,197,106,.35) 80deg,
+        transparent 130deg, transparent 200deg, rgba(201,168,76,.55) 250deg, transparent 300deg);
+      animation:aiSpin 7s linear infinite;
+    }
+    .prog-card--ai::after {
+      content:''; position:absolute; inset:1.5px; z-index:0;
+      border-radius:22.5px; background:rgba(12,21,11,0.97);
+    }
+    @keyframes aiSpin { to { transform:rotate(360deg); } }
+    .ai-pill {
+      position:relative; overflow:hidden;
+      display:inline-flex; align-items:center; gap:8px;
+      align-self:center; margin-bottom:26px; padding:7px 18px;
+      border-radius:50px; background:var(--gradient); color:#080f09;
+      font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase;
+      white-space:nowrap;
+    }
+    .ai-pill::after {
+      content:''; position:absolute; top:0; bottom:0; left:-60%; width:40%;
+      background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);
+      transform:skewX(-20deg); animation:aiSheen 3.2s ease-in-out infinite;
+    }
+    @keyframes aiSheen { 0%{left:-60%} 55%,100%{left:130%} }
+    .prog-icon--ai { animation:aiGlow 2.6s ease-in-out infinite; }
+    @keyframes aiGlow {
+      0%,100% { filter:drop-shadow(0 0 5px rgba(201,168,76,.25)); }
+      50%     { filter:drop-shadow(0 0 14px rgba(201,168,76,.65)); }
+    }
+    .ai-grad {
+      background:var(--gradient); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .prog-ai-line {
+      font-size:16.5px; font-weight:700; color:var(--cream);
+      line-height:1.5; letter-spacing:-.2px; margin-bottom:14px;
+    }
     .prog-desc { font-size:14px; color:var(--muted); line-height:1.75; margin-bottom:24px; }
     .prog-feats { list-style:none; display:flex; flex-direction:column; gap:11px; margin-bottom:30px; }
     .prog-feats li { font-size:13.5px; color:var(--light); display:flex; align-items:flex-start; gap:10px; line-height:1.55; }
@@ -709,12 +759,29 @@
       border-left:2px solid var(--gold); padding-left:18px;
       color:var(--cream); font-size:15px;
     }
-    .quem-tags { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+    .quem-tags { display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
     .quem-tag {
+      display:inline-flex; align-items:center; gap:8px;
       font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
-      color:var(--gold); border:1px solid rgba(201,168,76,0.25);
-      padding:7px 16px; border-radius:100px; background:rgba(201,168,76,0.05);
+      color:var(--light); border:1px solid rgba(201,168,76,0.22);
+      padding:9px 17px; border-radius:100px; background:rgba(201,168,76,0.04);
+      transition:border-color .3s, background .3s, color .3s, transform .3s;
     }
+    .quem-tag::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+    .quem-tag:hover { border-color:rgba(201,168,76,0.5); background:rgba(201,168,76,0.09); color:var(--cream); transform:translateY(-2px); }
+    /* CTA da bio (auto-largura, não estica no flex column) */
+    .quem-cta {
+      align-self:flex-start; margin-top:36px;
+      display:inline-flex; align-items:center; gap:12px;
+      padding:16px 34px; border-radius:100px;
+      background:var(--gradient); color:#080f09;
+      font-size:15px; font-weight:800; letter-spacing:.3px; text-decoration:none;
+      box-shadow:0 8px 40px rgba(201,168,76,0.25);
+      transition:transform .3s, box-shadow .3s;
+    }
+    .quem-cta::after { content:'→'; font-size:17px; line-height:1; transition:transform .3s; }
+    .quem-cta:hover { transform:translateY(-3px); box-shadow:0 20px 60px rgba(201,168,76,0.4); }
+    .quem-cta:hover::after { transform:translateX(5px); }
 
     /* LOGOS (CLIENTES) */
     #logos { padding:100px 6%; }
@@ -815,7 +882,6 @@
     }
     @media(max-width:600px){
       .foot-top{grid-template-columns:1fr;}
-      .srv-grid{grid-template-columns:1fr;}
       .logos-grid{grid-template-columns:repeat(2,1fr);}
       section { padding: 64px 5%; }
       #cta { padding: 80px 5%; }
@@ -954,9 +1020,8 @@
   <!-- HERO -->
   <section id="hero">
     <div class="hero-inner">
-      <div class="hero-badge">Aceleração Comercial</div>
       <h1 class="hero-h1">
-        Times que<br />
+        Treinamos times que<br />
         <span class="word-flip">
           <span class="wf1">ultrapassam</span>
           <span class="wf2">Outpace</span>
@@ -965,7 +1030,7 @@
       </h1>
       <p style="font-size:clamp(13px,1.2vw,15px);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(201,168,76,0.6);margin-bottom:28px;margin-top:-16px;">Só crescer não basta. É preciso ultrapassar a concorrência.</p>
       <p class="hero-p">
-        Treinamos e mentoramos times comerciais e donos de indústrias para escalar vendas com estratégia, método e acompanhamento contínuo.
+        Mentoramos donos de indústrias e treinamos seus times para escalar vendas com estratégia, método e acompanhamento contínuo.
       </p>
       <div class="hero-btns">
         <a href="../formulario/index.html" class="btn-g">Quero acelerar agora</a>
@@ -992,7 +1057,6 @@
         </button>
       </div>
       <div class="rvr">
-        <p class="slabel">Treinamento de Times</p>
         <h2 class="stitle">Seu time pronto para fechar mais</h2>
         <p class="ssub">Desenvolvemos habilidades técnicas e comportamentais do seu time comercial, criando uma máquina de vendas consistente e escalável.</p>
         <ul class="feat-list">
@@ -1026,7 +1090,6 @@
         <img src="images/foto-palestra.png" alt="Palestra e treinamento prático ao vivo" />
       </div>
       <div class="rvl">
-        <p class="slabel">Treinamentos Práticos</p>
         <h2 class="stitle"><span class="flash-gold">Aprendizado</span> que vira resultado</h2>
         <p class="ssub">Palestras e workshops imersivos onde o time vivencia, pratica e aplica as técnicas comerciais em tempo real, saindo pronto para executar no dia seguinte.</p>
         <ul class="feat-list">
@@ -1039,21 +1102,76 @@
     </div>
   </section>
 
-  <!-- SERVICES -->
+  <!-- SERVICES: TRILHA -->
   <section id="services">
     <div>
-      <p class="slabel">Nossos Serviços</p>
-      <h2 class="stitle rv">O que entregamos para o seu negócio</h2>
+      <h2 class="stitle rv" style="text-align:center">O caminho que percorremos com o seu negócio</h2>
     </div>
-    <div class="srv-grid">
-      <div class="srv-card rv"><div class="srv-icon">🎯</div><h3 class="srv-title">Diagnóstico Comercial</h3><p class="srv-desc">Mapeamos gargalos e oportunidades no seu funil de vendas com análise profunda do processo atual.</p></div>
-      <div class="srv-card rv"><div class="srv-icon">🚀</div><h3 class="srv-title">Aceleração de Vendas</h3><p class="srv-desc">Implementamos estratégias de go-to-market e técnicas avançadas para escalar receita rapidamente.</p></div>
-      <div class="srv-card rv"><div class="srv-icon">🏭</div><h3 class="srv-title">Mentoria para Indústrias</h3><p class="srv-desc">Acompanhamento estratégico para donos de indústria construírem operações comerciais de alta performance.</p></div>
-      <div class="srv-card rv"><div class="srv-icon">📊</div><h3 class="srv-title">Gestão de Pipeline</h3><p class="srv-desc">Estruturamos seu CRM e processos de pipeline para visibilidade total e previsibilidade de receita.</p></div>
-      <div class="srv-card rv"><div class="srv-icon">🧠</div><h3 class="srv-title">Liderança Comercial</h3><p class="srv-desc">Formamos líderes de vendas capazes de engajar e inspirar times de alta performance.</p></div>
-      <div class="srv-card rv"><div class="srv-icon">🔄</div><h3 class="srv-title">Acompanhamento Contínuo</h3><p class="srv-desc">Presença ativa no seu negócio com reuniões de ritmo, revisão de metas e ajustes em tempo real.</p></div>
-      <div class="srv-card rv"><div class="srv-icon">📈</div><h3 class="srv-title">Geração de Demanda</h3><p class="srv-desc">Estruturamos a máquina de prospecção ativa do seu negócio, criando fluxo constante e previsível de novas oportunidades.</p></div>
-      <div class="srv-card rv"><div class="srv-icon">💼</div><h3 class="srv-title">Estruturação de Canais</h3><p class="srv-desc">Desenhamos e ativamos redes de distribuidores, representantes e parceiros B2B para ampliar sua capilaridade de vendas.</p></div>
+    <div class="srv-path">
+      <div class="srv-step rv">
+        <div class="srv-dot">1</div>
+        <div class="srv-card">
+          <p class="srv-passo">Passo 1</p>
+          <h3 class="srv-title">Diagnóstico Comercial</h3>
+          <p class="srv-desc">Tudo começa por entender onde você está. Mapeamos gargalos e oportunidades do seu funil com análise profunda do processo atual.</p>
+        </div>
+      </div>
+      <div class="srv-step rv">
+        <div class="srv-dot">2</div>
+        <div class="srv-card">
+          <p class="srv-passo">Passo 2</p>
+          <h3 class="srv-title">Gestão de Pipeline</h3>
+          <p class="srv-desc">Com o diagnóstico na mão, organizamos a casa. CRM e pipeline estruturados para dar visibilidade total e previsibilidade de receita.</p>
+        </div>
+      </div>
+      <div class="srv-step rv">
+        <div class="srv-dot">3</div>
+        <div class="srv-card">
+          <p class="srv-passo">Passo 3</p>
+          <h3 class="srv-title">Geração de Demanda</h3>
+          <p class="srv-desc">Casa em ordem, hora de encher o funil. Montamos sua máquina de prospecção ativa para gerar fluxo constante de oportunidades.</p>
+        </div>
+      </div>
+      <div class="srv-step rv">
+        <div class="srv-dot">4</div>
+        <div class="srv-card">
+          <p class="srv-passo">Passo 4</p>
+          <h3 class="srv-title">Estruturação de Canais</h3>
+          <p class="srv-desc">Seu alcance não precisa parar na sua equipe. Ativamos distribuidores, representantes e parceiros B2B para ampliar a capilaridade de vendas.</p>
+        </div>
+      </div>
+      <div class="srv-step rv">
+        <div class="srv-dot">5</div>
+        <div class="srv-card">
+          <p class="srv-passo">Passo 5</p>
+          <h3 class="srv-title">Aceleração de Vendas</h3>
+          <p class="srv-desc">Com demanda entrando, o jogo é acelerar. Estratégias de go-to-market e técnicas avançadas para escalar receita com ritmo.</p>
+        </div>
+      </div>
+      <div class="srv-step rv">
+        <div class="srv-dot">6</div>
+        <div class="srv-card">
+          <p class="srv-passo">Passo 6</p>
+          <h3 class="srv-title">Liderança Comercial</h3>
+          <p class="srv-desc">Escala só se sustenta com comando. Formamos líderes de vendas que engajam e mantêm o time em alta performance.</p>
+        </div>
+      </div>
+      <div class="srv-step rv">
+        <div class="srv-dot">7</div>
+        <div class="srv-card">
+          <p class="srv-passo">Passo 7</p>
+          <h3 class="srv-title">Mentoria para Indústrias</h3>
+          <p class="srv-desc">O dono participa da construção. Acompanhamento estratégico para donos de indústria decidirem com clareza e visão de operação.</p>
+        </div>
+      </div>
+      <div class="srv-step rv">
+        <div class="srv-dot">8</div>
+        <div class="srv-card">
+          <p class="srv-passo">Passo 8</p>
+          <h3 class="srv-title">Acompanhamento Contínuo</h3>
+          <p class="srv-desc">E o ritmo não se perde no caminho. Presença ativa com reuniões de rotina, revisão de metas e ajustes em tempo real.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1069,35 +1187,29 @@
   <!-- PRODUTOS -->
   <section id="programs">
     <div class="prog-header">
-      <p class="slabel">Produtos</p>
       <h2 class="stitle rv">Três <em style="font-style:normal;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">produtos</em>, para uma máquina de vendas completa</h2>
       <p class="ssub rv">Do diagnóstico estratégico à tecnologia que sustenta a operação. Escolha o que seu estágio pede.</p>
     </div>
     <div id="prog-cards" class="prog-grid" style="scroll-margin-top:80px">
-      <a href="produtos/vendeai.html" class="prog-card rvs prog-card--featured">
-        <span class="prog-badge">Mais popular</span>
-        <div class="prog-kicker">CRM</div>
-        <div class="prog-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-        </div>
-        <h3 class="prog-title">VendeAi</h3>
-        <p class="prog-desc">Implementação de CRM, ajuste de funil, automações e playbook, com acompanhamento contínuo para o CRM virar ferramenta de gestão.</p>
+      <a href="produtos/vendeai.html" class="prog-card rvs prog-card--featured prog-card--ai">
+        <span class="ai-pill">✦ Primeiro CRM com IA</span>
+        <h3 class="prog-title">Vende<span class="ai-grad">Ai</span></h3>
+        <p class="prog-ai-line">A IA que ajuda seu time a <span class="ai-grad">fechar vendas</span>.</p>
+        <p class="prog-desc">Implementação completa com funil ajustado, automações e playbook. A IA acompanha cada negociação e o CRM vira máquina de fechamento.</p>
         <ul class="prog-feats">
+          <li>IA que sugere o próximo passo de cada negociação</li>
+          <li>Follow-ups e tarefas automáticas na hora certa</li>
           <li>Implementação e configuração de CRM</li>
-          <li>Ajustes de funil e critérios de etapa</li>
-          <li>Automações de follow-up e tarefas</li>
-          <li>Playbook por área dentro do CRM</li>
+          <li>Funil ajustado e critérios de etapa</li>
           <li>Organização de dados e pipeline</li>
           <li>Pagamento por assinatura</li>
         </ul>
         <span class="prog-cta">Acesse a trilha</span>
       </a>
       <a href="produtos/growth.html" class="prog-card rvs">
-        <div class="prog-kicker">Time Comercial</div>
-        <div class="prog-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        </div>
-        <h3 class="prog-title">SellAs Growth</h3>
+        <div class="prog-kicker">Para seu time</div>
+        <h3 class="prog-title">SellAs <span class="ai-grad">Growth</span></h3>
+        <p class="prog-ai-line">O método que faz seu time <span class="ai-grad">vender com consistência</span>.</p>
         <p class="prog-desc">Foco no time comercial: reuniões quinzenais, playbook de vendas e acompanhamento por assinatura para melhorar execução e conversão.</p>
         <ul class="prog-feats">
           <li>Reunião quinzenal com o time comercial</li>
@@ -1110,11 +1222,9 @@
         <span class="prog-cta">Acesse a trilha</span>
       </a>
       <a href="produtos/advisory.html" class="prog-card rvs">
-        <div class="prog-kicker">Parceria</div>
-        <div class="prog-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
-        </div>
-        <h3 class="prog-title">Partner Growth</h3>
+        <div class="prog-kicker">Para o dono</div>
+        <h3 class="prog-title">Partner <span class="ai-grad">Growth</span></h3>
+        <p class="prog-ai-line">A parceria que conecta <span class="ai-grad">decisão e execução</span>.</p>
         <p class="prog-desc">Parceria estratégica e operacional: atuamos com CEO, gestores e time para fechar o gap entre decisão e execução.</p>
         <ul class="prog-feats">
           <li>Reunião mensal com o CEO</li>
@@ -1133,7 +1243,6 @@
   <section id="comparativo">
     <div class="cmp-wrap">
       <div class="cmp-head-block">
-        <p class="slabel rv">Comparativo</p>
         <h2 class="stitle rv">Qual programa é o certo<br/><em>para o seu momento?</em></h2>
         <p class="ssub rv">Cada produto foi desenhado para um estágio diferente do negócio. Veja o que está incluído em cada um e escolha com clareza.</p>
       </div>
@@ -1148,11 +1257,11 @@
             <p class="cmp-pname">VendeAi</p>
           </div>
           <div class="cmp-col cmp-ph">
-            <p class="cmp-ptag">Time Comercial</p>
+            <p class="cmp-ptag">Para seu time</p>
             <p class="cmp-pname">SellAs Growth</p>
           </div>
           <div class="cmp-col cmp-ph partner-col-head">
-            <p class="cmp-ptag">Parceria</p>
+            <p class="cmp-ptag">Para o dono</p>
             <p class="cmp-pname featured">Partner Growth</p>
           </div>
         </div>
@@ -1273,7 +1382,6 @@
         <img src="images/foto-google-meet.png" alt="Mentoria estratégica ao vivo por videoconferência" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&q=80'" />
       </div>
       <div class="rvl">
-        <p class="slabel">Mentoria para Donos de Indústria</p>
         <h2 class="stitle"><span class="flash-gold">Estratégia</span> que move indústrias</h2>
         <p class="ssub">Trabalhamos lado a lado com donos de indústrias para construir uma visão comercial sólida, times preparados e processos que sustentam o crescimento.</p>
         <ul class="feat-list">
@@ -1300,7 +1408,6 @@
         </div>
       </div>
       <div class="quem-bio rvr">
-        <p class="slabel">Quem sou eu</p>
         <h2 class="stitle">O <span class="flash-gold">estrategista</span> por trás da aceleração</h2>
         <p style="font-size:clamp(15px,1.4vw,18px);font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:-10px 0 14px;">De promotor a mentor</p>
         <p class="lead">Sou especialista em crescimento comercial B2B, diretor comercial e mentor de diversos empresários da indústria.</p>
@@ -1316,7 +1423,7 @@
           <span class="quem-tag">18 Anos de Experiência</span>
           <span class="quem-tag">Gestão de Times</span>
         </div>
-        <a href="../formulario/index.html" class="btn-g" style="display:inline-block;margin-top:40px;">Quero trabalhar com você</a>
+        <a href="../formulario/index.html" class="quem-cta">Quero trabalhar com você</a>
       </div>
     </div>
   </section>
@@ -1324,7 +1431,6 @@
   <!-- PROCESS -->
   <section id="process">
     <div class="proc-header">
-      <p class="slabel">Nosso Processo</p>
       <h2 class="stitle rv">Do diagnóstico à transformação</h2>
     </div>
     <div class="proc-steps">
@@ -1338,7 +1444,6 @@
   <!-- TESTIMONIALS -->
   <section id="testi">
     <div class="testi-header">
-      <p class="slabel">Prova Real</p>
       <h2 class="stitle rv">O que dizem quem já <span class="word-flip-sm"><span class="wf1">ultrapassou</span><span class="wf2">Outpace</span></span></h2>
     </div>
     <div class="testi-grid">
@@ -1390,7 +1495,6 @@
   <!-- LOGOS CLIENTES -->
   <section id="logos">
     <div class="logos-header">
-      <p class="slabel">Quem já acelerou com a Outpace</p>
       <h2 class="stitle rv">Empresas que escolheram crescer<br /><em>com método</em></h2>
       <p class="ssub rv" style="margin:0 auto;text-align:center;">Indústrias, distribuidoras e empresas B2B que transformaram seus resultados comerciais.</p>
     </div>
@@ -1641,7 +1745,6 @@ window.addEventListener('scroll',()=>nav.classList.toggle('sc',scrollY>60));
    GSAP
 ══════════════════════════════════════════ */
 gsap.registerPlugin(ScrollTrigger);
-gsap.from('.hero-badge',{opacity:0,y:20,duration:.8,delay:.35,ease:'power3.out'});
 gsap.from('.hero-h1',  {opacity:0,y:44,duration:1, delay:.55,ease:'power3.out'});
 gsap.from('.hero-p',   {opacity:0,y:30,duration:.9,delay:.75,ease:'power3.out'});
 gsap.from('.hero-btns',{opacity:0,y:28,duration:.9,delay:.95,ease:'power3.out'});
