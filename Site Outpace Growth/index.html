@@ -282,13 +282,15 @@
     #services { background:rgba(8,15,9,0.68); backdrop-filter:blur(10px); }
     /* TRILHA DE SERVIÇOS: linha central, bolinhas numeradas e cards em zigue-zague */
     .srv-path { position:relative; max-width:980px; margin:72px auto 0; }
-    .srv-path::before {
-      content:''; position:absolute; left:50%; top:26px; bottom:26px; width:1px;
-      transform:translateX(-50%);
-      background:linear-gradient(to bottom,transparent,rgba(201,168,76,.5) 5%,rgba(201,168,76,.5) 95%,transparent);
-    }
     .srv-step { position:relative; display:grid; grid-template-columns:1fr 120px 1fr; align-items:center; margin-bottom:18px; }
     .srv-step:last-child { margin-bottom:0; }
+    /* linha da trilha em segmentos por passo: cada trecho esfumaça junto com o card no scroll */
+    .srv-step::before {
+      content:''; position:absolute; left:50%; top:0; bottom:-18px; width:1px;
+      transform:translateX(-50%); background:rgba(201,168,76,.5); z-index:0; pointer-events:none;
+    }
+    .srv-step:first-child::before { top:50%; }
+    .srv-step:last-child::before  { top:0; bottom:auto; height:50%; }
     /* conector horizontal entre o card e a bolinha */
     .srv-step::after {
       content:''; position:absolute; top:50%; height:1px; width:34px;
@@ -317,8 +319,10 @@
     .srv-title { font-size:20px; font-weight:700; margin-bottom:10px; letter-spacing:-.3px; color:var(--cream); }
     .srv-desc { font-size:14px; color:var(--muted); line-height:1.8; }
     @media(max-width:900px){
-      .srv-path::before { left:26px; transform:none; }
       .srv-step { display:flex; align-items:flex-start; gap:18px; margin-bottom:22px; }
+      .srv-step::before { left:26px; top:0; bottom:-22px; transform:none; }
+      .srv-step:first-child::before { top:26px; }
+      .srv-step:last-child::before { top:0; bottom:auto; height:26px; }
       .srv-step::after { display:none; }
       .srv-dot { flex-shrink:0; }
       .srv-card { flex:1; }
@@ -1883,15 +1887,15 @@ document.querySelectorAll('.nv[data-target]').forEach(el=>io.observe(el));
   <!-- Trilha de serviços: cards se materializam e esfumaçam ao chegar na base da tela -->
   <script>
   (function(){
-    const cards = Array.prototype.slice.call(document.querySelectorAll('.srv-card'));
+    const cards = Array.prototype.slice.call(document.querySelectorAll('.srv-step'));
     if(!cards.length) return;
     cards.forEach(function(c){ c.style.willChange = 'opacity, filter'; });
     let ticking = false;
     function update(){
       ticking = false;
       const vh = window.innerHeight;
-      const fadeStart = vh * 0.55;   // topo do card acima disso: nítido
-      const fadeEnd   = vh * 0.82;   // topo do card abaixo disso: sumiu
+      const fadeStart = vh * 0.72;   // topo do passo acima disso: nítido
+      const fadeEnd   = vh * 0.95;   // topo do passo abaixo disso: sumiu
       for(let i=0;i<cards.length;i++){
         const c = cards[i];
         const top = c.getBoundingClientRect().top;
