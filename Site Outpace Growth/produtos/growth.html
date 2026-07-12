@@ -114,8 +114,8 @@
     .tl-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
     /* ROW TOP */
     .tl-row-top{align-items:flex-end}
-    .tl-slot-top{display:flex;flex-direction:column;align-items:center}
-    .tl-slot-top .tl-card{margin-bottom:0;width:100%}
+    .tl-slot-top{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;position:relative}
+    .tl-slot-top .tl-card{position:absolute;bottom:26px;left:0;right:0}
     .tl-slot-top .tl-conn{margin-top:0}
     .tl-slot-empty{visibility:hidden}
     /* ROW MID */
@@ -124,16 +124,28 @@
     .tl-node{display:flex;justify-content:center;align-items:center;padding:10px 0;position:relative;z-index:2}
     /* ROW BOT */
     .tl-row-bot{align-items:flex-start}
-    .tl-slot-bot{display:flex;flex-direction:column;align-items:center}
-    .tl-slot-bot .tl-card{margin-top:0;width:100%}
+    .tl-slot-bot{display:flex;flex-direction:column;align-items:center;position:relative}
+    .tl-slot-bot .tl-card{position:absolute;top:26px;left:0;right:0}
     /* SHARED */
     .tl-conn{width:1px;height:26px;background:rgba(201,168,76,.35);flex-shrink:0}
     .tl-dot{width:52px;height:52px;border-radius:50%;background:rgba(11,20,12,0.98);border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold);font-family:'Playfair Display',serif;font-size:19px;font-weight:800;box-shadow:0 0 18px rgba(201,168,76,.12)}
-    .tl-card{background:rgba(11,20,12,0.9);border:1px solid var(--border);border-radius:18px;padding:22px 14px;text-align:center;transition:border-color .3s,transform .3s}
-    .tl-card:hover{border-color:rgba(201,168,76,.32);transform:translateY(-3px)}
-    .tl-mes{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
-    .tl-title{font-size:15px;font-weight:800;color:var(--cream);margin-bottom:8px;letter-spacing:-.2px;line-height:1.2}
-    .tl-desc{font-size:12px;color:var(--muted);line-height:1.65}
+    .tl-card{background:rgba(11,20,12,0.9);border:1px solid var(--border);border-radius:18px;padding:22px 14px;text-align:center;cursor:pointer;transition:border-color .3s,transform .3s,box-shadow .3s,background .3s,left .5s cubic-bezier(.4,0,.2,1),right .5s cubic-bezier(.4,0,.2,1),padding .5s cubic-bezier(.4,0,.2,1)}
+    .tl-card:hover{border-color:rgba(201,168,76,.45);transform:translateY(-4px);background:rgba(13,24,15,.97);box-shadow:0 0 32px rgba(201,168,76,.14),0 16px 36px rgba(0,0,0,.4)}
+    .tl-why{display:grid;grid-template-rows:0fr;opacity:0;margin-top:0;padding-top:0;border-top:1px solid transparent;transition:grid-template-rows .5s cubic-bezier(.4,0,.2,1),opacity .35s ease,margin-top .5s cubic-bezier(.4,0,.2,1),padding-top .5s cubic-bezier(.4,0,.2,1),border-color .3s}
+    .tl-why>p{overflow:hidden;font-size:13px;line-height:1.6;color:var(--light)}
+    .tl-card:hover .tl-why{grid-template-rows:1fr;opacity:1;margin-top:12px;padding-top:12px;border-top-color:rgba(201,168,76,.2)}
+    /* no hover o card vira overlay ancorado na linha do tempo: expande sem deslocar o layout */
+    /* left/right negativos alargam o card pros lados, distribuindo o texto em menos altura */
+    #trilha-meses .sec-head{padding-bottom:28px}
+    /* cards sempre absolutos ancorados na linha: expansão anima left/right sem mexer no layout */
+    .tl-slot-top .tl-card:hover{left:-40%;right:-40%;z-index:20;padding:22px 20px;transform:none}
+    .tl-slot-bot .tl-card:hover{left:-40%;right:-40%;z-index:20;padding:22px 20px;transform:none}
+    /* cards das pontas expandem menos pra fora, pra não estourar a tela */
+    .tl-row-top .tl-slot-top:first-child .tl-card:hover{left:-20%;right:-60%}
+    .tl-row-bot .tl-slot-bot:last-of-type .tl-card:hover{left:-60%;right:-20%}
+    .tl-mes{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+    .tl-title{font-size:17px;font-weight:800;color:var(--cream);margin-bottom:8px;letter-spacing:-.2px;line-height:1.2}
+    .tl-desc{font-size:13px;color:var(--muted);line-height:1.65}
 
     /* MOBILE TIMELINE */
     .tl-mobile{display:none}
@@ -152,6 +164,9 @@
       .tl-m-card .tl-mes{text-align:left;margin-bottom:6px}
       .tl-m-card .tl-title{text-align:left;font-size:16px}
       .tl-m-card .tl-desc{text-align:left;font-size:13px}
+      /* no mobile não há hover: a importância fica sempre visível */
+      .tl-m-card .tl-why{grid-template-rows:1fr;opacity:1;margin-top:10px;padding-top:10px;border-top-color:rgba(201,168,76,.15)}
+      .tl-m-card .tl-why>p{text-align:left;font-size:12.5px}
     }
   </style>
 </head>
@@ -185,7 +200,7 @@
       <div class="sec-head">
         <p class="sec-kicker">Trilha SellAs Growth</p>
         <h2 class="sec-title">6 meses de capacitação comercial</h2>
-        <p class="sec-sub">Da definição de quem compra até o domínio do fechamento — um módulo por mês, com progressão lógica e aplicação imediata na operação.</p>
+        <p class="sec-sub">Da definição de quem compra até o domínio do fechamento: um módulo por mês, com progressão lógica e aplicação imediata na operação.</p>
       </div>
       <div class="tl-outer">
 
@@ -196,6 +211,7 @@
               <p class="tl-mes">Mês 1</p>
               <h4 class="tl-title">ICP</h4>
               <p class="tl-desc">Pra quem vendemos: perfil ideal, fit e critérios de entrada</p>
+              <div class="tl-why"><p>Sem clareza de quem compra, o time gasta energia com quem nunca vai fechar. É o alicerce da trilha: todas as etapas seguintes se constroem sobre essa definição.</p></div>
             </div>
             <div class="tl-conn"></div>
           </div>
@@ -205,6 +221,7 @@
               <p class="tl-mes">Mês 3</p>
               <h4 class="tl-title">NABT</h4>
               <p class="tl-desc">Como qualificamos: critérios de avanço e filtro de oportunidade</p>
+              <div class="tl-why"><p>Pipeline cheio não é pipeline bom. Qualificar com critério evita meses perdidos com quem nunca ia fechar e dá previsibilidade real ao funil.</p></div>
             </div>
             <div class="tl-conn"></div>
           </div>
@@ -214,6 +231,7 @@
               <p class="tl-mes">Mês 5</p>
               <h4 class="tl-title">ROI</h4>
               <p class="tl-desc">Como geramos valor: demonstração de retorno e justificativa</p>
+              <div class="tl-why"><p>Decisor compra retorno, não recurso. Mostrar ROI em números transforma a proposta em investimento justificável e acelera a decisão.</p></div>
             </div>
             <div class="tl-conn"></div>
           </div>
@@ -239,6 +257,7 @@
               <p class="tl-mes">Mês 2</p>
               <h4 class="tl-title">Apresentação + PV</h4>
               <p class="tl-desc">Como abordamos: pitch, proposta de valor e diferenciação</p>
+              <div class="tl-why"><p>A primeira conversa define se o negócio avança. Um pitch com proposta de valor clara diferencia sua empresa antes do preço entrar em pauta.</p></div>
             </div>
           </div>
           <div class="tl-slot-empty"><div class="tl-card"><p class="tl-mes">-</p></div></div>
@@ -248,6 +267,7 @@
               <p class="tl-mes">Mês 4</p>
               <h4 class="tl-title">SPIN</h4>
               <p class="tl-desc">Como sondamos: perguntas que revelam dor e constroem valor</p>
+              <div class="tl-why"><p>Quem pergunta certo vende mais. A sondagem estruturada revela a dor real do cliente e constrói o valor da solução antes da proposta.</p></div>
             </div>
           </div>
           <div class="tl-slot-empty"><div class="tl-card"><p class="tl-mes">-</p></div></div>
@@ -257,6 +277,7 @@
               <p class="tl-mes">Mês 6</p>
               <h4 class="tl-title">FUP e Fechamento</h4>
               <p class="tl-desc">Como criamos urgência nos decisores e avançamos o negócio</p>
+              <div class="tl-why"><p>Negócio parado esfria. Follow-up com método mantém o decisor engajado, cria urgência genuína e transforma o "quase" em contrato assinado.</p></div>
             </div>
           </div>
         </div>
@@ -271,6 +292,7 @@
             <p class="tl-mes">Mês 1</p>
             <h4 class="tl-title">ICP</h4>
             <p class="tl-desc">Pra quem vendemos: perfil ideal, fit e critérios de entrada</p>
+            <div class="tl-why"><p>Sem clareza de quem compra, o time gasta energia com quem nunca vai fechar. É o alicerce da trilha: todas as etapas seguintes se constroem sobre essa definição.</p></div>
           </div>
         </div>
         <div class="tl-m-item">
@@ -279,6 +301,7 @@
             <p class="tl-mes">Mês 2</p>
             <h4 class="tl-title">Apresentação + PV</h4>
             <p class="tl-desc">Como abordamos: pitch, proposta de valor e diferenciação</p>
+            <div class="tl-why"><p>A primeira conversa define se o negócio avança. Um pitch com proposta de valor clara diferencia sua empresa antes do preço entrar em pauta.</p></div>
           </div>
         </div>
         <div class="tl-m-item">
@@ -287,6 +310,7 @@
             <p class="tl-mes">Mês 3</p>
             <h4 class="tl-title">NABT</h4>
             <p class="tl-desc">Como qualificamos: critérios de avanço e filtro de oportunidade</p>
+            <div class="tl-why"><p>Pipeline cheio não é pipeline bom. Qualificar com critério evita meses perdidos com quem nunca ia fechar e dá previsibilidade real ao funil.</p></div>
           </div>
         </div>
         <div class="tl-m-item">
@@ -295,6 +319,7 @@
             <p class="tl-mes">Mês 4</p>
             <h4 class="tl-title">SPIN</h4>
             <p class="tl-desc">Como sondamos: perguntas que revelam dor e constroem valor</p>
+            <div class="tl-why"><p>Quem pergunta certo vende mais. A sondagem estruturada revela a dor real do cliente e constrói o valor da solução antes da proposta.</p></div>
           </div>
         </div>
         <div class="tl-m-item">
@@ -303,6 +328,7 @@
             <p class="tl-mes">Mês 5</p>
             <h4 class="tl-title">ROI</h4>
             <p class="tl-desc">Como geramos valor: demonstração de retorno e justificativa</p>
+            <div class="tl-why"><p>Decisor compra retorno, não recurso. Mostrar ROI em números transforma a proposta em investimento justificável e acelera a decisão.</p></div>
           </div>
         </div>
         <div class="tl-m-item">
@@ -311,6 +337,7 @@
             <p class="tl-mes">Mês 6</p>
             <h4 class="tl-title">FUP e Fechamento</h4>
             <p class="tl-desc">Como criamos urgência nos decisores e avançamos o negócio</p>
+            <div class="tl-why"><p>Negócio parado esfria. Follow-up com método mantém o decisor engajado, cria urgência genuína e transforma o "quase" em contrato assinado.</p></div>
           </div>
         </div>
       </div>
@@ -381,6 +408,21 @@
   <script>
   const nav=document.getElementById('nav');
   window.addEventListener('scroll',()=>nav.classList.toggle('sc',scrollY>40));
+
+  // iguala a altura dos cards da timeline e dá altura aos slots (os cards são absolutos)
+  function equalizeTlCards(){
+    const slots=[...document.querySelectorAll('.tl-slot-top, .tl-slot-bot')];
+    const cards=[...document.querySelectorAll('.tl-slot-top .tl-card, .tl-slot-bot .tl-card')];
+    cards.forEach(c=>c.style.minHeight='');
+    const max=Math.max(...cards.filter(c=>!c.matches(':hover')).map(c=>c.offsetHeight));
+    if(max<=0)return;
+    cards.forEach(c=>c.style.minHeight=max+'px');
+    slots.forEach(s=>s.style.height=(max+26)+'px');
+  }
+  equalizeTlCards();
+  window.addEventListener('load',equalizeTlCards);
+  window.addEventListener('resize',equalizeTlCards);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(equalizeTlCards);
   </script>
 </body>
 </html>
