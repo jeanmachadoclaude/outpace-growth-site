@@ -1028,7 +1028,7 @@
         </span><br />
         resultados
       </h1>
-      <p style="font-size:clamp(13px,1.2vw,15px);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(201,168,76,0.6);margin-bottom:28px;margin-top:-16px;">Só crescer não basta. É preciso ultrapassar a concorrência.</p>
+      <p style="font-size:clamp(13px,1.2vw,15px);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(201,168,76,0.6);margin-bottom:28px;margin-top:4px;">Só crescer não basta. É preciso ultrapassar a concorrência.</p>
       <p class="hero-p">
         Mentoramos donos de indústrias e treinamos seus times para escalar vendas com estratégia, método e acompanhamento contínuo.
       </p>
@@ -1108,7 +1108,7 @@
       <h2 class="stitle rv" style="text-align:center">O caminho que percorremos com o seu negócio</h2>
     </div>
     <div class="srv-path">
-      <div class="srv-step rv">
+      <div class="srv-step">
         <div class="srv-dot">1</div>
         <div class="srv-card">
           <p class="srv-passo">Passo 1</p>
@@ -1116,7 +1116,7 @@
           <p class="srv-desc">Tudo começa por entender onde você está. Mapeamos gargalos e oportunidades do seu funil com análise profunda do processo atual.</p>
         </div>
       </div>
-      <div class="srv-step rv">
+      <div class="srv-step">
         <div class="srv-dot">2</div>
         <div class="srv-card">
           <p class="srv-passo">Passo 2</p>
@@ -1124,7 +1124,7 @@
           <p class="srv-desc">Com o diagnóstico na mão, organizamos a casa. CRM e pipeline estruturados para dar visibilidade total e previsibilidade de receita.</p>
         </div>
       </div>
-      <div class="srv-step rv">
+      <div class="srv-step">
         <div class="srv-dot">3</div>
         <div class="srv-card">
           <p class="srv-passo">Passo 3</p>
@@ -1132,7 +1132,7 @@
           <p class="srv-desc">Casa em ordem, hora de encher o funil. Montamos sua máquina de prospecção ativa para gerar fluxo constante de oportunidades.</p>
         </div>
       </div>
-      <div class="srv-step rv">
+      <div class="srv-step">
         <div class="srv-dot">4</div>
         <div class="srv-card">
           <p class="srv-passo">Passo 4</p>
@@ -1140,7 +1140,7 @@
           <p class="srv-desc">Seu alcance não precisa parar na sua equipe. Ativamos distribuidores, representantes e parceiros B2B para ampliar a capilaridade de vendas.</p>
         </div>
       </div>
-      <div class="srv-step rv">
+      <div class="srv-step">
         <div class="srv-dot">5</div>
         <div class="srv-card">
           <p class="srv-passo">Passo 5</p>
@@ -1148,7 +1148,7 @@
           <p class="srv-desc">Com demanda entrando, o jogo é acelerar. Estratégias de go-to-market e técnicas avançadas para escalar receita com ritmo.</p>
         </div>
       </div>
-      <div class="srv-step rv">
+      <div class="srv-step">
         <div class="srv-dot">6</div>
         <div class="srv-card">
           <p class="srv-passo">Passo 6</p>
@@ -1156,7 +1156,7 @@
           <p class="srv-desc">Escala só se sustenta com comando. Formamos líderes de vendas que engajam e mantêm o time em alta performance.</p>
         </div>
       </div>
-      <div class="srv-step rv">
+      <div class="srv-step">
         <div class="srv-dot">7</div>
         <div class="srv-card">
           <p class="srv-passo">Passo 7</p>
@@ -1164,7 +1164,7 @@
           <p class="srv-desc">O dono participa da construção. Acompanhamento estratégico para donos de indústria decidirem com clareza e visão de operação.</p>
         </div>
       </div>
-      <div class="srv-step rv">
+      <div class="srv-step">
         <div class="srv-dot">8</div>
         <div class="srv-card">
           <p class="srv-passo">Passo 8</p>
@@ -1878,6 +1878,45 @@ document.querySelectorAll('.nv[data-target]').forEach(el=>io.observe(el));
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeVideoModal();
     });
+  </script>
+
+  <!-- Trilha de serviços: cards se materializam e esfumaçam ao chegar na base da tela -->
+  <script>
+  (function(){
+    const cards = Array.prototype.slice.call(document.querySelectorAll('.srv-card'));
+    if(!cards.length) return;
+    cards.forEach(function(c){ c.style.willChange = 'opacity, filter'; });
+    let ticking = false;
+    function update(){
+      ticking = false;
+      const vh = window.innerHeight;
+      const fadeStart = vh * 0.55;   // topo do card acima disso: nítido
+      const fadeEnd   = vh * 0.82;   // topo do card abaixo disso: sumiu
+      for(let i=0;i<cards.length;i++){
+        const c = cards[i];
+        const top = c.getBoundingClientRect().top;
+        let p = (top - fadeStart) / (fadeEnd - fadeStart);
+        p = p < 0 ? 0 : (p > 1 ? 1 : p);
+        if(p <= 0){
+          c.style.opacity = '';
+          c.style.filter = '';
+          c.style.webkitMaskImage = '';
+          c.style.maskImage = '';
+        } else {
+          c.style.opacity = (1 - p).toFixed(3);
+          c.style.filter = 'blur(' + (p * 9).toFixed(2) + 'px)';
+          const stop = Math.round((1 - p) * 100);
+          const g = 'linear-gradient(to bottom, #000 ' + stop + '%, transparent 100%)';
+          c.style.webkitMaskImage = g;
+          c.style.maskImage = g;
+        }
+      }
+    }
+    function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll);
+    update();
+  })();
   </script>
 </body>
 </html>
