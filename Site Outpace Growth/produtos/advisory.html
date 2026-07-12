@@ -122,23 +122,38 @@
     #trilha-meses{background:rgba(8,15,9,0.62);backdrop-filter:blur(10px)}
     .tl-outer{max-width:1080px;margin:0 auto}
     .tl-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+    /* ROW TOP */
     .tl-row-top{align-items:flex-end}
-    .tl-slot-top{display:flex;flex-direction:column;align-items:center}
-    .tl-slot-top .tl-card{width:100%}
+    .tl-slot-top{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;position:relative}
+    .tl-slot-top .tl-card{position:absolute;bottom:26px;left:0;right:0}
+    .tl-slot-top .tl-conn{margin-top:0}
     .tl-slot-empty{visibility:hidden}
+    /* ROW MID */
     .tl-row-mid{position:relative;align-items:center}
     .tl-row-mid::before{content:'';position:absolute;top:50%;left:26px;right:26px;height:1px;background:linear-gradient(to right,transparent,rgba(201,168,76,.5) 8%,rgba(201,168,76,.5) 92%,transparent);transform:translateY(-50%);pointer-events:none}
     .tl-node{display:flex;justify-content:center;align-items:center;padding:10px 0;position:relative;z-index:2}
+    /* ROW BOT */
     .tl-row-bot{align-items:flex-start}
-    .tl-slot-bot{display:flex;flex-direction:column;align-items:center}
-    .tl-slot-bot .tl-card{width:100%}
+    .tl-slot-bot{display:flex;flex-direction:column;align-items:center;position:relative}
+    .tl-slot-bot .tl-card{position:absolute;top:26px;left:0;right:0}
+    /* SHARED */
     .tl-conn{width:1px;height:26px;background:rgba(201,168,76,.35);flex-shrink:0}
     .tl-dot{width:52px;height:52px;border-radius:50%;background:rgba(11,20,12,0.98);border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold);font-family:'Playfair Display',serif;font-size:19px;font-weight:800;box-shadow:0 0 18px rgba(201,168,76,.12)}
-    .tl-card{background:rgba(11,20,12,0.9);border:1px solid var(--border);border-radius:18px;padding:22px 14px;text-align:center;transition:border-color .3s,transform .3s}
-    .tl-card:hover{border-color:rgba(201,168,76,.32);transform:translateY(-3px)}
-    .tl-mes{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
-    .tl-title{font-size:15px;font-weight:800;color:var(--cream);margin-bottom:8px;letter-spacing:-.2px;line-height:1.2}
-    .tl-desc{font-size:12px;color:var(--muted);line-height:1.65}
+    .tl-card{background:rgba(11,20,12,0.9);border:1px solid var(--border);border-radius:18px;padding:22px 14px;text-align:center;cursor:pointer;transition:border-color .3s,transform .3s,box-shadow .3s,background .3s,left .5s cubic-bezier(.4,0,.2,1),right .5s cubic-bezier(.4,0,.2,1),padding .5s cubic-bezier(.4,0,.2,1)}
+    .tl-card:hover{border-color:rgba(201,168,76,.45);transform:translateY(-4px);background:rgba(13,24,15,.97);box-shadow:0 0 32px rgba(201,168,76,.14),0 16px 36px rgba(0,0,0,.4)}
+    .tl-why{display:grid;grid-template-rows:0fr;opacity:0;margin-top:0;padding-top:0;border-top:1px solid transparent;transition:grid-template-rows .5s cubic-bezier(.4,0,.2,1),opacity .35s ease,margin-top .5s cubic-bezier(.4,0,.2,1),padding-top .5s cubic-bezier(.4,0,.2,1),border-color .3s}
+    .tl-why>p{overflow:hidden;font-size:13px;line-height:1.6;color:var(--light)}
+    .tl-card:hover .tl-why{grid-template-rows:1fr;opacity:1;margin-top:12px;padding-top:12px;border-top-color:rgba(201,168,76,.2)}
+    #trilha-meses .sec-head{padding-bottom:28px}
+    /* cards sempre absolutos ancorados na linha: expansão anima left/right sem mexer no layout */
+    .tl-slot-top .tl-card:hover{left:-40%;right:-40%;z-index:20;padding:22px 20px;transform:none}
+    .tl-slot-bot .tl-card:hover{left:-40%;right:-40%;z-index:20;padding:22px 20px;transform:none}
+    /* cards das pontas expandem menos pra fora, pra não estourar a tela */
+    .tl-row-top .tl-slot-top:first-child .tl-card:hover{left:-20%;right:-60%}
+    .tl-row-bot .tl-slot-bot:last-of-type .tl-card:hover{left:-60%;right:-20%}
+    .tl-mes{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+    .tl-title{font-size:17px;font-weight:800;color:var(--cream);margin-bottom:8px;letter-spacing:-.2px;line-height:1.2}
+    .tl-desc{font-size:13px;color:var(--muted);line-height:1.65}
 
     .tl-mobile{display:none}
     @media(max-width:900px){
@@ -155,6 +170,9 @@
       .tl-m-card .tl-mes{text-align:left;margin-bottom:6px}
       .tl-m-card .tl-title{text-align:left;font-size:16px}
       .tl-m-card .tl-desc{text-align:left;font-size:13px}
+      /* no mobile não há hover: a importância fica sempre visível */
+      .tl-m-card .tl-why{grid-template-rows:1fr;opacity:1;margin-top:10px;padding-top:10px;border-top-color:rgba(201,168,76,.15)}
+      .tl-m-card .tl-why>p{text-align:left;font-size:12.5px}
     }
   </style>
 </head>
@@ -188,7 +206,7 @@
       <div class="sec-head">
         <p class="sec-kicker">Trilha Partner Growth</p>
         <h2 class="sec-title">6 meses de transformação comercial</h2>
-        <p class="sec-sub">Da revisão do perfil de cliente ideal à instalação das rotinas de gestão — um mês por vez, com profundidade e resultado medido ao longo de toda a jornada.</p>
+        <p class="sec-sub">Da revisão do perfil de cliente ideal à instalação das rotinas de gestão: um mês por vez, com profundidade e resultado medido ao longo de toda a jornada.</p>
       </div>
       <div class="tl-outer">
 
@@ -199,6 +217,7 @@
               <p class="tl-mes">Mês 1</p>
               <h4 class="tl-title">Revisão de ICP</h4>
               <p class="tl-desc">Quem é o cliente ideal? Fit, dores e perfil de decisão</p>
+              <div class="tl-why"><p>Rever quem é o cliente ideal realinha todo o esforço comercial. Sem esse ponto de partida, prospecção, pitch e proposta miram no alvo errado.</p></div>
             </div>
             <div class="tl-conn"></div>
           </div>
@@ -208,6 +227,7 @@
               <p class="tl-mes">Mês 3</p>
               <h4 class="tl-title">Casos Reais</h4>
               <p class="tl-desc">Documentação com entrevistas de clientes, criando prova social</p>
+              <div class="tl-why"><p>Prova social vende por você. Casos reais documentados com clientes reduzem a desconfiança do decisor e encurtam o ciclo de venda.</p></div>
             </div>
             <div class="tl-conn"></div>
           </div>
@@ -217,6 +237,7 @@
               <p class="tl-mes">Mês 5</p>
               <h4 class="tl-title">KPIs e Dashboards</h4>
               <p class="tl-desc">Indicadores que importam e visibilidade em tempo real</p>
+              <div class="tl-why"><p>O que não se mede não se melhora. Indicadores claros e visíveis em tempo real permitem corrigir a rota antes do resultado escapar.</p></div>
             </div>
             <div class="tl-conn"></div>
           </div>
@@ -242,6 +263,7 @@
               <p class="tl-mes">Mês 2</p>
               <h4 class="tl-title">Teste de Impacto</h4>
               <p class="tl-desc">Teste de proposta de valor junto ao mercado real</p>
+              <div class="tl-why"><p>Testar a proposta de valor no mercado real evita apostar meses numa mensagem que não convence. O feedback do cliente afina o discurso antes da escala.</p></div>
             </div>
           </div>
           <div class="tl-slot-empty"><div class="tl-card"><p class="tl-mes">-</p></div></div>
@@ -251,6 +273,7 @@
               <p class="tl-mes">Mês 4</p>
               <h4 class="tl-title">Revisão de Canais</h4>
               <p class="tl-desc">Onde e como prospectar: canais, cadências e abordagem</p>
+              <div class="tl-why"><p>Escolher os canais certos define quanto esforço vira reunião. Cadência e abordagem alinhadas ao canal aumentam a taxa de resposta.</p></div>
             </div>
           </div>
           <div class="tl-slot-empty"><div class="tl-card"><p class="tl-mes">-</p></div></div>
@@ -260,6 +283,7 @@
               <p class="tl-mes">Mês 6</p>
               <h4 class="tl-title">Rotinas de Gestão</h4>
               <p class="tl-desc">Rituais, tarefas e cadências que sustentam a operação</p>
+              <div class="tl-why"><p>Método sem rotina se perde. Rituais e cadências de gestão sustentam o padrão no dia a dia e mantêm o time executando com consistência.</p></div>
             </div>
           </div>
         </div>
@@ -274,6 +298,7 @@
             <p class="tl-mes">Mês 1</p>
             <h4 class="tl-title">Revisão de ICP</h4>
             <p class="tl-desc">Quem é o cliente ideal? Fit, dores e perfil de decisão</p>
+            <div class="tl-why"><p>Rever quem é o cliente ideal realinha todo o esforço comercial. Sem esse ponto de partida, prospecção, pitch e proposta miram no alvo errado.</p></div>
           </div>
         </div>
         <div class="tl-m-item">
@@ -282,6 +307,7 @@
             <p class="tl-mes">Mês 2</p>
             <h4 class="tl-title">Teste de Impacto</h4>
             <p class="tl-desc">Teste de proposta de valor junto ao mercado real</p>
+            <div class="tl-why"><p>Testar a proposta de valor no mercado real evita apostar meses numa mensagem que não convence. O feedback do cliente afina o discurso antes da escala.</p></div>
           </div>
         </div>
         <div class="tl-m-item">
@@ -290,6 +316,7 @@
             <p class="tl-mes">Mês 3</p>
             <h4 class="tl-title">Casos Reais</h4>
             <p class="tl-desc">Documentação com entrevistas de clientes, criando prova social</p>
+            <div class="tl-why"><p>Prova social vende por você. Casos reais documentados com clientes reduzem a desconfiança do decisor e encurtam o ciclo de venda.</p></div>
           </div>
         </div>
         <div class="tl-m-item">
@@ -298,6 +325,7 @@
             <p class="tl-mes">Mês 4</p>
             <h4 class="tl-title">Revisão de Canais</h4>
             <p class="tl-desc">Onde e como prospectar: canais, cadências e abordagem</p>
+            <div class="tl-why"><p>Escolher os canais certos define quanto esforço vira reunião. Cadência e abordagem alinhadas ao canal aumentam a taxa de resposta.</p></div>
           </div>
         </div>
         <div class="tl-m-item">
@@ -306,6 +334,7 @@
             <p class="tl-mes">Mês 5</p>
             <h4 class="tl-title">KPIs e Dashboards</h4>
             <p class="tl-desc">Indicadores que importam e visibilidade em tempo real</p>
+            <div class="tl-why"><p>O que não se mede não se melhora. Indicadores claros e visíveis em tempo real permitem corrigir a rota antes do resultado escapar.</p></div>
           </div>
         </div>
         <div class="tl-m-item">
@@ -314,6 +343,7 @@
             <p class="tl-mes">Mês 6</p>
             <h4 class="tl-title">Rotinas de Gestão</h4>
             <p class="tl-desc">Rituais, tarefas e cadências que sustentam a operação</p>
+            <div class="tl-why"><p>Método sem rotina se perde. Rituais e cadências de gestão sustentam o padrão no dia a dia e mantêm o time executando com consistência.</p></div>
           </div>
         </div>
       </div>
@@ -385,6 +415,21 @@
 
   const nav=document.getElementById('nav');
   window.addEventListener('scroll',()=>nav.classList.toggle('sc',scrollY>40));
+
+  // iguala a altura dos cards da timeline e dá altura aos slots (os cards são absolutos)
+  function equalizeTlCards(){
+    const slots=[...document.querySelectorAll('.tl-slot-top, .tl-slot-bot')];
+    const cards=[...document.querySelectorAll('.tl-slot-top .tl-card, .tl-slot-bot .tl-card')];
+    cards.forEach(c=>c.style.minHeight='');
+    const max=Math.max(...cards.filter(c=>!c.matches(':hover')).map(c=>c.offsetHeight));
+    if(max<=0)return;
+    cards.forEach(c=>c.style.minHeight=max+'px');
+    slots.forEach(s=>s.style.height=(max+26)+'px');
+  }
+  equalizeTlCards();
+  window.addEventListener('load',equalizeTlCards);
+  window.addEventListener('resize',equalizeTlCards);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(equalizeTlCards);
   </script>
 </body>
 </html>
