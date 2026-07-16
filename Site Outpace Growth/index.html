@@ -233,6 +233,7 @@
       display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
       gap:48px; text-align:center;
       backdrop-filter:blur(12px);
+      box-shadow:0 18px 44px rgba(0,0,0,.5), 0 -18px 44px rgba(0,0,0,.32);
     }
     .nv {
       font-size:clamp(44px,5vw,70px); font-weight:900; letter-spacing:-3px;
@@ -253,7 +254,7 @@
     .split { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
     .split.rev { direction:rtl; }
     .split.rev>* { direction:ltr; }
-    .img-wrap { position:relative; border-radius:20px; overflow:hidden; aspect-ratio:4/5; border:1px solid var(--border); }
+    .img-wrap { position:relative; border-radius:20px; overflow:hidden; aspect-ratio:4/5; border:1px solid var(--border); box-shadow:0 2px 4px rgba(0,0,0,.4), 0 18px 40px rgba(0,0,0,.45), 0 44px 90px rgba(0,0,0,.32); }
     .img-wrap img { width:100%; height:120%; object-fit:cover; will-change:transform; }
     .img-wrap.crop-right img { object-position: right center; }
     .img-wrap.crop-left  img { object-position: 28% center; }
@@ -540,6 +541,7 @@
       margin-bottom:80px;
       border-top:1px solid var(--border2); border-bottom:1px solid var(--border2);
       overflow:hidden; background:rgba(8,12,8,0.65);
+      box-shadow:0 18px 44px rgba(0,0,0,.5), 0 -18px 44px rgba(0,0,0,.32);
     }
     .m-label { text-align:center; font-size:11px; letter-spacing:2.5px; text-transform:uppercase; color:var(--muted); margin-bottom:40px; }
     .m-track { display:flex; gap:72px; animation:mq 24s linear infinite; width:max-content; }
@@ -754,7 +756,7 @@
     /* QUEM SOU EU */
     #quem { background:rgba(8,15,9,0.66); backdrop-filter:blur(10px); }
     .quem-wrap { display:grid; grid-template-columns:1fr 2fr; gap:72px; align-items:start; }
-    .quem-photo { position:relative; border-radius:20px; overflow:hidden; aspect-ratio:3/4; border:0; background:#0a1810; }
+    .quem-photo { position:relative; border-radius:20px; overflow:hidden; aspect-ratio:3/4; border:0; background:#0a1810; box-shadow:0 2px 4px rgba(0,0,0,.4), 0 18px 40px rgba(0,0,0,.45), 0 44px 90px rgba(0,0,0,.32); }
     .quem-photo img {
       width:100%; height:calc(100% + 10px);
       margin-top:-10px;  /* crop 10px off the top to remove the white line */
@@ -1620,17 +1622,28 @@
   const START_PCT   = 0.20;  // ignora o início estático do vídeo
   const SCROLL_GAIN = 1.6;   // fração do scroll total que rege a animação
   const MAX_DPR     = 2;
+  const FRAME_DUR   = 1 / 24; // vídeo a 24fps
+  const LERP        = 0.18;   // suavização do tempo exibido (0-1)
 
   const canvas = document.getElementById('rocket-canvas');
   const ctx    = canvas.getContext('2d');
 
+  /* Poster estático: aparece imediatamente enquanto o vídeo baixa */
+  const poster = new Image();
+  poster.src = 'rocket-poster.jpg';
+  let posterReady = false;
+  poster.onload = () => { posterReady = true; if (!ready) drawSource(poster); };
+
   const video       = document.createElement('video');
-  video.src         = 'rocket-scrub.mp4';
   video.muted       = true;
   video.preload     = 'auto';
   video.playsInline = true;
 
-  let ready = false;
+  let ready       = false;  // vídeo carregado e pronto para scrub
+  let goalTime    = 0;      // alvo derivado do scroll
+  let displayTime = 0;      // tempo suavizado (lerp) efetivamente buscado
+  let seeking     = false;  // um seek em andamento?
+  let pendingSeek = false;  // há novo seek aguardando o 'seeked' atual?
 
   function resize() {
     const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
@@ -1640,17 +1653,22 @@
     canvas.style.height = window.innerHeight + 'px';
   }
 
-  function draw() {
-    if (!ready) return;
+  /* Desenha vídeo ou poster com enquadramento "cover" */
+  function drawSource(src) {
     const W = canvas.width, H = canvas.height;
-    const vW = video.videoWidth, vH = video.videoHeight;
+    const vW = src.videoWidth || src.naturalWidth;
+    const vH = src.videoHeight || src.naturalHeight;
+    if (!vW || !vH) return;
     const scale = Math.max(W / vW, H / vH);
     const sw = vW * scale, sh = vH * scale;
     ctx.clearRect(0, 0, W, H);
-    ctx.drawImage(video, (W - sw) / 2, (H - sh) / 2, sw, sh);
+    ctx.drawImage(src, (W - sw) / 2, (H - sh) / 2, sw, sh);
   }
 
-  video.addEventListener('seeked', draw);
+  function draw() {
+    if (ready) drawSource(video);
+    else if (posterReady) drawSource(poster);
+  }
 
   function scrollProgress() {
     const max = document.documentElement.scrollHeight - window.innerHeight;
@@ -1658,43 +1676,58 @@
     return Math.pow(Math.min((window.scrollY / max) * SCROLL_GAIN, 1), 0.55);
   }
 
-  function seek() {
+  function timeFromScroll() {
+    return (START_PCT + scrollProgress() * (1 - START_PCT)) * video.duration;
+  }
+
+  /* Seek-gating: só emite um novo seek quando o anterior terminou */
+  function issueSeek() {
     if (!ready) return;
-    const t = (START_PCT + scrollProgress() * (1 - START_PCT)) * video.duration;
-    video.currentTime = Math.max(START_PCT * video.duration, t);
+    if (seeking) { pendingSeek = true; return; }
+    if (Math.abs(displayTime - video.currentTime) < FRAME_DUR / 2) return;
+    seeking = true;
+    video.currentTime = displayTime;
+  }
+
+  video.addEventListener('seeked', () => {
+    seeking = false;
+    draw();
+    if (pendingSeek) { pendingSeek = false; issueSeek(); }
+  });
+
+  /* Loop de animação: suaviza displayTime rumo ao goalTime e agenda seeks */
+  function tick() {
+    requestAnimationFrame(tick);
+    if (!ready) return;
+    displayTime += (goalTime - displayTime) * LERP;
+    if (Math.abs(goalTime - displayTime) < FRAME_DUR / 4) displayTime = goalTime;
+    issueSeek();
   }
 
   video.addEventListener('loadedmetadata', () => {
-    ready = true;
+    goalTime = displayTime = timeFromScroll();
     resize();
-    seek();
+    ready = true;
+    seeking = true;
+    video.currentTime = displayTime; // primeiro frame -> substitui o poster
+    requestAnimationFrame(tick);
   });
 
-  /* Renderiza cada novo frame decodificado pelo browser */
-  if ('requestVideoFrameCallback' in HTMLVideoElement.prototype) {
-    (function onFrame() {
-      draw();
-      video.requestVideoFrameCallback(onFrame);
-    }());
-  } else {
-    (function loop() {
-      requestAnimationFrame(loop);
-      draw();
-    }());
-  }
+  /* Baixa o vídeo inteiro em background: todos os seeks passam a ser locais
+     (elimina o jank de range requests durante o scrub) */
+  fetch('rocket-scrub.mp4')
+    .then(r => { if (!r.ok) throw 0; return r.blob(); })
+    .then(b => { video.src = URL.createObjectURL(b); video.load(); })
+    .catch(() => { video.src = 'rocket-scrub.mp4'; video.load(); });
 
-  /* Throttle: um seek por frame de animação, no máximo */
-  let pending = false;
+  /* Scroll apenas atualiza o alvo; o tick faz o resto */
   window.addEventListener('scroll', () => {
-    if (pending) return;
-    pending = true;
-    requestAnimationFrame(() => { seek(); pending = false; });
+    if (ready) goalTime = timeFromScroll();
   }, { passive: true });
 
   window.addEventListener('resize', () => { resize(); draw(); });
 
   resize();
-  video.load();
 })();
 
 /* ══════════════════════════════════════════
