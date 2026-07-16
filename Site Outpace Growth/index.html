@@ -284,17 +284,18 @@
     .srv-path { position:relative; max-width:980px; margin:72px auto 0; }
     .srv-step { position:relative; display:grid; grid-template-columns:1fr 120px 1fr; align-items:center; margin-bottom:18px; }
     .srv-step:last-child { margin-bottom:0; }
-    /* linha da trilha em segmentos por passo: cada trecho esfumaça junto com o card no scroll */
+    /* linha da trilha em segmentos por passo: degradê contínuo controlado por --line-top/--line-bot */
     .srv-step::before {
       content:''; position:absolute; left:50%; top:0; bottom:-18px; width:1px;
-      transform:translateX(-50%); background:rgba(201,168,76,.5); z-index:0; pointer-events:none;
+      transform:translateX(-50%); z-index:0; pointer-events:none;
+      background:linear-gradient(to bottom, rgba(201,168,76,var(--line-top,.5)), rgba(201,168,76,var(--line-bot,.5)));
     }
     .srv-step:first-child::before { top:50%; }
     .srv-step:last-child::before  { top:0; bottom:auto; height:50%; }
     /* conector horizontal entre o card e a bolinha */
     .srv-step::after {
       content:''; position:absolute; top:50%; height:1px; width:34px;
-      background:rgba(201,168,76,.35);
+      background:rgba(201,168,76,.35); opacity:var(--seg,1);
     }
     .srv-step:nth-child(odd)::after  { left:calc(50% - 60px); }
     .srv-step:nth-child(even)::after { left:calc(50% + 26px); }
@@ -310,11 +311,19 @@
       grid-row:1;
       background:rgba(11,20,12,0.9); border:1px solid var(--border); border-radius:18px;
       padding:28px 30px; backdrop-filter:blur(8px);
-      transition:border-color .3s, transform .3s, box-shadow .3s;
+      box-shadow:0 1px 2px rgba(0,0,0,.35), 0 12px 28px rgba(0,0,0,.38), 0 30px 60px rgba(0,0,0,.28);
+      transition:border-color .45s, transform .3s, box-shadow .45s;
     }
     .srv-step:nth-child(odd)  .srv-card { grid-column:1; }
     .srv-step:nth-child(even) .srv-card { grid-column:3; }
-    .srv-card:hover { border-color:rgba(201,168,76,.45); transform:translateY(-4px); box-shadow:0 0 32px rgba(201,168,76,.12), 0 16px 36px rgba(0,0,0,.4); }
+    .srv-card:hover { border-color:rgba(201,168,76,.45); transform:translateY(-4px); box-shadow:0 0 32px rgba(201,168,76,.12), 0 16px 36px rgba(0,0,0,.45), 0 30px 60px rgba(0,0,0,.28); }
+    /* passo passando pelo centro da tela: bordas iluminadas como no hover */
+    .srv-step.is-center .srv-card {
+      border-color:rgba(201,168,76,.45);
+      box-shadow:0 0 32px rgba(201,168,76,.14), 0 16px 36px rgba(0,0,0,.45), 0 30px 60px rgba(0,0,0,.28);
+    }
+    .srv-step.is-center .srv-dot { box-shadow:0 0 26px rgba(201,168,76,.3); }
+    .srv-dot { transition:box-shadow .45s; }
     .srv-passo { font-size:11px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
     .srv-title { font-size:20px; font-weight:700; margin-bottom:10px; letter-spacing:-.3px; color:var(--cream); }
     .srv-desc { font-size:14px; color:var(--muted); line-height:1.8; }
@@ -349,10 +358,11 @@
     .prog-card {
       background:rgba(11,20,12,0.72); border:1px solid var(--border2); backdrop-filter:blur(8px);
       border-radius:24px; padding:44px 36px 36px; position:relative; overflow:hidden;
+      box-shadow:0 1px 2px rgba(0,0,0,.35), 0 14px 32px rgba(0,0,0,.38), 0 34px 70px rgba(0,0,0,.28);
       transition:transform .4s,box-shadow .4s,border-color .4s;
       display:flex; flex-direction:column;
     }
-    .prog-card:hover { transform:translateY(-8px); box-shadow:0 40px 80px rgba(0,0,0,0.6); border-color:rgba(201,168,76,0.32); }
+    .prog-card:hover { transform:translateY(-8px); box-shadow:0 1px 2px rgba(0,0,0,.35), 0 40px 80px rgba(0,0,0,0.6); border-color:rgba(201,168,76,0.32); }
     .prog-kicker {
       font-size:11px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase;
       color:var(--gold); margin-bottom:28px;
@@ -508,9 +518,11 @@
     .testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
     .tcard {
       background:rgba(11,20,12,0.72); border:1px solid var(--border2); backdrop-filter:blur(8px);
-      border-radius:20px; padding:40px; transition:transform .3s,border-color .3s;
+      border-radius:20px; padding:40px;
+      box-shadow:0 1px 2px rgba(0,0,0,.35), 0 12px 28px rgba(0,0,0,.38), 0 30px 60px rgba(0,0,0,.28);
+      transition:transform .3s,border-color .3s,box-shadow .3s;
     }
-    .tcard:hover { transform:translateY(-5px); border-color:var(--border); }
+    .tcard:hover { transform:translateY(-5px); border-color:var(--border); box-shadow:0 1px 2px rgba(0,0,0,.35), 0 20px 44px rgba(0,0,0,.5), 0 34px 70px rgba(0,0,0,.3); }
     .stars { color:var(--gold); font-size:14px; letter-spacing:3px; margin-bottom:22px; }
     .ttext { font-size:15px; color:var(--light); line-height:1.8; margin-bottom:28px; }
     .tauthor { display:flex; align-items:center; gap:14px; }
@@ -1887,33 +1899,60 @@ document.querySelectorAll('.nv[data-target]').forEach(el=>io.observe(el));
   <!-- Trilha de serviços: cards se materializam e esfumaçam ao chegar na base da tela -->
   <script>
   (function(){
-    const cards = Array.prototype.slice.call(document.querySelectorAll('.srv-step'));
-    if(!cards.length) return;
-    cards.forEach(function(c){ c.style.willChange = 'opacity, filter'; });
+    const steps = Array.prototype.slice.call(document.querySelectorAll('.srv-step'));
+    if(!steps.length) return;
+    const parts = steps.map(function(s){
+      return { step:s, els:[s.querySelector('.srv-card'), s.querySelector('.srv-dot')].filter(Boolean) };
+    });
+    parts.forEach(function(p){ p.els.forEach(function(el){ el.style.willChange = 'opacity, filter'; }); });
     let ticking = false;
     function update(){
       ticking = false;
       const vh = window.innerHeight;
-      const fadeStart = vh * 0.72;   // topo do passo acima disso: nítido
-      const fadeEnd   = vh * 0.95;   // topo do passo abaixo disso: sumiu
-      for(let i=0;i<cards.length;i++){
-        const c = cards[i];
-        const top = c.getBoundingClientRect().top;
-        let p = (top - fadeStart) / (fadeEnd - fadeStart);
+      const fadeStart = vh * 0.72;   // acima disso: nítido
+      const fadeEnd   = vh * 0.95;   // abaixo disso: sumiu
+      // visibilidade (1 = nítido, 0 = sumiu) em função da posição vertical na tela
+      function vis(y){
+        let p = (y - fadeStart) / (fadeEnd - fadeStart);
         p = p < 0 ? 0 : (p > 1 ? 1 : p);
-        if(p <= 0){
-          c.style.opacity = '';
-          c.style.filter = '';
-          c.style.webkitMaskImage = '';
-          c.style.maskImage = '';
-        } else {
-          c.style.opacity = (1 - p).toFixed(3);
-          c.style.filter = 'blur(' + (p * 9).toFixed(2) + 'px)';
-          const stop = Math.round((1 - p) * 100);
-          const g = 'linear-gradient(to bottom, #000 ' + stop + '%, transparent 100%)';
-          c.style.webkitMaskImage = g;
-          c.style.maskImage = g;
-        }
+        return 1 - p;
+      }
+      const screenMid = vh * 0.5;
+      let bestIdx = -1, bestDist = Infinity;
+      for(let i=0;i<parts.length;i++){
+        const s = parts[i].step;
+        const rect = s.getBoundingClientRect();
+        const p = 1 - vis(rect.top);
+        // card e bolinha se materializam (a linha fica de fora para não cortar)
+        parts[i].els.forEach(function(el){
+          if(p <= 0){
+            el.style.opacity = '';
+            el.style.filter = '';
+            el.style.webkitMaskImage = '';
+            el.style.maskImage = '';
+          } else {
+            el.style.opacity = (1 - p).toFixed(3);
+            el.style.filter = 'blur(' + (p * 9).toFixed(2) + 'px)';
+            const stop = Math.round((1 - p) * 100);
+            const g = 'linear-gradient(to bottom, #000 ' + stop + '%, transparent 100%)';
+            el.style.webkitMaskImage = g;
+            el.style.maskImage = g;
+          }
+        });
+        // degradê contínuo da linha: alpha calculado no topo e na base de cada segmento
+        s.style.setProperty('--line-top', (0.5 * vis(rect.top)).toFixed(3));
+        s.style.setProperty('--line-bot', (0.5 * vis(rect.bottom + 18)).toFixed(3));
+        s.style.setProperty('--seg', vis(rect.top + rect.height / 2).toFixed(3));
+        // guarda o passo mais próximo do centro da tela (só ele acende)
+        const cy = rect.top + rect.height / 2;
+        const dist = Math.abs(cy - screenMid);
+        if(dist < bestDist){ bestDist = dist; bestIdx = i; }
+      }
+      // apenas o card mais próximo do centro fica com as bordas iluminadas, e só
+      // enquanto estiver realmente perto (dentro de meio card de distância)
+      const centerBand = vh * 0.16;
+      for(let i=0;i<parts.length;i++){
+        parts[i].step.classList.toggle('is-center', i === bestIdx && bestDist < centerBand);
       }
     }
     function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
