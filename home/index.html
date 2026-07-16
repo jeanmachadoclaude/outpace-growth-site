@@ -7,6 +7,7 @@
   <meta name="description" content="Outpace é a consultoria comercial para empresas B2B que querem crescer com método, treinamento e acompanhamento contínuo. SellAs Growth, Partner Growth e VendeAI." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://outpacegrowth.com.br/" />
+  <link rel="preload" as="image" href="rocket-poster.jpg" />
 
   <!-- Open Graph -->
   <meta property="og:type"        content="website" />
@@ -93,6 +94,14 @@
     #rocket-bg {
       position:fixed; inset:0; width:100%; height:100%;
       z-index:0; pointer-events:none; overflow:hidden;
+    }
+    /* LQIP: foguete borrado inline, visível no instante zero até o canvas assumir */
+    #rocket-bg::before {
+      content:'';
+      position:absolute; inset:-6%;
+      background:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAKKADAAQAAAABAAAAFgAAAAD/7QA4UGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAAA4QklNBCUAAAAAABDUHYzZjwCyBOmACZjs+EJ+/8AAEQgAFgAoAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/bAEMAExMTExMTIBMTIC0gICAtPS0tLS09TT09PT09TV1NTU1NTU1dXV1dXV1dXXBwcHBwcIODg4ODk5OTk5OTk5OTk//bAEMBFxgYJSMlQCMjQJloVWiZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmf/dAAQAA//aAAwDAQACEQMRAD8A5lI1DYPIFW44kdtoGc+1S2kUMw2scFj/ACrXtrRYpgqHcRyfwrN1UlbqaKk279Dn/LjSUkjI3YxippLdSQEArq5NMhH35Apckj6mseW3kti0rDKBsURqW0Y3C+xjm2y2wLyKPsjf3a6JVimGFKpzjAqT7Av/AD0H6UnWQvZn/9DlUuCmMVpQ6psIBUg9Mg1iDtUi/e/Gs5RTNYyaOhuNQWYKW3Db0qrLfhy2QfmOaqN92oDWaii22WHuAwJ5zVf7TJ60w9DUNapIybZ//9k=) center/cover no-repeat;
+      filter:blur(18px) saturate(1) brightness(0.86) contrast(1.05);
+      opacity:0.58;
     }
     #rocket-canvas {
       position:absolute; inset:0;
@@ -1416,17 +1425,28 @@
   const START_PCT   = 0.20;  // ignora o início estático do vídeo
   const SCROLL_GAIN = 1.6;   // fração do scroll total que rege a animação
   const MAX_DPR     = 2;
+  const FRAME_DUR   = 1 / 24; // vídeo a 24fps
+  const LERP        = 0.18;   // suavização do tempo exibido (0-1)
 
   const canvas = document.getElementById('rocket-canvas');
   const ctx    = canvas.getContext('2d');
 
+  /* Poster estático: aparece imediatamente enquanto o vídeo baixa */
+  const poster = new Image();
+  poster.src = 'rocket-poster.jpg';
+  let posterReady = false;
+  poster.onload = () => { posterReady = true; if (!ready) drawSource(poster); };
+
   const video       = document.createElement('video');
-  video.src         = 'rocket-scrub.mp4';
   video.muted       = true;
   video.preload     = 'auto';
   video.playsInline = true;
 
-  let ready = false;
+  let ready       = false;  // vídeo carregado e pronto para scrub
+  let goalTime    = 0;      // alvo derivado do scroll
+  let displayTime = 0;      // tempo suavizado (lerp) efetivamente buscado
+  let seeking     = false;  // um seek em andamento?
+  let pendingSeek = false;  // há novo seek aguardando o 'seeked' atual?
 
   function resize() {
     const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
@@ -1436,14 +1456,21 @@
     canvas.style.height = window.innerHeight + 'px';
   }
 
-  function draw() {
-    if (!ready) return;
+  /* Desenha vídeo ou poster com enquadramento "cover" */
+  function drawSource(src) {
     const W = canvas.width, H = canvas.height;
-    const vW = video.videoWidth, vH = video.videoHeight;
+    const vW = src.videoWidth || src.naturalWidth;
+    const vH = src.videoHeight || src.naturalHeight;
+    if (!vW || !vH) return;
     const scale = Math.max(W / vW, H / vH);
     const sw = vW * scale, sh = vH * scale;
     ctx.clearRect(0, 0, W, H);
-    ctx.drawImage(video, (W - sw) / 2, (H - sh) / 2, sw, sh);
+    ctx.drawImage(src, (W - sw) / 2, (H - sh) / 2, sw, sh);
+  }
+
+  function draw() {
+    if (ready) drawSource(video);
+    else if (posterReady) drawSource(poster);
   }
 
   function scrollProgress() {
@@ -1452,42 +1479,58 @@
     return Math.pow(Math.min((window.scrollY / max) * SCROLL_GAIN, 1), 0.55);
   }
 
-  function seek() {
+  function timeFromScroll() {
+    return (START_PCT + scrollProgress() * (1 - START_PCT)) * video.duration;
+  }
+
+  /* Seek-gating: só emite um novo seek quando o anterior terminou */
+  function issueSeek() {
     if (!ready) return;
-    video.currentTime = (START_PCT + scrollProgress() * (1 - START_PCT)) * video.duration;
+    if (seeking) { pendingSeek = true; return; }
+    if (Math.abs(displayTime - video.currentTime) < FRAME_DUR / 2) return;
+    seeking = true;
+    video.currentTime = displayTime;
+  }
+
+  video.addEventListener('seeked', () => {
+    seeking = false;
+    draw();
+    if (pendingSeek) { pendingSeek = false; issueSeek(); }
+  });
+
+  /* Loop de animação: suaviza displayTime rumo ao goalTime e agenda seeks */
+  function tick() {
+    requestAnimationFrame(tick);
+    if (!ready) return;
+    displayTime += (goalTime - displayTime) * LERP;
+    if (Math.abs(goalTime - displayTime) < FRAME_DUR / 4) displayTime = goalTime;
+    issueSeek();
   }
 
   video.addEventListener('loadedmetadata', () => {
-    ready = true;
+    goalTime = displayTime = timeFromScroll();
     resize();
-    seek();
+    ready = true;
+    seeking = true;
+    video.currentTime = displayTime; // primeiro frame -> substitui o poster
+    requestAnimationFrame(tick);
   });
 
-  /* Renderiza cada novo frame decodificado pelo browser */
-  if ('requestVideoFrameCallback' in HTMLVideoElement.prototype) {
-    (function onFrame() {
-      draw();
-      video.requestVideoFrameCallback(onFrame);
-    }());
-  } else {
-    (function loop() {
-      requestAnimationFrame(loop);
-      draw();
-    }());
-  }
+  /* Baixa o vídeo inteiro em background: todos os seeks passam a ser locais
+     (elimina o jank de range requests durante o scrub) */
+  fetch('rocket-scrub.mp4')
+    .then(r => { if (!r.ok) throw 0; return r.blob(); })
+    .then(b => { video.src = URL.createObjectURL(b); video.load(); })
+    .catch(() => { video.src = 'rocket-scrub.mp4'; video.load(); });
 
-  /* Throttle: um seek por frame de animação, no máximo */
-  let pending = false;
+  /* Scroll apenas atualiza o alvo; o tick faz o resto */
   window.addEventListener('scroll', () => {
-    if (pending) return;
-    pending = true;
-    requestAnimationFrame(() => { seek(); pending = false; });
+    if (ready) goalTime = timeFromScroll();
   }, { passive: true });
 
   window.addEventListener('resize', () => { resize(); draw(); });
 
   resize();
-  video.load();
 })();
 
 /* ══════════════════════════════════════════
