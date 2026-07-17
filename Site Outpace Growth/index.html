@@ -41,7 +41,7 @@
   <link rel="apple-touch-icon" href="images/Logo Outpace.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:opsz,wght@9..40,200..1000&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:opsz,wght@9..40,200..1000&family=Playfair+Display:wght@900&display=swap" rel="stylesheet" />
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-L0CH9XR11X"></script>
   <script>
@@ -679,9 +679,9 @@
       pointer-events:none; z-index:1; overflow:hidden;
     }
     .roi-bg span {
-      font-family:'Fraunces',serif;
+      font-family:'Playfair Display',serif;
       font-size:clamp(240px,46vw,700px);
-      font-weight:700; letter-spacing:-0.05em; line-height:0.78;
+      font-weight:900; letter-spacing:-32px; line-height:0.78;
       color:rgba(241,215,128,0.14);
       opacity:0.55; user-select:none; white-space:nowrap;
       text-shadow:
@@ -1088,7 +1088,7 @@
   <section id="training">
     <div class="split">
       <div class="img-wrap rvl" style="cursor:pointer;" onclick="openVideoModal()">
-        <img src="images/foto-treinamento-nova.png" alt="Treinamento comercial ao vivo" />
+        <img src="images/foto-treinamento-nova.jpg" alt="Treinamento comercial ao vivo" loading="lazy" decoding="async" />
         <button class="img-play-ring" aria-label="Assistir vídeo">
           <svg width="26" height="26" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
         </button>
@@ -1124,7 +1124,7 @@
   <section id="palestras" style="background:rgba(8,15,9,0.68);backdrop-filter:blur(10px)">
     <div class="split rev">
       <div class="img-wrap crop-left rvr">
-        <img src="images/foto-palestra.png" alt="Palestra e treinamento prático ao vivo" />
+        <img src="images/foto-palestra.jpg" alt="Palestra e treinamento prático ao vivo" loading="lazy" decoding="async" />
       </div>
       <div class="rvl">
         <h2 class="stitle"><span class="flash-gold">Aprendizado</span> que vira resultado</h2>
@@ -1416,7 +1416,7 @@
   <section id="mentoria" style="background:rgba(8,15,9,0.68);backdrop-filter:blur(10px)">
     <div class="split rev">
       <div class="img-wrap hires crop-right rvr" data-noparallax="1">
-        <img src="images/foto-google-meet.png" alt="Mentoria estratégica ao vivo por videoconferência" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&q=80'" />
+        <img src="images/foto-google-meet.jpg" alt="Mentoria estratégica ao vivo por videoconferência" loading="lazy" decoding="async" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&q=80'" />
       </div>
       <div class="rvl">
         <h2 class="stitle"><span class="flash-gold">Estratégia</span> que move indústrias</h2>
@@ -1437,7 +1437,7 @@
     <div class="quem-wrap">
       <div class="rvl">
         <div class="quem-photo">
-          <img src="images/foto-perfil.png" alt="Jean Machado" />
+          <img src="images/foto-perfil.png" alt="Jean Machado" loading="lazy" decoding="async" />
           <div class="quem-badge">
             <div class="quem-badge-name">Jean Machado</div>
             <div class="quem-badge-role">Especialista em Crescimento Comercial B2B</div>
@@ -1540,10 +1540,10 @@
       <div class="logo-item rvs"><img src="images/logo-lebes.png" alt="Lebes" onload="this.nextSibling.style.display='none'" onerror="this.style.display='none'" /><span class="logo-name">Lebes</span></div>
       <div class="logo-item rvs size-xl"><img src="images/logo-claro.png" alt="Claro" onload="this.nextSibling.style.display='none'" onerror="this.style.display='none'" /><span class="logo-name">Claro</span></div>
       <div class="logo-item rvs"><img src="images/logo-vivo.png" alt="Vivo" onload="this.nextSibling.style.display='none'" onerror="this.style.display='none'" /><span class="logo-name">Vivo</span></div>
-      <div class="logo-item rvs size-lg"><img src="images/logo-ibs.png" alt="IBS" onload="this.nextSibling.style.display='none'" onerror="this.style.display='none'" /><span class="logo-name">IBS</span></div>
+      <div class="logo-item rvs size-lg"><img src="images/logo-ibs-sm.png" loading="lazy" decoding="async" alt="IBS" onload="this.nextSibling.style.display='none'" onerror="this.style.display='none'" /><span class="logo-name">IBS</span></div>
       <div class="logo-item rvs"><img src="images/logo-escola-empresarios.png" alt="Escola de Empresários" onload="this.nextSibling.style.display='none'" onerror="this.style.display='none'" /><span class="logo-name">Escola de Empresários</span></div>
       <div class="logo-item rvs size-lg"><img src="images/logo-villerose.png" alt="Ville Rose" onload="this.nextSibling.style.display='none'" onerror="this.style.display='none'" /><span class="logo-name">Ville Rose Cerâmica</span></div>
-      <div class="logo-item rvs size-lg"><img src="images/logo-lepetit.png" alt="Le Petit" onload="this.nextSibling.style.display='none'" onerror="this.style.display='none'" /><span class="logo-name">Le Petit</span></div>
+      <div class="logo-item rvs size-lg"><img src="images/logo-lepetit-sm.png" loading="lazy" decoding="async" alt="Le Petit" onload="this.nextSibling.style.display='none'" onerror="this.style.display='none'" /><span class="logo-name">Le Petit</span></div>
     </div>
     <p class="logos-note">e muitas outras empresas que escolheram <strong>ultrapassar a concorrência.</strong></p>
   </section>
@@ -1643,6 +1643,11 @@
   const MAX_DPR     = 2;
   const FRAME_DUR   = 1 / 24; // vídeo a 24fps
   const LERP        = 0.18;   // suavização do tempo exibido (0-1)
+  const SEEK_TIMEOUT = 400;   // ms sem 'seeked' -> watchdog destrava o pipeline
+
+  /* Mobile recebe a versão 540p (~1,1 MB); desktop a 720p (~1,9 MB) */
+  const VIDEO_SRC = matchMedia('(max-width: 820px)').matches
+      ? 'rocket-scrub-mobile.mp4' : 'rocket-scrub.mp4';
 
   const canvas = document.getElementById('rocket-canvas');
   const ctx    = canvas.getContext('2d');
@@ -1663,6 +1668,8 @@
   let displayTime = 0;      // tempo suavizado (lerp) efetivamente buscado
   let seeking     = false;  // um seek em andamento?
   let pendingSeek = false;  // há novo seek aguardando o 'seeked' atual?
+  let lastShown   = -1;     // último tempo confirmado pelo 'seeked'
+  let seekStart   = 0;      // timestamp do seek em andamento (watchdog)
 
   function resize() {
     const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
@@ -1692,32 +1699,54 @@
   function scrollProgress() {
     const max = document.documentElement.scrollHeight - window.innerHeight;
     if (max <= 0) return 0;
-    return Math.pow(Math.min((window.scrollY / max) * SCROLL_GAIN, 1), 0.55);
+    /* scrollY fica negativo no rubber-band do iOS; Math.pow(negativo, 0.55)
+       retorna NaN e congela o scrub em definitivo */
+    const frac = Math.min(Math.max(window.scrollY, 0) / max * SCROLL_GAIN, 1);
+    return Math.pow(frac, 0.55);
   }
 
   function timeFromScroll() {
-    return (START_PCT + scrollProgress() * (1 - START_PCT)) * video.duration;
+    const t = (START_PCT + scrollProgress() * (1 - START_PCT)) * video.duration;
+    /* nunca busca o fim exato: no iOS isso põe o vídeo em estado 'ended'
+       e os 'seeked' seguintes param de disparar (scrub congela) */
+    return Math.min(t, video.duration - 0.05);
   }
 
-  /* Seek-gating: só emite um novo seek quando o anterior terminou */
+  /* Seek-gating: só emite um novo seek quando o anterior terminou.
+     Watchdog: se o 'seeked' se perder (iOS), destrava após SEEK_TIMEOUT. */
   function issueSeek() {
     if (!ready) return;
-    if (seeking) { pendingSeek = true; return; }
-    if (Math.abs(displayTime - video.currentTime) < FRAME_DUR / 2) return;
-    seeking = true;
-    video.currentTime = displayTime;
+    if (seeking) {
+      if (performance.now() - seekStart < SEEK_TIMEOUT) { pendingSeek = true; return; }
+      seeking = false; // 'seeked' perdido -> destrava e tenta de novo
+      draw();          // redesenha com o frame que o vídeo tiver agora
+    }
+    if (Math.abs(displayTime - lastShown) < FRAME_DUR / 2) return;
+    seeking   = true;
+    seekStart = performance.now();
+    /* jitter mínimo: seek para o mesmo currentTime pode ser ignorado */
+    video.currentTime = Math.abs(video.currentTime - displayTime) < 1e-4
+        ? displayTime + 1e-3 : displayTime;
   }
 
   video.addEventListener('seeked', () => {
-    seeking = false;
+    seeking   = false;
+    lastShown = video.currentTime;
     draw();
     if (pendingSeek) { pendingSeek = false; issueSeek(); }
   });
+
+  /* Se ainda assim entrar em 'ended', libera o pipeline */
+  video.addEventListener('ended', () => { seeking = false; });
 
   /* Loop de animação: suaviza displayTime rumo ao goalTime e agenda seeks */
   function tick() {
     requestAnimationFrame(tick);
     if (!ready) return;
+    /* se algum NaN/Infinity entrar no pipeline, o lerp nunca se recupera
+       sozinho: ressincroniza com o scroll atual */
+    if (!isFinite(goalTime))    goalTime    = timeFromScroll();
+    if (!isFinite(displayTime)) displayTime = goalTime;
     displayTime += (goalTime - displayTime) * LERP;
     if (Math.abs(goalTime - displayTime) < FRAME_DUR / 4) displayTime = goalTime;
     issueSeek();
@@ -1728,16 +1757,17 @@
     resize();
     ready = true;
     seeking = true;
+    seekStart = performance.now();
     video.currentTime = displayTime; // primeiro frame -> substitui o poster
     requestAnimationFrame(tick);
   });
 
   /* Baixa o vídeo inteiro em background: todos os seeks passam a ser locais
      (elimina o jank de range requests durante o scrub) */
-  fetch('rocket-scrub.mp4')
+  fetch(VIDEO_SRC)
     .then(r => { if (!r.ok) throw 0; return r.blob(); })
     .then(b => { video.src = URL.createObjectURL(b); video.load(); })
-    .catch(() => { video.src = 'rocket-scrub.mp4'; video.load(); });
+    .catch(() => { video.src = VIDEO_SRC; video.load(); });
 
   /* Scroll apenas atualiza o alvo; o tick faz o resto */
   window.addEventListener('scroll', () => {
